@@ -1,0 +1,1 @@
+creada la carpeta src/main/resources/umu/tds/gestion_gastos/gasto
