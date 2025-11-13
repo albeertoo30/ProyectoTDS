@@ -14,7 +14,7 @@ public class RepoCategorias {
     }
 
 	// Obtener todas las categorias
-	public List<Categoria> getAll() {
+	public List<Categoria> getAllCategorias() {
         return new ArrayList<>(categorias);
     }
 	
