@@ -1,4 +1,4 @@
-package umu.tds.gestion_gastos.notificacion;
+package umu.tds.gestion_gastos.alerta;
 
 import java.util.List;
 

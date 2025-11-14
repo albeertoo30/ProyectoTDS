@@ -1,4 +1,4 @@
-package umu.tds.gestion_gastos.alerta;
+package umu.tds.gestion_gastos.notificacion;
 
 import java.time.LocalDate;
 
