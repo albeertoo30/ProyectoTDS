@@ -1,6 +1,9 @@
 package umu.tds.gestion_gastos.notificacion;
 
-public class HistorialNotificacione{
+import java.util.List;
 
-    //falta poner las cosas
+public class HistorialNotificaciones{
+
+	public List notifiaciones;
+	
 }
