@@ -1,6 +1,7 @@
 package umu.tds.gestion_gastos.alerta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,22 +28,28 @@ public class GestorAlertas{
 	
 	public void eliminarAlerta(int id) {
 		//Esto no se si hay que hacerlo asi o no, depende de la implementacion que queramos.
+		//Solo la desactivamos.
 		this.alertas.stream()
 				.filter(a -> a.getId() == id)
 				.forEach(a -> a.desactivarAlarma());
-		
-		//Se puede hacer con stream pero no es eficiente, nos quedamos con esta.
-		this.alertas.removeIf(a -> a.getId() == id);	
 	}
 	
 	public void comprobarAlertas() {
-		//de momento nada
+		//de momento nada, que tenemos que comprobar?? 
 	}
 	
 	public List<Alerta> getAlertasActivas(){
 		return alertas.stream()
-				.filter(Alerta::estaActiva)
+				.filter(Alerta::isActiva)
 				.collect(Collectors.toList());
+	}
+	
+	public HistorialNotificaciones getHistorial() {
+		return this.historial;   // En historial nos encargamos de no pasarle cosas que no deberiamos.
+	}
+	
+	public RepoGastos getRepoGastos() {
+		return this.repoGastos;
 	}
 	
 	

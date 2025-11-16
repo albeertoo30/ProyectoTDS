@@ -9,24 +9,26 @@ public class Alerta {
 	//Atributos
 	private int id;
 	private double limite;
-	private boolean isActiva;
+	private boolean activa;
+	private ComportamientoAlerta comportamiento;
+
 	
 	//Constructores
 	public Alerta(int id, double limite) {
 		this.id = id;
 		this.limite = limite;
 		//Por defecto cuando se crea se activa
-		this.isActiva = true;
+		this.activa = true;
 	}
 	
 	//Metodos
 	//Provisional
 	public boolean ejecutarComprobar(List<Gasto> gastos) {
-		return true;
+		return this.comportamiento.comprobar(gastos, this.limite);
 	}
 					//Esto yo lo cambiaria
-	public boolean estaActiva() {
-		return this.isActiva;
+	public boolean isActiva() {
+		return this.activa;
 	}
 	
 	//Para que se pueda modificar supongo
@@ -35,7 +37,7 @@ public class Alerta {
 	}
 	
 	public void desactivarAlarma() {
-		this.isActiva = false;
+		this.activa = false;
 	}
 	
 	public double getLimite() {
@@ -46,5 +48,8 @@ public class Alerta {
 		return this.id;
 	}
 	
+	public String getMensaje() {
+		return this.comportamiento.getMensaje();
+	}
 
 }
