@@ -5,15 +5,15 @@ import java.util.stream.Collectors;
 
 public class GestorGastos {
 	
-	private RepoGastos repositorio;
+	private GastoRepository repositorio;
 	
-	public GestorGastos(RepoGastos repositorio) {
+	public GestorGastos(GastoRepository repositorio) {
 		this.repositorio = repositorio;
 	}
 	
 	// Método de consulta
 	public List<Gasto> obtenerTodos() {
-        return repositorio.getAllGastos();
+        return repositorio.getAll();
     }
 	
 	// Funcionalidad
@@ -24,12 +24,20 @@ public class GestorGastos {
 	}
 	
 	public void editarGasto(Gasto g) {
-		if (g == null) throw new IllegalArgumentException("El gasto no puede ser nulo");
-		repositorio.add(g);
+	    if (g == null) throw new IllegalArgumentException("El gasto no puede ser nulo");
+	    if (g.getId() <= 0) throw new IllegalArgumentException("El gasto debe tener un ID válido");
+
+	    if (repositorio.findById(g.getId()).isEmpty())
+	        throw new IllegalArgumentException("No existe un gasto con ID " + g.getId());
+
+	    repositorio.update(g);
 	}
 	
 	public void eliminarGasto(int id) {
-		repositorio.findById(id).ifPresent(repositorio::remove);
+	    var gasto = repositorio.findById(id)
+	            .orElseThrow(() -> new IllegalArgumentException("No existe un gasto con ID " + id));
+
+	    repositorio.remove(gasto);
 	}
 	
 	public Gasto obtenerPorId(int id) {
@@ -37,7 +45,7 @@ public class GestorGastos {
 	}
 	
 	public List<Gasto> obtenerGastosFiltradosPorCategoria(String categoria){
-		return repositorio.getAllGastos().stream()
+		return repositorio.getAll().stream()
 				.filter(g -> g.getCategoria() != null &&
 						g.getCategoria().getNombre().equalsIgnoreCase(categoria))
 				.collect(Collectors.toList());
@@ -46,7 +54,7 @@ public class GestorGastos {
 	/* Usamos el tipo envoltorio Double porque el filtrado puede ser solo con un mínimo
 	o solo con un máximo y de esta manera podemos permitir null. */
 	public List<Gasto> obtenerGastosFiltrados(String categoria, Double min, Double max){
-		return repositorio.getAllGastos().stream()
+		return repositorio.getAll().stream()
 				.filter(g -> categoria == null || g.getCategoria().getNombre().equalsIgnoreCase(categoria))
 				.filter(g -> min == null || g.getCantidad() >= min)
 				.filter(g -> max == null || g.getCantidad() <= max)
