@@ -4,29 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RepoGastos {
+public class RepoGastos implements GastoRepository{
 	
 	private List<Gasto> gastos;
 	
 	// Constructor
 	public RepoGastos() {
-		this.gastos = new ArrayList<Gasto>();
+		this.gastos = new ArrayList<>();
 	}
 	
 	// Obtener todos los gastos
-	public List<Gasto> getAllGastos(){
+	@Override
+	public List<Gasto> getAll(){
 		return new ArrayList<Gasto>(gastos);
 	}
 	
 	// Funcionalidad
+	@Override
 	public void add(Gasto g) {
         gastos.add(g);
     }
 
+	@Override
     public void remove(Gasto g) {
         gastos.remove(g);
     }
 	
+	@Override
     public void update(Gasto g) { 
         for (int i = 0; i < gastos.size(); i++) {
             if (gastos.get(i).getId() == g.getId()) {
@@ -36,6 +40,7 @@ public class RepoGastos {
         }
     }
     
+	@Override
     public Optional<Gasto> findById(int id) {
         return gastos.stream().filter(g -> g.getId() == id).findFirst();
     }
