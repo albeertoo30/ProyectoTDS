@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RepoCategorias {
+public class RepoCategorias implements CategoriaRepository {
 	
 	private List<Categoria> categorias;
 	
@@ -14,7 +14,7 @@ public class RepoCategorias {
     }
 
 	// Obtener todas las categorias
-	public List<Categoria> getAllCategorias() {
+	public List<Categoria> getAll() {
         return new ArrayList<>(categorias);
     }
 	

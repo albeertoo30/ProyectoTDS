@@ -4,15 +4,19 @@ import java.util.List;
 
 public class GestorCategorias {
 
-	private RepoCategorias repositorio;
+	private CategoriaRepository repositorio;
 	
 	public GestorCategorias(RepoCategorias repositorio) {
 		this.repositorio = repositorio;
 	}
 	
-	// Método de consulta
-	public List<Categoria> obtenerCategorias() {
-        return repositorio.getAllCategorias();
+	// Métodos de consulta
+	public List<Categoria> getCategorias() {
+        return repositorio.getAll();
+    }
+	
+	public Categoria obtenerCategoriaPorNombre(String nombre) {
+        return repositorio.findByName(nombre).orElse(null);
     }
 	
 	// Funcionalidad 
@@ -42,7 +46,4 @@ public class GestorCategorias {
         repositorio.remove(categoria);
     }
 	
-	public Categoria obtenerCategoriaPorNombre(String nombre) {
-        return repositorio.findByName(nombre).orElse(null);
-    }
 }
