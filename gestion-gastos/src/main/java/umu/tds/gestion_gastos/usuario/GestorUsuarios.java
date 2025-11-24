@@ -8,16 +8,17 @@ public class GestorUsuarios {
 	
 	private List<Usuario> usuarios;
 	
+	
 	public GestorUsuarios() {
 		this.usuarios = new ArrayList<Usuario>();
 	}
 	
-	public Usuario crearCuenta(Usuario usuario) {
+	public Usuario crearUsuario(Usuario usuario) {
 		this.usuarios.add(usuario);
 		return usuario;
 	}
 	
-	public boolean borrarCuenta(int usuarioId) {
+	public boolean borrarUsuario(int usuarioId) {
 		boolean borrado = false;
 		for(Usuario usuario : this.usuarios) {
 			if(usuario.getId() == usuarioId) {
@@ -28,7 +29,7 @@ public class GestorUsuarios {
 		return borrado;
 	}
 	
-	public boolean actualizarCuenta(int usuarioId, String nombreUsuario) {
+	public boolean actualizarUsuario(int usuarioId, String nombreUsuario) {
 		boolean actualizado = false;
 		for(Usuario usuario : this.usuarios) {
 			if(usuario.getId() == usuarioId) {
