@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="umu.tds.gestion_gastos.vista.categoria.ControladorCategoriasView">
+
+    <!-- ▬▬▬▬▬▬▬▬▬ TOP: TÍTULO ▬▬▬▬▬▬▬▬▬ -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10"
+              style="-fx-background-color: #f4f4f4;">
+            <Label text="Categorías">
+                <font>
+                    <Font size="28"/>
+                </font>
+            </Label>
+            <padding>
+                <Insets top="20" bottom="20" left="20" right="20"/>
+            </padding>
+        </HBox>
+    </top>
+
+    <!-- ▬▬▬▬▬▬▬▬▬ CENTER: TABLA ▬▬▬▬▬▬▬▬▬ -->
+    <center>
+        <TableView fx:id="tablaCategorias">
+            <columns>
+                <TableColumn fx:id="colNombre"
+                             text="Nombre"
+                             prefWidth="200"/>
+                <TableColumn fx:id="colDescripcion"
+                             text="Descripción"
+                             prefWidth="400"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <!-- ▬▬▬▬▬▬▬▬▬ BOTTOM: BOTONES ▬▬▬▬▬▬▬▬▬ -->
+    <bottom>
+        <HBox spacing="15"
+              alignment="CENTER_RIGHT"
+              style="-fx-background-color: #f4f4f4;">
+            <padding>
+                <Insets top="15" bottom="15" left="20" right="20"/>
+            </padding>
+
+            <Button text="Añadir"
+                    fx:id="btnAñadir"
+                    style="-fx-background-color: #5cb85c; -fx-text-fill: white;"/>
+            <Button text="Editar"
+                    fx:id="btnEditar"
+                    style="-fx-background-color: #0275d8; -fx-text-fill: white;"/>
+            <Button text="Eliminar"
+                    fx:id="btnEliminar"
+                    style="-fx-background-color: #d9534f; -fx-text-fill: white;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

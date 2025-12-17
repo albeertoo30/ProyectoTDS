@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="umu.tds.gestion_gastos.gasto.controlador.ControladorGastosView">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="umu.tds.gestion_gastos.vista.gasto.ControladorGastosView">
 
     <!-- ▬▬▬▬▬▬▬▬▬ TOP: TÍTULO ▬▬▬▬▬▬▬▬▬ -->
     <top>

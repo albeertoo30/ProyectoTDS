@@ -2,22 +2,35 @@ package umu.tds.gestion_gastos.negocio.controladores;
 
 import java.util.List;
 
+import umu.tds.gestion_gastos.adapters.repository.impl.CategoriaRepositoryJSONImpl;
+import umu.tds.gestion_gastos.adapters.repository.impl.GastoRepositoryJSONImpl;
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.categoria.CategoriaRepository;
 import umu.tds.gestion_gastos.categoria.GestorCategorias;
 import umu.tds.gestion_gastos.gasto.Gasto;
+import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.gasto.GestorGastos;
 
 public class ControladorApp {
 
-    private GestorGastos gestorGastos;
-    private GestorCategorias gestorCategorias;
+    private final GastoRepository gastoRepository;
+    private final CategoriaRepository categoriaRepository;
 
-    public ControladorApp(GestorGastos gestorGastos, GestorCategorias gestorCategorias) {
-        this.gestorGastos = gestorGastos;
-        this.gestorCategorias = gestorCategorias;
+    private final GestorGastos gestorGastos;
+    private final GestorCategorias gestorCategorias;
+
+    public ControladorApp() {
+        this.gastoRepository = new GastoRepositoryJSONImpl();
+        this.categoriaRepository = new CategoriaRepositoryJSONImpl();
+
+        this.gestorGastos = new GestorGastos(gastoRepository);
+        this.gestorCategorias = new GestorCategorias(categoriaRepository);
     }
 
-    //GASTOS
+    // Operaciones con gastos
+    public List<Gasto> obtenerGastos() {
+        return gestorGastos.obtenerTodos();
+    }
 
     public void registrarGasto(Gasto gasto) {
         gestorGastos.registrarGasto(gasto);
@@ -31,13 +44,13 @@ public class ControladorApp {
         gestorGastos.eliminarGasto(id);
     }
 
-    public List<Gasto> obtenerGastos() {
-        return gestorGastos.obtenerTodos();
+    public Gasto obtenerGastoPorId(int id) {
+        return gestorGastos.obtenerPorId(id);
     }
-
-    // CATEGORÍAS
-
+    
+    // Operaciones con categorias
     public List<Categoria> obtenerCategorias() {
         return gestorCategorias.getCategorias();
     }
+    
 }

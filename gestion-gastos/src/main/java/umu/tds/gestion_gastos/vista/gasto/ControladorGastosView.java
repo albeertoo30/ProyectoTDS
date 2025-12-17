@@ -1,16 +1,24 @@
 package umu.tds.gestion_gastos.vista.gasto;
 
 import java.io.IOException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 
@@ -21,6 +29,18 @@ public class ControladorGastosView {
     @FXML private TableColumn<Gasto, String> colCategoria;
     @FXML private TableColumn<Gasto, Double> colCantidad;
     @FXML private TableColumn<Gasto, String> colDescripcion;
+    @FXML private DatePicker filtroFecha;
+    @FXML private ComboBox<Categoria> filtroCategoria;
+    @FXML private TextField filtroMin;
+    @FXML private TextField filtroMax;
+
+    @FXML private Button btnLimpiarFiltros;
+    @FXML private Button btnAñadir;
+    @FXML private Button btnEditar;
+    @FXML private Button btnEliminar;
+
+    
+    private final ObservableList<Gasto> gastosObservable = FXCollections.observableArrayList();
 
     private ControladorApp controlador;
 
@@ -30,8 +50,9 @@ public class ControladorGastosView {
     }
 
     @FXML
-    public void initialize() {
-
+    public void initialize() { 	
+    	tablaGastos.setItems(gastosObservable);
+   
         colFecha.setCellValueFactory(cellData ->
             new javafx.beans.property.SimpleStringProperty(
                 cellData.getValue().getFecha().toString()
@@ -60,7 +81,7 @@ public class ControladorGastosView {
 
     private void refrescarTabla() {
         if (controlador != null) {
-            tablaGastos.getItems().setAll(controlador.obtenerGastos());
+            gastosObservable.setAll(controlador.obtenerGastos());
         }
     }
 

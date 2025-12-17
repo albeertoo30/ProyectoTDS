@@ -49,11 +49,15 @@ public class FormularioGastoController {
 
     @FXML
     private void initialize() {
-        // Nada de lógica de negocio aquí
+        // No hay lógica de negocio aquí
     }
 
     @FXML
     private void onGuardar() {
+    	if (campoFecha.getValue() == null || campoCategoria.getValue() == null || campoCantidad.getText().isBlank()) {
+    		mostrarError("Todos los campos son obligatorios");
+    		return;
+    	}
         try {
             LocalDate fecha = campoFecha.getValue();
             Categoria cat = campoCategoria.getValue();
@@ -74,7 +78,6 @@ public class FormularioGastoController {
 
             if (onSaveCallback != null) onSaveCallback.run();
             cerrar();
-
         } catch (Exception e) {
             mostrarError("Datos incorrectos: " + e.getMessage());
         }
