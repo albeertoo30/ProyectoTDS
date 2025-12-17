@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="umu.tds.gestion_gastos.gasto.FormularioGastoController">
+
+    <!-- ======== TÍTULO SUPERIOR ======== -->
+    <top>
+        <Label text="Registrar / Editar Gasto"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 15;" />
+    </top>
+
+    <!-- ======== CENTRO: FORMULARIO ======== -->
+    <center>
+        <GridPane hgap="15" vgap="15" padding="20">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <!-- CANTIDAD -->
+            <children>
+                <Label text="Cantidad (€):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtCantidad"
+                           promptText="Ej: 25.50"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <!-- FECHA -->
+                <Label text="Fecha:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dateFecha"
+                            GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <!-- CATEGORÍA -->
+                <Label text="Categoría:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboCategoria"
+                          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <!-- DESCRIPCIÓN -->
+                <Label text="Descripción:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextArea fx:id="txtDescripcion"
+                          prefRowCount="3"
+                          promptText="Introduce una breve descripción"
+                          GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </children>
+        </GridPane>
+    </center>
+
+    <!-- ======== BOTONES INFERIORES ======== -->
+    <bottom>
+        <HBox spacing="15" alignment="CENTER_RIGHT" padding="15">
+            <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: lightgray;"/>
+            <Button fx:id="btnGuardar" text="Guardar" style="-fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

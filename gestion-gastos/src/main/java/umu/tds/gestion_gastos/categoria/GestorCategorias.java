@@ -6,7 +6,7 @@ public class GestorCategorias {
 
 	private CategoriaRepository repositorio;
 	
-	public GestorCategorias(RepoCategorias repositorio) {
+	public GestorCategorias(CategoriaRepository repositorio) {
 		this.repositorio = repositorio;
 	}
 	
