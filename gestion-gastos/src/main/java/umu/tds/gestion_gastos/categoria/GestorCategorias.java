@@ -28,16 +28,11 @@ public class GestorCategorias {
 		repositorio.add(new Categoria(nombre, descripcion));
 	}
 	
-	public void editarCategoria(String oldName, String newName, String newDescripcion) {
-		repositorio.findByName(oldName).ifPresent(categoria -> {
-			if(newName != null && !newName.trim().isEmpty()) {
-				categoria.setNombre(newName);
-			}
-			if(newDescripcion != null) {
-				categoria.setDescripcion(newDescripcion);
-			}
-			repositorio.update(categoria);
-		});
+	public void editarCategoria(Categoria categoria) {
+	    if (categoria == null) {
+	        throw new IllegalArgumentException("La categoría no puede ser nula");
+	    }
+	    repositorio.update(categoria);
 	}
 	
 	public void eliminarCategoria(String nombre) {

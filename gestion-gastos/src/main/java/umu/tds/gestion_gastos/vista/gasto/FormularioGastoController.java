@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
@@ -49,7 +50,16 @@ public class FormularioGastoController {
 
     @FXML
     private void initialize() {
-        // No hay lógica de negocio aquí
+        campoCategoria.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Categoria categoria) {
+                return categoria == null ? "" : categoria.getNombre();
+            }
+            @Override
+            public Categoria fromString(String string) {
+                return null; // No se usa
+            }
+        });
     }
 
     @FXML
@@ -92,6 +102,7 @@ public class FormularioGastoController {
     private void cargarCategorias() {
         if (controlador != null) {
             campoCategoria.getItems().setAll(controlador.obtenerCategorias());
+            campoCategoria.setPromptText("Seleccione una categoría");
         }
     }
 

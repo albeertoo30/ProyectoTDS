@@ -49,8 +49,9 @@
                        GridPane.rowIndex="2"
                        GridPane.columnIndex="0"/>
                 <ComboBox fx:id="campoCategoria"
-                          GridPane.rowIndex="2"
-                          GridPane.columnIndex="1"/>
+          				GridPane.rowIndex="2"
+          				GridPane.columnIndex="1"
+          				maxWidth="Infinity"/>
 
                 <!-- DESCRIPCIÓN -->
                 <Label text="Descripción:"
@@ -75,10 +76,12 @@
 			</padding>
             <Button fx:id="btnCancelar"
                     text="Cancelar"
-                    style="-fx-background-color: lightgray;"/>
+                    style="-fx-background-color: lightgray;"
+                    onAction="#onCancelar"/>
             <Button fx:id="btnGuardar"
                     text="Guardar"
-                    style="-fx-font-weight: bold;"/>
+                    style="-fx-font-weight: bold;"
+                    onAction="#onGuardar"/>
         </HBox>
     </bottom>
 

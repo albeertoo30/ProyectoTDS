@@ -42,7 +42,9 @@
             <Label text="Importe máximo (€):"/>
             <TextField fx:id="filtroMax"/>
 
-            <Button fx:id="btnLimpiarFiltros" text="Limpiar filtros" style="-fx-background-color: #dddddd;"/>
+            <Button fx:id="btnLimpiarFiltros" text="Limpiar filtros" 
+                    style="-fx-background-color: #dddddd;"
+                    onAction="#onLimpiarFiltros"/>
 
         </VBox>
     </left>
@@ -66,9 +68,15 @@
                 <Insets top="15" bottom="15" left="20" right="20"/>
             </padding>
 
-            <Button fx:id="btnAñadir" text="Añadir" style="-fx-background-color: #5cb85c; -fx-text-fill: white;"/>
-            <Button fx:id="btnEditar" text="Editar" style="-fx-background-color: #0275d8; -fx-text-fill: white;"/>
-            <Button fx:id="btnEliminar" text="Eliminar" style="-fx-background-color: #d9534f; -fx-text-fill: white;"/>
+            <Button fx:id="btnAñadir" text="Añadir" 
+                    style="-fx-background-color: #5cb85c; -fx-text-fill: white;"
+                    onAction="#onNuevoGasto"/>
+            <Button fx:id="btnEditar" text="Editar" 
+                    style="-fx-background-color: #0275d8; -fx-text-fill: white;"
+                    onAction="#onEditarGasto"/>
+            <Button fx:id="btnEliminar" text="Eliminar" 
+                    style="-fx-background-color: #d9534f; -fx-text-fill: white;"
+                    onAction="#onEliminarGasto"/>
         </HBox>
     </bottom>
 

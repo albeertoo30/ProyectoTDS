@@ -2,6 +2,8 @@ package umu.tds.gestion_gastos.vista.gasto;
 
 import java.io.IOException;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -41,11 +43,15 @@ public class ControladorGastosView {
 
     
     private final ObservableList<Gasto> gastosObservable = FXCollections.observableArrayList();
-
     private ControladorApp controlador;
 
     public void setControlador(ControladorApp controlador) {
         this.controlador = controlador;
+        
+        // Cargar categorías en el filtro
+        filtroCategoria.getItems().setAll(controlador.obtenerCategorias());
+        filtroCategoria.setPromptText("Todas");
+        
         refrescarTabla();
     }
 
@@ -54,28 +60,22 @@ public class ControladorGastosView {
     	tablaGastos.setItems(gastosObservable);
    
         colFecha.setCellValueFactory(cellData ->
-            new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getFecha().toString()
-            )
+            new SimpleStringProperty(cellData.getValue().getFecha().toString())
         );
 
         colCategoria.setCellValueFactory(cellData ->
-            new javafx.beans.property.SimpleStringProperty(
+            new SimpleStringProperty(
                 cellData.getValue().getCategoria() != null ?
                 cellData.getValue().getCategoria().getNombre() : ""
             )
         );
 
         colCantidad.setCellValueFactory(cellData ->
-            new javafx.beans.property.SimpleObjectProperty<>(
-                cellData.getValue().getCantidad()
-            )
+            new SimpleObjectProperty<>(cellData.getValue().getCantidad())
         );
 
         colDescripcion.setCellValueFactory(cellData ->
-            new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getDescripcion()
-            )
+            new SimpleStringProperty(cellData.getValue().getDescripcion())
         );
     }
 
@@ -85,13 +85,13 @@ public class ControladorGastosView {
         }
     }
 
-    // ---- BOTÓN AÑADIR ----
+    // BOTÓN AÑADIR
     @FXML
     private void onNuevoGasto() throws IOException {
         abrirFormulario(null);
     }
 
-    // ---- BOTÓN EDITAR ----
+    // BOTÓN EDITAR
     @FXML
     private void onEditarGasto() throws IOException {
         Gasto seleccionado = tablaGastos.getSelectionModel().getSelectedItem();
@@ -102,7 +102,7 @@ public class ControladorGastosView {
         abrirFormulario(seleccionado);
     }
 
-    // ---- BOTÓN ELIMINAR ----
+    // BOTÓN ELIMINAR
     @FXML
     private void onEliminarGasto() {
         Gasto seleccionado = tablaGastos.getSelectionModel().getSelectedItem();
@@ -117,7 +117,17 @@ public class ControladorGastosView {
         }
     }
 
-    // ---- ABRIR FORMULARIO ----
+    // BOTÓN LIMPIAR FILTROS
+    @FXML
+    private void onLimpiarFiltros() {
+        filtroFecha.setValue(null);
+        filtroCategoria.setValue(null);
+        filtroMin.clear();
+        filtroMax.clear();
+        refrescarTabla();
+    }
+    
+    // ABRIR FORMULARIO
     private void abrirFormulario(Gasto gastoAEditar) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
@@ -137,7 +147,7 @@ public class ControladorGastosView {
         stage.showAndWait();
     }
 
-    // ---- UTILS ----
+    // UTILS 
     private void mostrarError(String msg) {
         new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).showAndWait();
     }

@@ -13,18 +13,12 @@ import umu.tds.gestion_gastos.gasto.GestorGastos;
 
 public class ControladorApp {
 
-    private final GastoRepository gastoRepository;
-    private final CategoriaRepository categoriaRepository;
-
     private final GestorGastos gestorGastos;
     private final GestorCategorias gestorCategorias;
 
-    public ControladorApp() {
-        this.gastoRepository = new GastoRepositoryJSONImpl();
-        this.categoriaRepository = new CategoriaRepositoryJSONImpl();
-
-        this.gestorGastos = new GestorGastos(gastoRepository);
-        this.gestorCategorias = new GestorCategorias(categoriaRepository);
+    public ControladorApp(GastoRepository gastoRepo, CategoriaRepository categoriaRepo) {
+        this.gestorGastos = new GestorGastos(gastoRepo);
+        this.gestorCategorias = new GestorCategorias(categoriaRepo);
     }
 
     // Operaciones con gastos
@@ -53,4 +47,28 @@ public class ControladorApp {
         return gestorCategorias.getCategorias();
     }
     
+    public void crearCategoria(String nombre, String descripcion) {
+        gestorCategorias.crearCategoria(nombre, descripcion);
+    }
+
+    public void editarCategoria(Categoria categoria) {
+        gestorCategorias.editarCategoria(categoria);
+    }
+    
+    public boolean categoriaTieneGastos(String nombreCategoria) {
+        return gestorGastos.obtenerTodos().stream()
+                .anyMatch(g ->
+                    g.getCategoria() != null &&
+                    g.getCategoria().getNombre().equalsIgnoreCase(nombreCategoria)
+                );
+    }
+    
+    public void eliminarCategoria(String nombre) {
+        if (categoriaTieneGastos(nombre)) {
+            throw new IllegalStateException(
+                "No se puede eliminar la categoría porque tiene gastos asociados."
+            );
+        }
+        gestorCategorias.eliminarCategoria(nombre);
+    }
 }
