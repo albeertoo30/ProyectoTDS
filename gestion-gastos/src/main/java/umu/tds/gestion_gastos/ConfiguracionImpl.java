@@ -26,11 +26,11 @@ public class ConfiguracionImpl extends Configuracion {
 
     @Override
     public String getRutaGastos() {
-        return "/umu/tds/gestion_gastos/data/gastos.json";
+        return "/umu/tds/data/gastos.json";
     }
 
     @Override
     public String getRutaCategorias() {
-        return "/umu/tds/gestion_gastos/data/categorias.json";
+        return "/umu/tds/data/categorias.json";
     }
 }

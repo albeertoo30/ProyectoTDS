@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,10 +38,6 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
 
     private File inicializarFichero(String rutaFichero) {
         try {
-            // Intentar cargar desde resources (lectura)
-            InputStream inputStream = getClass().getResourceAsStream(rutaFichero);
-            
-            // Crear directorio de datos en la ubicación del usuario
             String userHome = System.getProperty("user.home");
             File dataDir = new File(userHome, ".gestion_gastos/data");
             if (!dataDir.exists()) {
@@ -49,17 +46,18 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
             
             File archivoLocal = new File(dataDir, "gastos.json");
             
-            // Si existe en resources y no existe localmente, copiar
-            if (inputStream != null && !archivoLocal.exists()) {
-                Files.copy(inputStream, archivoLocal.toPath());
-                inputStream.close();
-            }
-            
-            // Si no existe ni en resources ni localmente, crear vacío
-            if (!archivoLocal.exists()) {
-                archivoLocal.createNewFile();
-                // Escribir array vacío
-                mapper.writeValue(archivoLocal, new ArrayList<>());
+            // Si no existe o está vacío, copiar desde resources
+            if (!archivoLocal.exists() || archivoLocal.length() <= 2) {
+                InputStream inputStream = getClass().getResourceAsStream(rutaFichero);
+                
+                if (inputStream != null) {
+                    Files.copy(inputStream, archivoLocal.toPath(), 
+                              StandardCopyOption.REPLACE_EXISTING);
+                    inputStream.close();
+                } else {
+                    archivoLocal.createNewFile();
+                    mapper.writeValue(archivoLocal, new ArrayList<>());
+                }
             }
             
             return archivoLocal;

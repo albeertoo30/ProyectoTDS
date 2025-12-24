@@ -22,6 +22,9 @@ public class Gasto {
 		this.descripcion = descripcion;
 		this.categoria = categoria;
 	}
+	
+	// Constructor vacío para Jackson
+	public Gasto() {}
 
 	// Getters (falta cuenta)
 	public int getId() {

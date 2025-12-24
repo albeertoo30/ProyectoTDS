@@ -2,8 +2,6 @@ package umu.tds.gestion_gastos.negocio.controladores;
 
 import java.util.List;
 
-import umu.tds.gestion_gastos.adapters.repository.impl.CategoriaRepositoryJSONImpl;
-import umu.tds.gestion_gastos.adapters.repository.impl.GastoRepositoryJSONImpl;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.categoria.CategoriaRepository;
 import umu.tds.gestion_gastos.categoria.GestorCategorias;

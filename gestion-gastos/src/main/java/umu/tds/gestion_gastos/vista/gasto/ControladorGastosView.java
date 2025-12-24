@@ -136,8 +136,16 @@ public class ControladorGastosView {
         Parent root = loader.load();
 
         FormularioGastoController controladorForm = loader.getController();
+        
+        // IMPORTANTE: Primero inyectar el controlador (esto carga las categorías)
         controladorForm.setControlador(controlador);
-        controladorForm.setGasto(gastoAEditar);
+        
+        // Luego configurar el gasto (si existe)
+        if (gastoAEditar != null) {
+            controladorForm.setGasto(gastoAEditar);
+        }
+        
+        // Finalmente configurar el callback
         controladorForm.setOnSave(this::refrescarTabla);
 
         Stage stage = new Stage();

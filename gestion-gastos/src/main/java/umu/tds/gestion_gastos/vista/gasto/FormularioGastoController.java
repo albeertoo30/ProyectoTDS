@@ -1,6 +1,8 @@
 package umu.tds.gestion_gastos.vista.gasto;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -101,7 +103,8 @@ public class FormularioGastoController {
     // Métodos auxiliares
     private void cargarCategorias() {
         if (controlador != null) {
-            campoCategoria.getItems().setAll(controlador.obtenerCategorias());
+            List<Categoria> categorias = controlador.obtenerCategorias();
+            campoCategoria.getItems().setAll(categorias);
             campoCategoria.setPromptText("Seleccione una categoría");
         }
     }

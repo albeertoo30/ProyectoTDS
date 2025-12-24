@@ -1,22 +1,21 @@
 package umu.tds.gestion_gastos.alerta;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import umu.tds.gestion_gastos.gasto.RepoGastos;
+import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.notificacion.HistorialNotificaciones;
 
 public class GestorAlertas{
 
 	//Atributos
 	private List<Alerta> alertas;
-	private RepoGastos repoGastos;
+	private GastoRepository repoGastos;
 	private HistorialNotificaciones historial;
 	
 	//Constructores
-	public GestorAlertas(RepoGastos repoGastos, HistorialNotificaciones historial){
+	public GestorAlertas(GastoRepository repoGastos, HistorialNotificaciones historial){
 		this.repoGastos = repoGastos;
 		this.historial = historial;
 		this.alertas = new ArrayList<>();
@@ -48,7 +47,7 @@ public class GestorAlertas{
 		return this.historial;   // En historial nos encargamos de no pasarle cosas que no deberiamos.
 	}
 	
-	public RepoGastos getRepoGastos() {
+	public GastoRepository getRepoGastos() {
 		return this.repoGastos;
 	}
 	
