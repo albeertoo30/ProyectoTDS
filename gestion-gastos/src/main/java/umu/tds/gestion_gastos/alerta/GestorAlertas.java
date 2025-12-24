@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import umu.tds.gestion_gastos.gasto.GastoRepository;
-import umu.tds.gestion_gastos.notificacion.HistorialNotificaciones;
+import umu.tds.gestion_gastos.notificacion.HistorialNotificacionesDESUSO;
 
 public class GestorAlertas{
 
 	//Atributos
 	private List<Alerta> alertas;
 	private GastoRepository repoGastos;
-	private HistorialNotificaciones historial;
+	private HistorialNotificacionesDESUSO historial;
 	
 	//Constructores
-	public GestorAlertas(GastoRepository repoGastos, HistorialNotificaciones historial){
+	public GestorAlertas(GastoRepository repoGastos, HistorialNotificacionesDESUSO historial){
 		this.repoGastos = repoGastos;
 		this.historial = historial;
 		this.alertas = new ArrayList<>();
@@ -43,7 +43,7 @@ public class GestorAlertas{
 				.collect(Collectors.toList());
 	}
 	
-	public HistorialNotificaciones getHistorial() {
+	public HistorialNotificacionesDESUSO getHistorial() {
 		return this.historial;   // En historial nos encargamos de no pasarle cosas que no deberiamos.
 	}
 	
