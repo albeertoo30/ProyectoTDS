@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import umu.tds.gestion_gastos.categoria.Categoria;
+
 public enum NotificacionRepository implements INotificacionRepository{
 
 	INSTANCE;
@@ -93,6 +95,13 @@ public enum NotificacionRepository implements INotificacionRepository{
 		this.listaNotificaciones.stream()
 			.filter(a -> !a.isLeida())
 			.forEach(a -> a.marcarLeida());
+	}
+
+
+	@Override
+	public void crearNotificacion(String msg, double cantidad, String alertId, Categoria categoria) {
+		Notificacion noti = new Notificacion(msg, cantidad, alertId, categoria);
+		this.add(noti);
 	}
 	
 	

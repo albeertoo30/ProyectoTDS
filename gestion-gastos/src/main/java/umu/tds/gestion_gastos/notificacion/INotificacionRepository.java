@@ -6,9 +6,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import umu.tds.gestion_gastos.categoria.Categoria;
+
 public interface INotificacionRepository {
 
 	void add(Notificacion n);
+	List<Notificacion> getNotificaciones();
 	Optional<Notificacion> getById(String id);
 	List<Notificacion> getAllOrderedByDateDesc();
 	List<Notificacion> findByDateRange(LocalDate desde, LocalDate hasta);
@@ -18,5 +21,8 @@ public interface INotificacionRepository {
 	void cargar(Path rutaBase) throws IOException;
 	void guardar(Path rutaBase) throws IOException;
 	void limpiarHistorial();
-
+	void crearNotificacion(String msg, double cantidad, String alertId, Categoria categoria);
+	
+	
+	
 }

@@ -1,31 +1,64 @@
 package umu.tds.gestion_gastos.alerta;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.gasto.Gasto;
 
 public class Alerta {
 	
 	//Atributos
-	private int id;
+	private String id;
 	private double limite;
 	private boolean activa;
-	private ComportamientoAlerta comportamiento;
-
+	private String descripcion;
+	private Categoria categoria; // opcional: null = todas las categorías
+	private AlertaStrategy strategy;
 	
 	//Constructores
-	public Alerta(int id, double limite) {
-		this.id = id;
+	public Alerta() {}
+	
+	@JsonCreator
+	public Alerta(@JsonProperty("descripcion") String descripcion,
+                  @JsonProperty("categoria") Categoria categoria,
+                  @JsonProperty("strategy") AlertaStrategy strategy,
+				  @JsonProperty("limite")double limite) {
+		this.id = UUID.randomUUID().toString();
 		this.limite = limite;
+		this.descripcion = descripcion;
+		this.categoria = categoria;
+		this.strategy = strategy;
 		//Por defecto cuando se crea se activa
 		this.activa = true;
 	}
 	
+	
+	
 	//Metodos
 	//Provisional
-	public boolean ejecutarComprobar(List<Gasto> gastos) {
-		return this.comportamiento.comprobar(gastos, this.limite);
-	}
+	public String getDescripcion() { return descripcion; }
+	public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+	public void setId(String id) { this.id = id; }
+	public Categoria getCategoria() { return categoria; }
+	public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+	public AlertaStrategy getStrategy() { return strategy; }
+	public void setStrategy(AlertaStrategy strategy) { this.strategy = strategy; }
+	
+
+	
+	public boolean seSuperaCon(Gasto nuevoGasto, java.util.List<Gasto> todosGastos) {
+		if (!activa || strategy== null) return false;
+		return strategy.seSupera(this, nuevoGasto, todosGastos);
+	}	
+		
+		
+	//public boolean ejecutarComprobar(List<Gasto> gastos) {
+	//	return this.comportamiento.comprobar(gastos, this.limite);
+	//}
 					//Esto yo lo cambiaria
 	public boolean isActiva() {
 		return this.activa;
@@ -44,12 +77,15 @@ public class Alerta {
 		return this.limite;
 	}
 	
-	public int getId() {
+	public String getId() {
 		return this.id;
 	}
 	
-	public String getMensaje() {
-		return this.comportamiento.getMensaje();
-	}
-
+	@Override
+    public String toString() {
+        return String.format("Alerta[id=%s, descripcion='%s', limite=%.2f, categoria=%s, activa=%s]",
+            id, descripcion, limite, categoria != null ? categoria : "todas", activa);
+    }
+	
+	
 }

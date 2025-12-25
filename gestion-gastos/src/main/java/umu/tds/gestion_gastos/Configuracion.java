@@ -1,5 +1,8 @@
 package umu.tds.gestion_gastos;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 
 public abstract class Configuracion {
@@ -19,4 +22,12 @@ public abstract class Configuracion {
     public abstract String getRutaGastos();
 
     public abstract String getRutaCategorias();
+    
+    public abstract Path getRutaDatos();
+ 
+  //Esto no se si va aqui o en el controlador
+    public abstract void cargarTodo() throws IOException;
+    
+    public abstract void guardarTodo() throws IOException;
+    
 }
