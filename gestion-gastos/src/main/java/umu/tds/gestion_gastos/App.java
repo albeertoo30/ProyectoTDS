@@ -1,16 +1,43 @@
 package umu.tds.gestion_gastos;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-        //TestCuentaUsuarios.main(args);
-        //TestVentanaCrearCuentaCompartida.main(args);
-        TestVistaDetalleCuenta.main(args);
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import umu.tds.gestion_gastos.vista.gasto.*;
+//import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+
+public class App extends Application {
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+        // Inicializar Configuración
+        Configuracion.setInstancia(new ConfiguracionImpl());
+
+        // Cargar vista
+        FXMLLoader loader = new FXMLLoader(
+            getClass().getResource(
+                "/umu/tds/gestion_gastos/gasto/GastosView.fxml"
+            )
+        );
+
+        Parent root = loader.load();
+
+        // Inyectar controlador de aplicación
+        ControladorGastosView viewController = loader.getController();
+        viewController.setControlador(
+            Configuracion.getInstancia().getControladorApp()
+        );
+
+        stage.setScene(new Scene(root, 1200, 700));
+        stage.setTitle("Gestión de Gastos");
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
+

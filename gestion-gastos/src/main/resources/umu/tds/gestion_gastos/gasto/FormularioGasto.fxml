@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="umu.tds.gestion_gastos.vista.gasto.FormularioGastoController">
+
+    <!-- ======== TÍTULO SUPERIOR ======== -->
+    <top>
+        <Label text="Registrar / Editar Gasto"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 15;" />
+    </top>
+
+    <!-- ======== CENTRO: FORMULARIO ======== -->
+    <center>
+        <GridPane hgap="15" vgap="15">
+    		<padding>
+        		<Insets top="20" right="20" bottom="20" left="20"/>
+    		</padding>
+
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <children>
+
+                <!-- CANTIDAD -->
+                <Label text="Cantidad (€):"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="0"/>
+                <TextField fx:id="campoCantidad"
+                           promptText="Ej: 25.50"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="1"/>
+
+                <!-- FECHA -->
+                <Label text="Fecha:"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"/>
+                <DatePicker fx:id="campoFecha"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="1"/>
+
+                <!-- CATEGORÍA -->
+                <Label text="Categoría:"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="0"/>
+                <ComboBox fx:id="campoCategoria"
+          				GridPane.rowIndex="2"
+          				GridPane.columnIndex="1"
+          				maxWidth="Infinity"/>
+
+                <!-- DESCRIPCIÓN -->
+                <Label text="Descripción:"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="0"/>
+                <TextArea fx:id="campoDescripcion"
+                          prefRowCount="3"
+                          promptText="Introduce una breve descripción"
+                          GridPane.rowIndex="3"
+                          GridPane.columnIndex="1"/>
+
+            </children>
+        </GridPane>
+    </center>
+
+    <!-- ======== BOTONES INFERIORES ======== -->
+    <bottom>
+        <HBox spacing="15"
+              alignment="CENTER_RIGHT">
+            <padding>
+    				<Insets top="15" right="15" bottom="15" left="15"/>
+			</padding>
+            <Button fx:id="btnCancelar"
+                    text="Cancelar"
+                    style="-fx-background-color: lightgray;"
+                    onAction="#onCancelar"/>
+            <Button fx:id="btnGuardar"
+                    text="Guardar"
+                    style="-fx-font-weight: bold;"
+                    onAction="#onGuardar"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="umu.tds.gestion_gastos.vista.categoria.FormularioCategoriaController">
+
+    <!-- ======== TÍTULO SUPERIOR ======== -->
+    <top>
+        <Label text="Crear / Editar Categoría"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;">
+               <padding>
+    				<Insets top="15" right="15" bottom="15" left="15"/>
+			   </padding>
+		</Label>
+    </top>
+
+    <!-- ======== CENTRO: FORMULARIO ======== -->
+    <center>
+        <GridPane hgap="15" vgap="15">
+        	<padding>
+        		<Insets top="20" right="20" bottom="20" left="20"/>
+        	</padding>
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <children>
+
+                <!-- NOMBRE -->
+                <Label text="Nombre:"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="0"/>
+                <TextField fx:id="campoNombre"
+                           promptText="Ej: Alimentación"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="1"/>
+
+                <!-- DESCRIPCIÓN -->
+                <Label text="Descripción:"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"/>
+                <TextArea fx:id="campoDescripcion"
+                          prefRowCount="3"
+                          promptText="Descripción de la categoría"
+                          GridPane.rowIndex="1"
+                          GridPane.columnIndex="1"/>
+
+            </children>
+        </GridPane>
+    </center>
+
+    <!-- ======== BOTONES INFERIORES ======== -->
+    <bottom>
+        <HBox spacing="15"
+              alignment="CENTER_RIGHT">
+            <padding>
+            	<Insets top="15" right="15" bottom="15" left="15"/>  
+            </padding>
+            <Button fx:id="btnCancelar"
+                    text="Cancelar"
+                    style="-fx-background-color: lightgray;"/>
+            <Button fx:id="btnGuardar"
+                    text="Guardar"
+                    style="-fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

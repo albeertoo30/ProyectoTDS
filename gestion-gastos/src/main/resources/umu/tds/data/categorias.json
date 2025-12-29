@@ -1,0 +1,26 @@
+[
+  {
+    "nombre": "Alimentación",
+    "descripcion": "Compras de comida y supermercado"
+  },
+  {
+    "nombre": "Transporte",
+    "descripcion": "Gasolina, transporte público, taxis"
+  },
+  {
+    "nombre": "Ocio",
+    "descripcion": "Entretenimiento, cine, restaurantes"
+  },
+  {
+    "nombre": "Salud",
+    "descripcion": "Farmacia, médicos, seguros"
+  },
+  {
+    "nombre": "Hogar",
+    "descripcion": "Alquiler, suministros, mantenimiento"
+  },
+  {
+    "nombre": "Educación",
+    "descripcion": "Libros, cursos, material escolar"
+  }
+]

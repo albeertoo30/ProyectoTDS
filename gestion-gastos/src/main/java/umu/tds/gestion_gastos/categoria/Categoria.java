@@ -10,6 +10,9 @@ public class Categoria {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}
+	
+	// Constructor vacío para Jackson
+    public Categoria() {}
 
 	// Getters
 	public String getNombre() {
