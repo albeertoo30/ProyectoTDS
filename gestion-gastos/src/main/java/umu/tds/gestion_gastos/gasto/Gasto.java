@@ -22,6 +22,9 @@ public class Gasto {
 		this.descripcion = descripcion;
 		this.categoria = categoria;
 	}
+	
+	// Constructor vacío para Jackson
+	public Gasto() {}
 
 	// Getters (falta cuenta)
 	public int getId() {
@@ -44,10 +47,27 @@ public class Gasto {
 		return categoria;
 	}
 	
-	// Setter categoría
+	// Setters
 	public void setCategoria(Categoria categoria) {
 		 this.categoria = categoria;
 	 }
+
+	public void setCantidad(double cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
 	
 	/*@Override // Comentado para que no salte el error por cuenta
 	public String toString() {

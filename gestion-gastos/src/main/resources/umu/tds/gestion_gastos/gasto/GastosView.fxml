@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="umu.tds.gestion_gastos.vista.gasto.ControladorGastosView">
+
+    <!-- ▬▬▬▬▬▬▬▬▬ TOP: TÍTULO ▬▬▬▬▬▬▬▬▬ -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f4f4f4;">
+            <Label text="Gastos">
+                <font>
+                    <Font size="28"/>
+                </font>
+            </Label>
+            <padding>
+                <Insets top="20" bottom="20" left="20" right="20"/>
+            </padding>
+        </HBox>
+    </top>
+
+    <!-- ▬▬▬▬▬▬▬▬▬ LEFT: FILTROS ▬▬▬▬▬▬▬▬▬ -->
+    <left>
+        <VBox spacing="12" style="-fx-background-color: #fafafa;">
+            <padding>
+                <Insets top="20" bottom="20" left="20" right="20"/>
+            </padding>
+
+            <Label text="Filtros" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <Label text="Fecha:"/>
+            <DatePicker fx:id="filtroFecha"/>
+
+            <Label text="Categoría:"/>
+            <ComboBox fx:id="filtroCategoria"/>
+
+            <Label text="Importe mínimo (€):"/>
+            <TextField fx:id="filtroMin"/>
+
+            <Label text="Importe máximo (€):"/>
+            <TextField fx:id="filtroMax"/>
+
+            <Button fx:id="btnLimpiarFiltros" text="Limpiar filtros" 
+                    style="-fx-background-color: #dddddd;"
+                    onAction="#onLimpiarFiltros"/>
+
+        </VBox>
+    </left>
+
+    <!-- ▬▬▬▬▬▬▬▬▬ CENTER: TABLA ▬▬▬▬▬▬▬▬▬ -->
+    <center>
+        <TableView fx:id="tablaGastos">
+            <columns>
+                <TableColumn fx:id="colFecha" text="Fecha" prefWidth="120"/>
+                <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="120"/>
+                <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="240"/>
+                <TableColumn fx:id="colCantidad" text="Cantidad (€)" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <!-- ▬▬▬▬▬▬▬▬▬ BOTTOM: BOTONES ▬▬▬▬▬▬▬▬▬ -->
+    <bottom>
+        <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-background-color: #f4f4f4;">
+            <padding>
+                <Insets top="15" bottom="15" left="20" right="20"/>
+            </padding>
+
+            <Button fx:id="btnAñadir" text="Añadir" 
+                    style="-fx-background-color: #5cb85c; -fx-text-fill: white;"
+                    onAction="#onNuevoGasto"/>
+            <Button fx:id="btnEditar" text="Editar" 
+                    style="-fx-background-color: #0275d8; -fx-text-fill: white;"
+                    onAction="#onEditarGasto"/>
+            <Button fx:id="btnEliminar" text="Eliminar" 
+                    style="-fx-background-color: #d9534f; -fx-text-fill: white;"
+                    onAction="#onEliminarGasto"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

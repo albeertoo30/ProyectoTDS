@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "mensaje": "Has superado el límite de alimentación",
+    "cantidad": 120.0,
+    "alertId": "alert1",
+    "categoria": { "nombre": "Alimentación", "descripcion": "" },
+    "fecha": "2025-12-25",
+    "leida": false
+  },
+  {
+    "id": "2",
+    "mensaje": "Has superado el límite de transporte",
+    "cantidad": 50.0,
+    "alertId": "alert2",
+    "categoria": { "nombre": "Transporte", "descripcion": "" },
+    "fecha": "2025-12-24",
+    "leida": true
+  }
+]

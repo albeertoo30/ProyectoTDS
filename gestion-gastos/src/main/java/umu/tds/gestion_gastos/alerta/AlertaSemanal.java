@@ -1,28 +1,53 @@
 package umu.tds.gestion_gastos.alerta;
-
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.List;
-
+import java.util.Locale;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import umu.tds.gestion_gastos.gasto.Gasto;
 
-public class AlertaSemanal implements ComportamientoAlerta {
 
+@JsonTypeName("semanal")
+public class AlertaSemanal implements AlertaStrategy{
+	
     @Override
-    public boolean comprobar(List<Gasto> gastos, double limite) {
-        LocalDate hoy = LocalDate.now();
-        WeekFields wf = WeekFields.ISO;
-
-        double totalSemana = gastos.stream()
-                .filter(g -> g.getFecha().get(wf.weekOfWeekBasedYear()) == hoy.get(wf.weekOfWeekBasedYear()))
-                .mapToDouble(Gasto::getCantidad)
-                .sum();
-
-        return totalSemana > limite;
+    public boolean seSupera(Alerta alerta, Gasto nuevoGasto, List<Gasto> todosGastos) {
+        
+        // PASO 1: Determinar la semana del nuevo gasto
+        LocalDate fechaNuevoGasto = nuevoGasto.getFecha();
+        WeekFields wf = WeekFields.of(Locale.getDefault());
+        int semanaNuevoGasto = fechaNuevoGasto.get(wf.weekOfWeekBasedYear());
+        int anioNuevoGasto = fechaNuevoGasto.getYear();
+        
+        // PASO 2: Sumar gastos de la MISMA SEMANA
+        // Filtrar por semana Y por categoría (si la alerta tiene categoría específica)
+        double totalSemana = todosGastos.stream()
+            .filter(gasto -> {
+                // Filtro 1: para la semana
+                LocalDate fechaGasto = gasto.getFecha();
+                boolean mismaSemana = fechaGasto.getYear() == anioNuevoGasto && 
+                                     fechaGasto.get(wf.weekOfWeekBasedYear()) == semanaNuevoGasto;
+                
+                if (!mismaSemana) {
+                    return false; // No es de esta semana, no lo contamos
+                }
+                
+                // Filtro 2: para ver si es de la misma categoria (null == todas)
+                return cumpleCategoria(gasto, alerta);
+            })
+            .mapToDouble(Gasto::getCantidad)
+            .sum();
+        
+        // PASO 3: Añadir el nuevo gasto si no está ya en la lista
+        if (!todosGastos.contains(nuevoGasto)) {
+            totalSemana += nuevoGasto.getCantidad();
+        }
+        
+        // PASO 4: Comparar con el límite
+        return totalSemana > alerta.getLimite();
     }
+    
+    
 
-    @Override
-    public String getMensaje() {   //Esto no se a que mensaje se refiere.
-        return "Has superado el límite semanal de gasto.";
-    }
+	
 }

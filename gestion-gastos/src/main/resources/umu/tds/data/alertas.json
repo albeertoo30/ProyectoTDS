@@ -1,0 +1,26 @@
+[
+  {
+    "descripcion": "Límite mensual Alimentación",
+    "categoria": {
+      "nombre": "Alimentación",
+      "descripcion": "Gastos de comida y supermercado"
+    },
+    "limite": 250.0,
+    "activa": true,
+    "strategy": {
+      "type": "mensual"
+    }
+  },
+  {
+    "descripcion": "Límite semanal Transporte",
+    "categoria": {
+      "nombre": "Transporte",
+      "descripcion": "Gastos de transporte público y gasolina"
+    },
+    "limite": 75.0,
+    "activa": true,
+    "strategy": {
+      "type": "semanal"
+    }
+  }
+]
