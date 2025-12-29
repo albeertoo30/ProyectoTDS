@@ -1,1 +1,23 @@
-[]
+[ {
+  "tipo" : "INDIVIDUAL",
+  "id" : 1,
+  "nombre" : "Cuenta Personal Pepe",
+  "gastos" : [ ],
+  "propietario" : {
+    "id" : 1,
+    "nombre" : "Pepe"
+  }
+}, {
+  "tipo" : "COMPARTIDA",
+  "id" : 2,
+  "nombre" : "Viaje Fin de Curso",
+  "miembros" : [ {
+    "id" : 1,
+    "nombre" : "Pepe"
+  }, {
+    "id" : 2,
+    "nombre" : "Maria"
+  } ],
+  "gastos" : [ ],
+  "porcentajes" : { }
+} ]
