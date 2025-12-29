@@ -14,6 +14,9 @@ import umu.tds.gestion_gastos.alerta.IAlertaRepository;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.categoria.CategoriaRepository;
 import umu.tds.gestion_gastos.categoria.GestorCategorias;
+import umu.tds.gestion_gastos.cuenta.Cuenta;
+import umu.tds.gestion_gastos.cuenta.CuentaRepository;
+import umu.tds.gestion_gastos.cuenta.GestorCuenta;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.gasto.GestorGastos;
@@ -29,16 +32,18 @@ public class ControladorApp { //Yo le crearia una interfaz
     private final INotificacionRepository repoNotificaciones;
     private final IAlertaRepository repoAlertas;
     private final IAlertManager gestorAlertas;
+    private final GestorCuenta gestorCuentas;
     
     public ControladorApp(GastoRepository gastoRepo, CategoriaRepository categoriaRepo,
     		INotificacionRepository notificacionRepo, IAlertaRepository alertaRepo,
-    		IAlertManager gestorAlertas) {
+    		IAlertManager gestorAlertas, CuentaRepository cuentaRepo) {
         
     	this.gestorGastos = new GestorGastos(gastoRepo);
         this.gestorCategorias = new GestorCategorias(categoriaRepo);
         this.repoNotificaciones = notificacionRepo;
         this.repoAlertas = alertaRepo;
         this.gestorAlertas = gestorAlertas;
+        this.gestorCuentas = new GestorCuenta(cuentaRepo);
     }
     
     //Operaciones de persistencia de datos van en la configuracion o en el controlador? 
@@ -159,6 +164,16 @@ public class ControladorApp { //Yo le crearia una interfaz
 
     public void limpiarHistorialNotificaciones() {
     	repoNotificaciones.limpiarHistorial();
+    }
+    
+    //Cuentas
+    
+    public void registrarCuenta(Cuenta c) {
+    	gestorCuentas.registrarCuenta(c);
+    }
+    
+    public List<Cuenta> obtenerTodasLasCuentas() {
+    	return this.gestorCuentas.getAll();
     }
 
     

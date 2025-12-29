@@ -23,6 +23,8 @@ public abstract class Configuracion {
 
     public abstract String getRutaCategorias();
     
+    public abstract String getRutaCuentas();
+    
     public abstract Path getRutaDatos();
  
   //Esto no se si va aqui o en el controlador

@@ -5,12 +5,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import umu.tds.gestion_gastos.adapters.repository.impl.CategoriaRepositoryJSONImpl;
+import umu.tds.gestion_gastos.adapters.repository.impl.CuentaRepositoryJSONImpl;
 import umu.tds.gestion_gastos.adapters.repository.impl.GastoRepositoryJSONImpl;
 import umu.tds.gestion_gastos.alerta.AlertManager;
 import umu.tds.gestion_gastos.alerta.AlertaRepository;
 import umu.tds.gestion_gastos.alerta.IAlertManager;
 import umu.tds.gestion_gastos.alerta.IAlertaRepository;
 import umu.tds.gestion_gastos.categoria.CategoriaRepository;
+import umu.tds.gestion_gastos.cuenta.CuentaRepository;
 import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
@@ -27,6 +29,7 @@ public class ConfiguracionImpl extends Configuracion {
         // Crear repositorios con las rutas correctas
         GastoRepository gastoRepo = new GastoRepositoryJSONImpl(getRutaGastos());
         CategoriaRepository categoriaRepo = new CategoriaRepositoryJSONImpl(getRutaCategorias());
+        CuentaRepository cuentaRepo = new CuentaRepositoryJSONImpl(getRutaCuentas());
 
         IAlertaRepository alertaRepo = AlertaRepository.INSTANCE;
         INotificacionRepository notiRepo = NotificacionRepository.INSTANCE;
@@ -36,7 +39,7 @@ public class ConfiguracionImpl extends Configuracion {
         
         // Crear controlador con los repositorios
         this.controlador = new ControladorApp(gastoRepo, categoriaRepo,
-        					notiRepo, alertaRepo,  alertManager);
+        					notiRepo, alertaRepo,  alertManager, cuentaRepo);
     
         this.rutaDatos = Paths.get(System.getProperty("user.home"), "gestion-gastos-data");
 
@@ -68,6 +71,13 @@ public class ConfiguracionImpl extends Configuracion {
     public String getRutaCategorias() {
         return "/umu/tds/data/categorias.json";
     }
+    
+    @Override
+    public String getRutaCuentas() {
+        return "/umu/tds/data/cuentas.json";
+    }
+    
+    
     
     @Override 
     public Path getRutaDatos() {

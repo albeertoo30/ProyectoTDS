@@ -11,8 +11,12 @@ public class GestorCuenta {
 	
 	private CuentaRepository repositorio;
 	
-	public GestorCuenta(RepoCuenta repo) {
+	public GestorCuenta(CuentaRepository repo) {
 		this.repositorio = repo;
+	}
+	
+	public boolean esCompartida(Cuenta c) {
+		return c instanceof CuentaCompartida;
 	}
 	
 	public void registrarCuenta(Cuenta c) {
@@ -56,10 +60,7 @@ public class GestorCuenta {
 				saldos.merge(miembro, -cantidadDeber, Double::sum);
 			}
 			
-			
-			
 		}
-		
 		
 	}
 	

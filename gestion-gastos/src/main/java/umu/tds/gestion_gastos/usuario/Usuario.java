@@ -6,6 +6,11 @@ public class Usuario {
 	private int id;
 	private String nombre;
 	
+
+	//jacksooooon
+	public Usuario() {
+
+	}
 	
 	
 	public Usuario(int id, String nombre) {
@@ -24,6 +29,10 @@ public class Usuario {
 	
 	public int getId() {
 		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }
