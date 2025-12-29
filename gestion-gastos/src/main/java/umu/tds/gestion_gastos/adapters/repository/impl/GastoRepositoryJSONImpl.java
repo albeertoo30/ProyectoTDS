@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import umu.tds.gestion_gastos.alerta.GastoListener;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.gasto.GastoRepository;
 
@@ -140,4 +141,11 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
                 .max()
                 .orElse(0) + 1;
     }
+
+	@Override
+	public void addListener(GastoListener gastoListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

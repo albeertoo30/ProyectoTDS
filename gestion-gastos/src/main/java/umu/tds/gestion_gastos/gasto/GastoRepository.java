@@ -2,8 +2,7 @@ package umu.tds.gestion_gastos.gasto;
 
 import java.util.List;
 import java.util.Optional;
-
-import umu.tds.gestion_gastos.alerta.AlertManager;
+import umu.tds.gestion_gastos.alerta.GastoListener;
 
 public interface GastoRepository {
 	
@@ -14,6 +13,6 @@ public interface GastoRepository {
 	List<Gasto> getAll();
 	
 	//Necesito esta implementacion, que sea un observable.
-	void addListener(AlertManager alertManager);
+	void addListener(GastoListener gastoListener);
 	
 }
