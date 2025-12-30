@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.vista.categoria.ControladorCategoriasView;
 
 public class ControladorGastosView {
 
@@ -38,6 +39,8 @@ public class ControladorGastosView {
     @FXML private TextField filtroMin;
     @FXML private TextField filtroMax;
 
+    @FXML private Button btnCategorias;
+    @FXML private Button btnNotificaciones;
     @FXML private Button btnFiltrar;
     @FXML private Button btnLimpiarFiltros;
     @FXML private Button btnAñadir;
@@ -88,6 +91,48 @@ public class ControladorGastosView {
         }
     }
 
+    // BOTON CATEGORIAS
+    @FXML
+    private void onIrACategorias() throws IOException {
+        abrirVentana(
+            "/umu/tds/gestion_gastos/categorias/CategoriaView.fxml",
+            "Categorías"
+        );
+    }
+
+    // BOTON NOTIFICACIONES
+    @FXML
+    private void onIrANotificaciones() throws IOException {
+        abrirVentana(
+            "/umu/tds/gestion_gastos/notificacion/VentanaNotificacion.fxml",
+            "Notificaciones"
+        );
+    }
+
+    // Método auxiliar para abrir ventanas
+    private void abrirVentana(String rutaFXML, String titulo) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+        Parent root = loader.load();
+        
+        // Inyectar el controlador si es necesario
+        Object controller = loader.getController();
+        
+        // Si el controlador tiene método setControlador, inyectarlo
+        if (controller instanceof ControladorCategoriasView) {
+            ((ControladorCategoriasView) controller).setControlador(controlador);
+        }
+        // Agregar otros controladores según sea necesario
+        
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle(titulo);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        
+        // Refrescar tabla al cerrar (por si se modificaron categorías)
+        refrescarTabla();
+    }
+    
     // BOTÓN AÑADIR
     @FXML
     private void onNuevoGasto() throws IOException {
