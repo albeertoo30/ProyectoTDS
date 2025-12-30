@@ -1,5 +1,6 @@
 package umu.tds.gestion_gastos.categoria;
 
+import java.io.IOException;
 import java.util.List;
 
 public class GestorCategorias {
@@ -40,5 +41,13 @@ public class GestorCategorias {
                 .orElseThrow(() -> new IllegalArgumentException("No existe una categoría con el nombre" + nombre));
         repositorio.remove(categoria);
     }
+	
+	public void cargar(String ruta) throws IOException{
+		repositorio.cargar(ruta);
+	}
+	
+	public void guardar(String ruta) throws IOException{
+		repositorio.guardar(ruta);
+	}
 	
 }

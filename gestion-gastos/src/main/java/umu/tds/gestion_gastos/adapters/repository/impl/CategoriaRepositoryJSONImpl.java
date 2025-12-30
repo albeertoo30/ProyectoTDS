@@ -131,4 +131,14 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
             throw new RuntimeException("Error guardando categorías", e);
         }
     }
+
+	@Override
+	public void cargar(String ruta) throws IOException {
+		cargarDatos();
+	}
+
+	@Override
+	public void guardar(String ruta) throws IOException {
+		guardarDatos();
+	}
 }

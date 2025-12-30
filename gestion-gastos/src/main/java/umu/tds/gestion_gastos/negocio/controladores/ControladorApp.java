@@ -2,6 +2,7 @@ package umu.tds.gestion_gastos.negocio.controladores;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.List;
 
 import umu.tds.gestion_gastos.Configuracion;
@@ -130,13 +131,10 @@ public class ControladorApp { //Yo le crearia una interfaz
         }
         gestorCategorias.eliminarCategoria(nombre);
     }
-    
-    
-    
-    
-    
-    
-    
+       
+    public List<Gasto> obtenerGastosFiltrados(LocalDate fecha, Categoria categoria, Double min, Double max) {
+        return gestorGastos.obtenerGastosFiltrados(fecha, categoria, min, max);
+    }
     
     //OPERACIONES CON ALERTAS: 
     

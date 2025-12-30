@@ -1,6 +1,8 @@
 package umu.tds.gestion_gastos.vista.gasto;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -36,6 +38,7 @@ public class ControladorGastosView {
     @FXML private TextField filtroMin;
     @FXML private TextField filtroMax;
 
+    @FXML private Button btnFiltrar;
     @FXML private Button btnLimpiarFiltros;
     @FXML private Button btnAñadir;
     @FXML private Button btnEditar;
@@ -117,6 +120,31 @@ public class ControladorGastosView {
         }
     }
 
+    // BOTON FILTRAR
+    @FXML
+    private void onAplicarFiltros() {
+        try {
+            // Recoger valores de la vista
+            LocalDate fecha = filtroFecha.getValue();
+            Categoria categoria = filtroCategoria.getValue();
+            String minStr = filtroMin.getText().trim();
+            String maxStr = filtroMax.getText().trim();
+            
+            // Convertir a Double (null si vacío)
+            Double min = minStr.isEmpty() ? null : Double.parseDouble(minStr);
+            Double max = maxStr.isEmpty() ? null : Double.parseDouble(maxStr);
+            
+            // Delegar en ControladorApp
+            List<Gasto> gastosFiltrados = controlador.obtenerGastosFiltrados(fecha, categoria, min, max);
+            
+            // Actualizar vista
+            gastosObservable.setAll(gastosFiltrados);
+            
+        } catch (NumberFormatException e) {
+            mostrarError("Los valores de importe deben ser números válidos.");
+        }
+    }
+    
     // BOTÓN LIMPIAR FILTROS
     @FXML
     private void onLimpiarFiltros() {
