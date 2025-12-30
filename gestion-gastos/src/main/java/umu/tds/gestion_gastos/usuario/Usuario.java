@@ -35,4 +35,9 @@ public class Usuario {
 		this.id = id;
 	}
 	
+	@Override
+	public String toString() {
+	    return this.nombre; 
+	}
+	
 }

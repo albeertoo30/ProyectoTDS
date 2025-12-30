@@ -24,6 +24,9 @@ import umu.tds.gestion_gastos.notificacion.INotificacionFilter;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
 import umu.tds.gestion_gastos.notificacion.NotificacionRepository;
+import umu.tds.gestion_gastos.usuario.GestorUsuarios;
+import umu.tds.gestion_gastos.usuario.Usuario;
+import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 
 public class ControladorApp { //Yo le crearia una interfaz 
 
@@ -33,10 +36,13 @@ public class ControladorApp { //Yo le crearia una interfaz
     private final IAlertaRepository repoAlertas;
     private final IAlertManager gestorAlertas;
     private final GestorCuenta gestorCuentas;
+    private final GestorUsuarios gestorUsuarios;
+    
+    private Usuario usuarioActual;
     
     public ControladorApp(GastoRepository gastoRepo, CategoriaRepository categoriaRepo,
     		INotificacionRepository notificacionRepo, IAlertaRepository alertaRepo,
-    		IAlertManager gestorAlertas, CuentaRepository cuentaRepo) {
+    		IAlertManager gestorAlertas, CuentaRepository cuentaRepo, UsuarioRepository usuarioRepo) {
         
     	this.gestorGastos = new GestorGastos(gastoRepo);
         this.gestorCategorias = new GestorCategorias(categoriaRepo);
@@ -44,6 +50,9 @@ public class ControladorApp { //Yo le crearia una interfaz
         this.repoAlertas = alertaRepo;
         this.gestorAlertas = gestorAlertas;
         this.gestorCuentas = new GestorCuenta(cuentaRepo);
+        this.gestorUsuarios = new GestorUsuarios(usuarioRepo);
+        
+        this.inicializarSesion();
     }
     
     //Operaciones de persistencia de datos van en la configuracion o en el controlador? 
@@ -67,6 +76,9 @@ public class ControladorApp { //Yo le crearia una interfaz
         repoNotificaciones.guardar(rutaDatosBase);    }
 
     
+    private void inicializarSesion() {
+    	this.usuarioActual = this.gestorUsuarios.inicializarSesion();
+    }
 
     // Operaciones con gastos
     public List<Gasto> obtenerGastos() {
@@ -175,6 +187,17 @@ public class ControladorApp { //Yo le crearia una interfaz
     public List<Cuenta> obtenerTodasLasCuentas() {
     	return this.gestorCuentas.getAll();
     }
+    
+    //Usuarios
+    
+    public Usuario getUsuarioActual() {
+    	return this.usuarioActual;
+    }
+    
+    public List<Usuario> obtenerTodosLosUsuarios() {
+        return gestorUsuarios.obtenerOtrosUsuarios(usuarioActual.getId());
+    }
+    
 
     
     

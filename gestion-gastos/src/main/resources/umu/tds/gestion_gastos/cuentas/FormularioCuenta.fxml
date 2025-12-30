@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="umu.tds.gestion_gastos.vista.cuenta.FormularioCuentaController">
+
+    <top>
+        <Label text="Crear / Editar Cuenta"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 15;" />
+    </top>
+
+    <center>
+        <GridPane hgap="15" vgap="15">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <children>
+                <Label text="Nombre de la Cuenta:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="campoNombre" promptText="Ej: Viaje a Roma" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Tipo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboTipo" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+                <Label text="Invitar Amigos:" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.valignment="TOP"/>
+                <ListView fx:id="listaUsuarios" GridPane.rowIndex="2" GridPane.columnIndex="1" prefHeight="150"/>
+
+                <Label text="Nuevo Amigo:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="boxNuevoUsuario">
+                    <TextField fx:id="campoNuevoUsuario" promptText="Nombre..." HBox.hgrow="ALWAYS"/>
+                    <Button text="Añadir" onAction="#onAgregarUsuario"/>
+                </HBox>
+                
+                <Label text="(Mantén CTRL o CMD para seleccionar varios)" 
+                       style="-fx-font-size: 10px; -fx-text-fill: gray;"
+                       GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            </children>
+        </GridPane>
+    </center>
+
+    <bottom>
+        <HBox spacing="15" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Button fx:id="btnCancelar" text="Cancelar" onAction="#onCancelar"/>
+            <Button fx:id="btnGuardar" text="Guardar" style="-fx-font-weight: bold;" onAction="#onGuardar"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

@@ -2,22 +2,24 @@ package umu.tds.gestion_gastos.usuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GestorUsuarios {
 
+	private UsuarioRepository usuarioRepo;
 	
-	private List<Usuario> usuarios;
 	
-	
-	public GestorUsuarios() {
-		this.usuarios = new ArrayList<Usuario>();
+	public GestorUsuarios(UsuarioRepository usuarioRepo) {
+		this.usuarioRepo = usuarioRepo;
 	}
 	
-	public Usuario crearUsuario(Usuario usuario) {
-		this.usuarios.add(usuario);
-		return usuario;
+	public void crearUsuario(Usuario usuario) {
+		this.usuarioRepo.guardar(usuario);
 	}
-	
+	/*
+	 
+	 
+	 
 	public boolean borrarUsuario(int usuarioId) {
 		boolean borrado = false;
 		for(Usuario usuario : this.usuarios) {
@@ -40,6 +42,37 @@ public class GestorUsuarios {
 		}
 		return actualizado;
 	}
+	 */
+	
+    //Inicio de sesion falso ( Si ya hay un usuario en el JSON se asume que eres tu. Si no crea uno para ti 
+    public Usuario inicializarSesion() {
+        List<Usuario> todos = this.usuarioRepo.obtenerTodos();
+        
+        if (todos.isEmpty()) {
+            Usuario nuevo = new Usuario((int) Math.floor(Math.random() * 1000), "Yo (Propietario)");
+            this.usuarioRepo.guardar(nuevo);
+            
+            // Creamos un par de amigos para probar
+            // TODO:  BORRAR ESTO LUEGO O DEJAR SI QUEREMOS USUARIOS POR DEFECTO
+            this.crearUsuario(new Usuario(this.generarId(), "Pepe"));
+            this.crearUsuario(new Usuario(this.generarId(), "Maria"));
+            
+            return nuevo;
+        } else {
+            return todos.get(0);
+        }
+    }
+    
+    //Devuelve usuarios que no son el usuario principal
+    public List<Usuario> obtenerOtrosUsuarios(int idUsuarioActual) {
+        return usuarioRepo.obtenerTodos().stream()
+                .filter(u -> u.getId() != (idUsuarioActual))
+                .collect(Collectors.toList());
+    }
+    
+    private int generarId() {
+        return (int) (Math.random() * 100000);
+    }
 	
 	
 	

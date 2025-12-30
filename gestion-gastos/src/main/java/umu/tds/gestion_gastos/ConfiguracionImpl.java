@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import umu.tds.gestion_gastos.adapters.repository.impl.CategoriaRepositoryJSONImpl;
 import umu.tds.gestion_gastos.adapters.repository.impl.CuentaRepositoryJSONImpl;
 import umu.tds.gestion_gastos.adapters.repository.impl.GastoRepositoryJSONImpl;
+import umu.tds.gestion_gastos.adapters.repository.impl.UsuarioRepositoryJSONImpl;
 import umu.tds.gestion_gastos.alerta.AlertManager;
 import umu.tds.gestion_gastos.alerta.AlertaRepository;
 import umu.tds.gestion_gastos.alerta.IAlertManager;
@@ -17,6 +18,7 @@ import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.NotificacionRepository;
+import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 
 public class ConfiguracionImpl extends Configuracion {
 
@@ -30,6 +32,7 @@ public class ConfiguracionImpl extends Configuracion {
         GastoRepository gastoRepo = new GastoRepositoryJSONImpl(getRutaGastos());
         CategoriaRepository categoriaRepo = new CategoriaRepositoryJSONImpl(getRutaCategorias());
         CuentaRepository cuentaRepo = new CuentaRepositoryJSONImpl(getRutaCuentas());
+        UsuarioRepository usuarioRepo = new UsuarioRepositoryJSONImpl(getRutaUsuarios());
 
         IAlertaRepository alertaRepo = AlertaRepository.INSTANCE;
         INotificacionRepository notiRepo = NotificacionRepository.INSTANCE;
@@ -39,7 +42,7 @@ public class ConfiguracionImpl extends Configuracion {
         
         // Crear controlador con los repositorios
         this.controlador = new ControladorApp(gastoRepo, categoriaRepo,
-        					notiRepo, alertaRepo,  alertManager, cuentaRepo);
+        					notiRepo, alertaRepo,  alertManager, cuentaRepo, usuarioRepo);
     
         this.rutaDatos = Paths.get(System.getProperty("user.home"), "gestion-gastos-data");
 
@@ -75,6 +78,11 @@ public class ConfiguracionImpl extends Configuracion {
     @Override
     public String getRutaCuentas() {
         return "/umu/tds/data/cuentas.json";
+    }
+    
+    @Override
+    public String getRutaUsuarios() {
+        return "/umu/tds/data/usuarios.json";
     }
     
     

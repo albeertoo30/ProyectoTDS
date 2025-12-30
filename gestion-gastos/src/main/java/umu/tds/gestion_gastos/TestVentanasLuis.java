@@ -1,17 +1,15 @@
 package umu.tds.gestion_gastos;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.vista.cuenta.FormularioCuentaController;
-import umu.tds.gestion_gastos.vista.gasto.*;
-//import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 
-public class App extends Application {
-
-    @Override
+import javafx.application.Application;
+public class TestVentanasLuis extends Application{
+	
+	@Override
     public void start(Stage stage) throws Exception {
 
         // Inicializar Configuración
@@ -20,7 +18,7 @@ public class App extends Application {
         // Cargar vista
         FXMLLoader loader = new FXMLLoader(
             getClass().getResource(
-            		"/umu/tds/gestion_gastos/cuentas/FormularioCuenta.fxml"
+                "/umu/tds/gestion_gastos/cuentas/FormularioCuenta.fxml"
             )
         );
 
@@ -33,7 +31,7 @@ public class App extends Application {
         );
 
         stage.setScene(new Scene(root, 1200, 700));
-        stage.setTitle("Gestión de Gastos");
+        stage.setTitle("Gestión de Cuenta");
         stage.show();
     }
 
@@ -41,4 +39,3 @@ public class App extends Application {
         launch(args);
     }
 }
-
