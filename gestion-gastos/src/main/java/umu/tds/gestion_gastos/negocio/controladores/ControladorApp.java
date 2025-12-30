@@ -59,22 +59,31 @@ public class ControladorApp { //Yo le crearia una interfaz
     public void cargarDatos() throws IOException {
         String rutaAbsolutaGastos = Configuracion.getInstancia().getRutaGastos();
         String rutaAbsolutaCate = Configuracion.getInstancia().getRutaCategorias();      		
-        Path rutaDatosBase = Configuracion.getInstancia().getRutaDatos();
-        gestorGastos.cargar(rutaAbsolutaGastos);
-        gestorCategorias.cargar(rutaAbsolutaCate);
-        repoAlertas.cargar(rutaDatosBase);
-        repoNotificaciones.cargar(rutaDatosBase);
+        //gestorGastos.cargar(rutaAbsolutaGastos);
+        //gestorCategorias.cargar(rutaAbsolutaCate);
+        
+        repoAlertas.cargar(Configuracion.getInstancia().getRutaAlertas());
+        repoNotificaciones.cargar(Configuracion.getInstancia().getRutaNotificaciones());
     }
 
     public void guardarDatos() throws IOException {
         String rutaAbsolutaGastos = Configuracion.getInstancia().getRutaGastos();
         String rutaAbsolutaCate = Configuracion.getInstancia().getRutaCategorias();      		
-        Path rutaDatosBase = Configuracion.getInstancia().getRutaDatos();
         gestorGastos.guardar(rutaAbsolutaGastos);
         gestorCategorias.guardar(rutaAbsolutaCate);
-        repoAlertas.guardar(rutaDatosBase);
-        repoNotificaciones.guardar(rutaDatosBase);    }
+        
+        repoAlertas.guardar(Configuracion.getInstancia().getRutaAlertas());
+        repoNotificaciones.guardar(Configuracion.getInstancia().getRutaNotificaciones());
+    
+    }
 
+
+    //Lo usamos con marcar leida porque seria absurdo guardar todo.
+    public void guardarNotificaciones() throws IOException {
+        repoNotificaciones.guardar(Configuracion.getInstancia().getRutaNotificaciones());
+    }
+
+    
     
     private void inicializarSesion() {
     	this.usuarioActual = this.gestorUsuarios.inicializarSesion();

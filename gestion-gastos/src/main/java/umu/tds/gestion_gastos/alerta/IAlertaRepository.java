@@ -26,14 +26,14 @@ public interface IAlertaRepository {
      * @param rutaBase Ruta base donde se encuentra el archivo JSON
      * @throws IOException Si hay error al leer el archivo
      */
-    void cargar(Path rutaBase) throws IOException;
+    void cargar(String rutaBase) throws IOException;
     
     /**
      * Guarda las alertas en el almacenamiento persistente
      * @param rutaBase Ruta base donde se guardará el archivo JSON
      * @throws IOException Si hay error al escribir el archivo
      */
-    void guardar(Path rutaBase) throws IOException;
+    void guardar(String rutaBase) throws IOException;
     
     /**
      * Añade una nueva alerta al repositorio

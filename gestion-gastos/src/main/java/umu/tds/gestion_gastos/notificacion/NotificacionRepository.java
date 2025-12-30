@@ -1,9 +1,15 @@
 package umu.tds.gestion_gastos.notificacion;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -12,7 +18,10 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import umu.tds.gestion_gastos.alerta.Alerta;
 import umu.tds.gestion_gastos.categoria.Categoria;
 
 public enum NotificacionRepository implements INotificacionRepository{
@@ -20,12 +29,20 @@ public enum NotificacionRepository implements INotificacionRepository{
 	INSTANCE;
 
 	private List<Notificacion> listaNotificaciones;
-    private static final String NOMBRE_FICHERO = "notificaciones.json";
+	private final ObjectMapper mapper;
+	
 	
 	public List<Notificacion> getNotificaciones() {
 		return Collections.unmodifiableList(this.listaNotificaciones);
 	}
     
+	NotificacionRepository(){
+		mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		this.listaNotificaciones = new ArrayList<Notificacion>();
+	}
     
 	@Override
 	public void add(Notificacion n) {
@@ -69,23 +86,53 @@ public enum NotificacionRepository implements INotificacionRepository{
 		getById(id).ifPresent(listaNotificaciones::remove);
 	}
 	
-
+	//En realidad se guardan en local, en las pruebas usamos otra ruta.
 	@Override
-	public void cargar(Path rutaBase) throws IOException {
-		Path fichero = rutaBase.resolve(NOMBRE_FICHERO);
-        if (Files.exists(fichero)) {
-            ObjectMapper mapper = new ObjectMapper();
-            listaNotificaciones = mapper.readValue(fichero.toFile(),
-                    new TypeReference<List<Notificacion>>() {});
-        }
+	public void cargar(String rutaJson) throws IOException {
+	    System.out.println("Cargando notificaciones");
+
+	    Path fichero = Paths.get(rutaJson);
+	    Files.createDirectories(fichero.getParent());
+
+	    // Crear el archivo vacío si no existe
+	    if (!Files.exists(fichero)) {
+	        System.out.println("Archivo no existe, creando uno vacío...");
+	        Files.createFile(fichero);
+	        listaNotificaciones.clear();
+	        return;
+	    }
+
+	    System.out.println("Leyendo notificaciones desde JSON...");
+	    try (InputStream is = Files.newInputStream(fichero)) {
+	        List<Notificacion> cargadas = mapper.readValue(is, new TypeReference<List<Notificacion>>() {});
+	        listaNotificaciones.clear();
+	        if (cargadas != null) listaNotificaciones.addAll(cargadas);
+	    }
 	}
 
+ 
+	
 	@Override
-	public void guardar(Path rutaBase) throws IOException {
-		ObjectMapper mapper = new ObjectMapper();
-        mapper.writerWithDefaultPrettyPrinter()
-              .writeValue(rutaBase.resolve(NOMBRE_FICHERO).toFile(), listaNotificaciones);	
+	public void guardar(String rutaJson) throws IOException {
+	    Path fichero = Paths.get(rutaJson);
+	    // Crear directorios si no existen
+	    Files.createDirectories(fichero.getParent());
+
+	    // Archivo temporal
+	    Path tmp = fichero.resolveSibling(fichero.getFileName() + ".tmp");
+
+	    try (OutputStream os = Files.newOutputStream(tmp,
+	            StandardOpenOption.CREATE,
+	            StandardOpenOption.TRUNCATE_EXISTING)) {
+
+	        mapper.writerWithDefaultPrettyPrinter()
+	              .writeValue(os, listaNotificaciones);
+	    }
+
+	    // Mover el temporal al archivo final
+	    Files.move(tmp, fichero, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
 	}
+
 
 	//Marca todas las notificaciones como leidas
 	@Override

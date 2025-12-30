@@ -5,16 +5,22 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import umu.tds.gestion_gastos.categoria.Categoria;
 
+@JsonIgnoreProperties(ignoreUnknown = true) 
 public class Notificacion {
 	
-	private final String id;
+	
+	private String id;
 	private String mensaje;
-	private final double importe;
-	private final LocalDate fecha;
-	private final String alertaId;
-	private final Categoria categoria;
+	private double importe;
+	private LocalDate fecha;
+	private String alertaId;
+	private Categoria categoria;
 	private boolean leida;
 	
 	//Constructor
@@ -30,6 +36,7 @@ public class Notificacion {
 		this.leida = false;
 	}
 	
+	public Notificacion() {}
 	
 	public void marcarLeida() {
 		this.leida = true;
@@ -78,6 +85,7 @@ public class Notificacion {
 		return categoria;
 	}
 
+    
 	/**
 	 * @return the leida
 	 */
