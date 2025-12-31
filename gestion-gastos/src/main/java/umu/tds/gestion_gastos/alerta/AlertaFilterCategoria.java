@@ -1,17 +1,18 @@
-package umu.tds.gestion_gastos.notificacion;
+package umu.tds.gestion_gastos.alerta;
+
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.filtros.Filtro;
 
-public class NotificacionFilterCategoria implements Filtro<Notificacion>{
-    
+public class AlertaFilterCategoria implements Filtro<Alerta>{
+
     private final Categoria categoria;
     
-    public NotificacionFilterCategoria(Categoria categoria) {
+    public AlertaFilterCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
     
     @Override
-    public boolean test(Notificacion n) {
+    public boolean test(Alerta n) {
         if (categoria == null) return true;
         
         Categoria catNotif = n.getCategoria();

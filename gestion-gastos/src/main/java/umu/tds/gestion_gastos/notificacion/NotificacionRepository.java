@@ -23,6 +23,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import umu.tds.gestion_gastos.alerta.Alerta;
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.filtros.Filtro;
 
 public enum NotificacionRepository implements INotificacionRepository{
 
@@ -53,7 +54,6 @@ public enum NotificacionRepository implements INotificacionRepository{
 	@Override
 	public Optional<Notificacion> getById(String id) {
 		return listaNotificaciones.stream().filter(x -> x.getId().equals(id)).findFirst();
-
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public enum NotificacionRepository implements INotificacionRepository{
 	}
 
 	@Override
-	public List<Notificacion> findByFilter(INotificacionFilter filter) {
+	public List<Notificacion> findByFilter(Filtro<Notificacion> filter) {
 		return this.listaNotificaciones.stream()
 				.filter(filter)
 				.sorted(Comparator.comparing(Notificacion::getFecha).reversed())

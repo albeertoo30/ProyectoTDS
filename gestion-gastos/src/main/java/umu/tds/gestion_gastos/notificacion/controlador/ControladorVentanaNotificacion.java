@@ -5,13 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.filtros.Filtro;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
-import umu.tds.gestion_gastos.notificacion.INotificacionFilter;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
-import umu.tds.gestion_gastos.notificacion.NotificacionFilterCategoria;
-import umu.tds.gestion_gastos.notificacion.NotificacionFilterFechaRange;
+import umu.tds.gestion_gastos.notificacion.NotificacionFilterBuilder;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +45,7 @@ public class ControladorVentanaNotificacion {
 
         configurarCeldas();
         configurarComboCategoria();
-        
     }
-    
-    
 
     public void setControlador(ControladorApp controlador) {
         this.controlador = controlador;
@@ -98,7 +93,13 @@ public class ControladorVentanaNotificacion {
             if (empty || n == null) {
                 setText(null);
             } else {
-                setText("[" + n.getFecha() + "] " + n.getMensaje() + " , " +  n.getImporte() + " , " + n.getCategoria().getNombre());
+                String categoriaText = n.getCategoria() != null ? n.getCategoria().getNombre() : "Sin categoría";
+                setText(String.format("[%s] %s | %.2f€ | %s", 
+                    n.getFecha(), 
+                    n.getMensaje(), 
+                    n.getImporte(), 
+                    categoriaText
+                ));
             }
         }
     }
@@ -135,22 +136,10 @@ public class ControladorVentanaNotificacion {
 
     @FXML
     private void onAplicarFiltros() {
-        INotificacionFilter filtroCompuesto = INotificacionFilter.alwaysTrue();
-        
-        LocalDate desde = dpDesde.getValue();
-        LocalDate hasta = dpHasta.getValue();
-        if (desde != null || hasta != null) {
-            filtroCompuesto = filtroCompuesto.and(new NotificacionFilterFechaRange(desde, hasta));
-        }
-        
-        Categoria categoriaSeleccionada = cbCategorias.getValue();
-        if (categoriaSeleccionada != null) {
-            filtroCompuesto = filtroCompuesto.and(new NotificacionFilterCategoria(categoriaSeleccionada));
-        }
-        
-        //Aqui se agregan los futuros filtros
-        
-        
+        Filtro<Notificacion> filtroCompuesto = new NotificacionFilterBuilder()
+            .fecha(dpDesde.getValue(), dpHasta.getValue())
+            .categoria(cbCategorias.getValue())
+            .build();
         
         List<Notificacion> filtradas = controlador.filtrarNotificaciones(filtroCompuesto);
         

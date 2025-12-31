@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import umu.tds.gestion_gastos.categoria.Categoria;
 
-@JsonIgnoreProperties(ignoreUnknown = true) 
+@JsonIgnoreProperties(ignoreUnknown = true) // Ignora cualquier campo no declarado
 public class Notificacion {
 	
 	
@@ -37,6 +37,7 @@ public class Notificacion {
 	}
 	
 	public Notificacion() {}
+	
 	
 	public void marcarLeida() {
 		this.leida = true;

@@ -17,10 +17,10 @@ import umu.tds.gestion_gastos.categoria.GestorCategorias;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.cuenta.CuentaRepository;
 import umu.tds.gestion_gastos.cuenta.GestorCuenta;
+import umu.tds.gestion_gastos.filtros.Filtro;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.gasto.GestorGastos;
-import umu.tds.gestion_gastos.notificacion.INotificacionFilter;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
 import umu.tds.gestion_gastos.notificacion.NotificacionRepository;
@@ -83,6 +83,12 @@ public class ControladorApp { //Yo le crearia una interfaz
         repoNotificaciones.guardar(Configuracion.getInstancia().getRutaNotificaciones());
     }
 
+    //Lo usamos con activar/desactvar/eliminar porque seria absurdo guardar todo.
+    public void guardarAlertas() throws IOException {
+        repoAlertas.guardar(Configuracion.getInstancia().getRutaAlertas());
+    }
+
+    
     
     
     private void inicializarSesion() {
@@ -160,6 +166,23 @@ public class ControladorApp { //Yo le crearia una interfaz
 		repoAlertas.crearAlerta(descripcion, categoria, strategy, limite);
 	}
  
+    public List<Alerta> filtrarAlertas(Filtro<Alerta> filter){
+    	return repoAlertas.findByFilter(filter);
+    }
+    
+    public void activarAlerta(String id) {
+    	repoAlertas.activarAlerta(id);
+    }
+    
+    public void desactivarAlerta(String id) {
+    	repoAlertas.desactivarAlerta(id);
+    }
+	
+    public void eliminarAlerta(Alerta a) {
+    	repoAlertas.remove(a);
+    }
+	
+    
 	
 	//OPERACIONES CON NOTIFICACIONES
        
@@ -171,7 +194,7 @@ public class ControladorApp { //Yo le crearia una interfaz
     	return repoNotificaciones.getAllOrderedByDateDesc();
     }
     
-    public List<Notificacion> filtrarNotificaciones(INotificacionFilter filter){
+    public List<Notificacion> filtrarNotificaciones(Filtro<Notificacion> filter){
     	return repoNotificaciones.findByFilter(filter);
     }
 

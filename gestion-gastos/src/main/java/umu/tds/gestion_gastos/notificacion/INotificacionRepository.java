@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.filtros.Filtro;
 
 public interface INotificacionRepository {
 
@@ -15,7 +16,7 @@ public interface INotificacionRepository {
 	Optional<Notificacion> getById(String id);
 	List<Notificacion> getAllOrderedByDateDesc();
 	List<Notificacion> findByDateRange(LocalDate desde, LocalDate hasta);
-	List<Notificacion> findByFilter(INotificacionFilter filter);
+	List<Notificacion> findByFilter(Filtro<Notificacion> filter);
 	void marcarLeida(String id);
 	void delete(String id);
 	void cargar(String rutaBase) throws IOException;
