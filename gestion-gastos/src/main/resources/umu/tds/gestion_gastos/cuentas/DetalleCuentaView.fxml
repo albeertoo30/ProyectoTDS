@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="umu.tds.gestion_gastos.vista.cuenta.DetalleCuentaController"
+            stylesheets="@../estilos/app.css">
+
+    <top>
+        <VBox style="-fx-padding: 15; -fx-background-color: #e9ecef;">
+            <Label fx:id="lblNombreCuenta" text="Nombre de la Cuenta" styleClass="label-titulo"/>
+            <Label text="Detalle de gastos y miembros" styleClass="label-subtitulo"/>
+        </VBox>
+    </top>
+
+    <left>
+        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-pref-width: 200; -fx-border-color: #dee2e6; -fx-border-width: 0 1 0 0;">
+            <Label text="MIEMBROS" styleClass="label-subtitulo" style="-fx-font-size: 14px;"/>
+            <ListView fx:id="listaMiembros" VBox.vgrow="ALWAYS"/>
+            <Button text="Ver Saldos" maxWidth="Infinity" disable="true" styleClass="boton-secundario"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label text="GASTOS DEL GRUPO" styleClass="label-subtitulo"/>
+            
+            <TableView fx:id="tablaGastos" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colFecha" text="Fecha" prefWidth="100"/>
+                    <TableColumn fx:id="colConcepto" text="Concepto" prefWidth="200"/>
+                    <TableColumn fx:id="colPagador" text="Pagado por" prefWidth="120"/>
+                    <TableColumn fx:id="colImporte" text="Importe (€)" prefWidth="100"/>
+                </columns>
+                <placeholder>
+                    <Label text="No hay gastos registrados en este grupo."/>
+                </placeholder>
+            </TableView>
+            
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Nuevo Gasto" onAction="#onNuevoGasto" styleClass="boton-accion"/>
+                <Button text="Eliminar Gasto" onAction="#onEliminarGasto" styleClass="boton-peligro"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-border-color: #dee2e6; -fx-border-width: 1 0 0 0;">
+            <Button text="⬅ Volver a Mis Cuentas" onAction="#onVolver" styleClass="boton-secundario"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

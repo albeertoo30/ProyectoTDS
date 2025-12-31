@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="umu.tds.gestion_gastos.vista.cuenta.ListaCuentasViewController"
+            stylesheets="@../estilos/app.css">
+
+    <top>
+        <VBox>
+            <Label text="Mis Cuentas Compartidas" styleClass="label-titulo" />
+            <Separator>
+                <VBox.margin>
+                    <Insets top="10" bottom="10"/>
+                </VBox.margin>
+            </Separator>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tablaCuentas">
+            <columns>
+                <TableColumn fx:id="colNombre" text="Nombre Cuenta" prefWidth="250"/>
+                <TableColumn fx:id="colMiembros" text="Miembros" prefWidth="150"/>
+                <TableColumn fx:id="colInfo" text="Descripción" prefWidth="200"/>
+            </columns>
+            <placeholder>
+                <Label text="No tienes cuentas compartidas. ¡Crea una!"/>
+            </placeholder>
+        </TableView>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            
+            <Button text="Nueva Cuenta" fx:id="btnCrear" onAction="#onNuevaCuenta" styleClass="boton-accion"/>
+            <Button text="Entrar en Cuenta" fx:id="btnEntrar" onAction="#onEntrarCuenta" styleClass="boton-info"/>
+            <Button text="Eliminar" fx:id="btnEliminar" onAction="#onEliminarCuenta" styleClass="boton-peligro"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

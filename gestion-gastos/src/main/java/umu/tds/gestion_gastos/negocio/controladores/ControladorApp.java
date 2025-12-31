@@ -197,6 +197,10 @@ public class ControladorApp { //Yo le crearia una interfaz
     	return this.gestorCuentas.getAll();
     }
     
+    public void eliminarCuenta(int id) {
+    	this.gestorCuentas.eliminarCuenta(id);
+    }
+    
     //Usuarios
     
     public Usuario getUsuarioActual() {
