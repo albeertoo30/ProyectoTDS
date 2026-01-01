@@ -5,26 +5,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="umu.tds.gestion_gastos.vista.gasto.ControladorGastosView">
+<BorderPane xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="umu.tds.gestion_gastos.vista.gasto.ControladorGastosView"
+            stylesheets="@/umu/tds/gestion_gastos/estilos/app.css">
 
     <!-- ▬▬▬▬▬▬▬▬▬ TOP: TÍTULO Y NAVEGACIÓN ▬▬▬▬▬▬▬▬▬ -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f4f4f4;">
-            <Label text="Gastos">
-                <font>
-                    <Font size="28"/>
-                </font>
-            </Label>
+            <Label text="Gastos" styleClass="label-titulo"/>
             
             <!-- Spacer para empujar los botones a la derecha -->
             <Region HBox.hgrow="ALWAYS"/>
             
             <!-- Botones de navegación -->
             <Button fx:id="btnCategorias" text="Categorías" 
-                    style="-fx-background-color: #f0ad4e; -fx-text-fill: white; -fx-font-size: 14px;"
+                    styleClass="button, boton-info"
                     onAction="#onIrACategorias"/>
             <Button fx:id="btnNotificaciones" text="Notificaciones" 
-                    style="-fx-background-color: #5bc0de; -fx-text-fill: white; -fx-font-size: 14px;"
+                    styleClass="button, boton-info"
                     onAction="#onIrANotificaciones"/>
             
             <padding>
@@ -40,7 +38,7 @@
                 <Insets top="20" bottom="20" left="20" right="20"/>
             </padding>
 
-            <Label text="Filtros" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Label text="Filtros" styleClass="label-subtitulo"/>
 
             <Label text="Fecha:"/>
             <DatePicker fx:id="filtroFecha"/>
@@ -56,13 +54,13 @@
 
             <HBox spacing="10">
                 <Button fx:id="btnFiltrar" text="Aplicar filtros" 
-                        style="-fx-background-color: #5cb85c; -fx-text-fill: white;"
+                        styleClass="button, boton-accion"
                         onAction="#onAplicarFiltros"
                         HBox.hgrow="ALWAYS"
                         maxWidth="Infinity"/>
                 
                 <Button fx:id="btnLimpiarFiltros" text="Limpiar filtros" 
-                        style="-fx-background-color: #dddddd;"
+                        styleClass="button, boton-secundario"
                         onAction="#onLimpiarFiltros"
                         HBox.hgrow="ALWAYS"
                         maxWidth="Infinity"/>
@@ -91,13 +89,13 @@
             </padding>
 
             <Button fx:id="btnAñadir" text="Añadir" 
-                    style="-fx-background-color: #5cb85c; -fx-text-fill: white;"
+                    styleClass="button, boton-accion"
                     onAction="#onNuevoGasto"/>
             <Button fx:id="btnEditar" text="Editar" 
-                    style="-fx-background-color: #0275d8; -fx-text-fill: white;"
+                    styleClass="button, boton-info"
                     onAction="#onEditarGasto"/>
             <Button fx:id="btnEliminar" text="Eliminar" 
-                    style="-fx-background-color: #d9534f; -fx-text-fill: white;"
+                    styleClass="button, boton-peligro"
                     onAction="#onEliminarGasto"/>
         </HBox>
     </bottom>

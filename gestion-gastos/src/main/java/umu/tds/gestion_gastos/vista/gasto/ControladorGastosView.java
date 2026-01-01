@@ -43,7 +43,7 @@ public class ControladorGastosView {
     @FXML private Button btnNotificaciones;
     @FXML private Button btnFiltrar;
     @FXML private Button btnLimpiarFiltros;
-    @FXML private Button btnAñadir;
+    @FXML private Button btnAnadir;
     @FXML private Button btnEditar;
     @FXML private Button btnEliminar;
 
