@@ -3,11 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="umu.tds.gestion_gastos.vista.inicio.ControladorInicioView">
+            fx:controller="umu.tds.gestion_gastos.vista.inicio.ControladorInicioView"
+            stylesheets="@/umu/tds/gestion_gastos/estilos/app.css">
 
     <!-- ===== TÍTULO ===== -->
     <top>
@@ -16,14 +16,11 @@
                 <Insets top="40"/>
             </padding>
 
-            <Label text="Bienvenido a tu Gestor de Gastos">
-                <font>
-                    <Font size="28"/>
-                </font>
-            </Label>
+            <Label text="Bienvenido a tu Gestor de Gastos"
+                   styleClass="label-titulo"/>
 
             <Label text="Controla tus gastos personales y compartidos de forma sencilla"
-                   style="-fx-text-fill: gray;"/>
+                   styleClass="label-subtitulo"/>
         </VBox>
     </top>
 
@@ -34,17 +31,19 @@
                 <Insets top="40"/>
             </padding>
 
-            <Button text="Mi cuenta personal"
-                    fx:id="btnCuentaPersonal"
+            <Button fx:id="btnCuentaPersonal"
+                    text="Mi cuenta personal"
                     prefWidth="260"
                     prefHeight="45"
-                    style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    onAction="#onCuentaPersonal"
+                    styleClass="button, boton-accion"/>
 
-            <Button text="Cuentas compartidas"
-                    fx:id="btnCuentasCompartidas"
+            <Button fx:id="btnCuentasCompartidas"
+                    text="Cuentas compartidas"
                     prefWidth="260"
                     prefHeight="45"
-                    style="-fx-font-size: 14px;"/>
+                    onAction="#onCuentasCompartidas"
+                    styleClass="button, boton-info"/>
         </VBox>
     </center>
 

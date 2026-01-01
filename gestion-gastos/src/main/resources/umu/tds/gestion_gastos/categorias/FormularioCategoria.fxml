@@ -6,12 +6,13 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="umu.tds.gestion_gastos.vista.categoria.FormularioCategoriaController">
+            fx:controller="umu.tds.gestion_gastos.vista.categoria.FormularioCategoriaController"
+            stylesheets="@/umu/tds/gestion_gastos/estilos/app.css">
 
     <!-- ======== TÍTULO SUPERIOR ======== -->
     <top>
         <Label text="Crear / Editar Categoría"
-               style="-fx-font-size: 20px; -fx-font-weight: bold;">
+               styleClass="label-titulo">
                <padding>
     				<Insets top="15" right="15" bottom="15" left="15"/>
 			   </padding>
@@ -59,14 +60,16 @@
         <HBox spacing="15"
               alignment="CENTER_RIGHT">
             <padding>
-            	<Insets top="15" right="15" bottom="15" left="15"/>  
+            	<Insets top="15" right="15" bottom="15" left="15"/>
             </padding>
             <Button fx:id="btnCancelar"
                     text="Cancelar"
-                    style="-fx-background-color: lightgray;"/>
+                    styleClass="button, boton-secundario"
+                    onAction="#onCancelar"/>
             <Button fx:id="btnGuardar"
                     text="Guardar"
-                    style="-fx-font-weight: bold;"/>
+                    styleClass="button, boton-accion"
+                    onAction="#onGuardar"/>
         </HBox>
     </bottom>
 
