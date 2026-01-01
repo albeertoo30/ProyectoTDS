@@ -18,10 +18,10 @@ import umu.tds.gestion_gastos.categoria.GestorCategorias;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.cuenta.CuentaRepository;
 import umu.tds.gestion_gastos.cuenta.GestorCuenta;
+import umu.tds.gestion_gastos.filtros.Filtro;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.gasto.GestorGastos;
-import umu.tds.gestion_gastos.notificacion.INotificacionFilter;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
 import umu.tds.gestion_gastos.notificacion.NotificacionRepository;
@@ -60,22 +60,37 @@ public class ControladorApp { //Yo le crearia una interfaz
     public void cargarDatos() throws IOException {
         String rutaAbsolutaGastos = Configuracion.getInstancia().getRutaGastos();
         String rutaAbsolutaCate = Configuracion.getInstancia().getRutaCategorias();      		
-        Path rutaDatosBase = Configuracion.getInstancia().getRutaDatos();
-        gestorGastos.cargar(rutaAbsolutaGastos);
-        gestorCategorias.cargar(rutaAbsolutaCate);
-        repoAlertas.cargar(rutaDatosBase);
-        repoNotificaciones.cargar(rutaDatosBase);
+        //gestorGastos.cargar(rutaAbsolutaGastos);
+        //gestorCategorias.cargar(rutaAbsolutaCate);
+        
+        repoAlertas.cargar(Configuracion.getInstancia().getRutaAlertas());
+        repoNotificaciones.cargar(Configuracion.getInstancia().getRutaNotificaciones());
     }
 
     public void guardarDatos() throws IOException {
         String rutaAbsolutaGastos = Configuracion.getInstancia().getRutaGastos();
         String rutaAbsolutaCate = Configuracion.getInstancia().getRutaCategorias();      		
-        Path rutaDatosBase = Configuracion.getInstancia().getRutaDatos();
         gestorGastos.guardar(rutaAbsolutaGastos);
         gestorCategorias.guardar(rutaAbsolutaCate);
-        repoAlertas.guardar(rutaDatosBase);
-        repoNotificaciones.guardar(rutaDatosBase);    }
+        
+        repoAlertas.guardar(Configuracion.getInstancia().getRutaAlertas());
+        repoNotificaciones.guardar(Configuracion.getInstancia().getRutaNotificaciones());
+    
+    }
 
+
+    //Lo usamos con marcar leida porque seria absurdo guardar todo.
+    public void guardarNotificaciones() throws IOException {
+        repoNotificaciones.guardar(Configuracion.getInstancia().getRutaNotificaciones());
+    }
+
+    //Lo usamos con activar/desactvar/eliminar porque seria absurdo guardar todo.
+    public void guardarAlertas() throws IOException {
+        repoAlertas.guardar(Configuracion.getInstancia().getRutaAlertas());
+    }
+
+    
+    
     
     private void inicializarSesion() {
     	this.usuarioActual = this.gestorUsuarios.inicializarSesion();
@@ -149,6 +164,23 @@ public class ControladorApp { //Yo le crearia una interfaz
 		repoAlertas.crearAlerta(descripcion, categoria, strategy, limite);
 	}
  
+    public List<Alerta> filtrarAlertas(Filtro<Alerta> filter){
+    	return repoAlertas.findByFilter(filter);
+    }
+    
+    public void activarAlerta(String id) {
+    	repoAlertas.activarAlerta(id);
+    }
+    
+    public void desactivarAlerta(String id) {
+    	repoAlertas.desactivarAlerta(id);
+    }
+	
+    public void eliminarAlerta(Alerta a) {
+    	repoAlertas.remove(a);
+    }
+	
+    
 	
 	//OPERACIONES CON NOTIFICACIONES
        
@@ -160,7 +192,7 @@ public class ControladorApp { //Yo le crearia una interfaz
     	return repoNotificaciones.getAllOrderedByDateDesc();
     }
     
-    public List<Notificacion> filtrarNotificaciones(INotificacionFilter filter){
+    public List<Notificacion> filtrarNotificaciones(Filtro<Notificacion> filter){
     	return repoNotificaciones.findByFilter(filter);
     }
 
@@ -184,6 +216,10 @@ public class ControladorApp { //Yo le crearia una interfaz
     
     public List<Cuenta> obtenerTodasLasCuentas() {
     	return this.gestorCuentas.getAll();
+    }
+    
+    public void eliminarCuenta(int id) {
+    	this.gestorCuentas.eliminarCuenta(id);
     }
     
     //Usuarios

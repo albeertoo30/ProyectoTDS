@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.vista.cuenta.FormularioCuentaController;
-
+import umu.tds.gestion_gastos.vista.cuenta.ListaCuentasViewController;
 import javafx.application.Application;
 public class TestVentanasLuis extends Application{
 	
@@ -18,14 +18,14 @@ public class TestVentanasLuis extends Application{
         // Cargar vista
         FXMLLoader loader = new FXMLLoader(
             getClass().getResource(
-                "/umu/tds/gestion_gastos/cuentas/FormularioCuenta.fxml"
+                "/umu/tds/gestion_gastos/cuentas/ListaCuentasView.fxml"
             )
         );
 
         Parent root = loader.load();
 
         // Inyectar controlador de aplicación
-        FormularioCuentaController viewController = loader.getController();
+        ListaCuentasViewController viewController = loader.getController();
         viewController.setControlador(
             Configuracion.getInstancia().getControladorApp()
         );

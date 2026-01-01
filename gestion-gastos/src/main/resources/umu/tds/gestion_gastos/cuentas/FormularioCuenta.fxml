@@ -5,11 +5,13 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="umu.tds.gestion_gastos.vista.cuenta.FormularioCuentaController">
+            fx:controller="umu.tds.gestion_gastos.vista.cuenta.FormularioCuentaController"
+            stylesheets="@../estilos/app.css">
 
     <top>
-        <Label text="Crear / Editar Cuenta"
-               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 15;" />
+        <VBox style="-fx-padding: 15; -fx-background-color: #e9ecef;">
+            <Label text="Crear / Editar Cuenta" styleClass="label-titulo" />
+        </VBox>
     </top>
 
     <center>
@@ -24,23 +26,23 @@
             </columnConstraints>
 
             <children>
-                <Label text="Nombre de la Cuenta:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label text="Nombre de la Cuenta:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
                 <TextField fx:id="campoNombre" promptText="Ej: Viaje a Roma" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                <Label text="Tipo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label text="Tipo:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
                 <ComboBox fx:id="comboTipo" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity"/>
 
-                <Label text="Invitar Amigos:" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.valignment="TOP"/>
+                <Label text="Invitar Amigos:" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.valignment="TOP" style="-fx-font-weight: bold;"/>
                 <ListView fx:id="listaUsuarios" GridPane.rowIndex="2" GridPane.columnIndex="1" prefHeight="150"/>
 
-                <Label text="Nuevo Amigo:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <Label text="Nuevo Amigo:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
                 <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="boxNuevoUsuario">
                     <TextField fx:id="campoNuevoUsuario" promptText="Nombre..." HBox.hgrow="ALWAYS"/>
-                    <Button text="Añadir" onAction="#onAgregarUsuario"/>
+                    <Button text="Añadir" onAction="#onAgregarUsuario" styleClass="boton-info"/>
                 </HBox>
                 
                 <Label text="(Mantén CTRL o CMD para seleccionar varios)" 
-                       style="-fx-font-size: 10px; -fx-text-fill: gray;"
+                       style="-fx-font-size: 11px; -fx-text-fill: #666;"
                        GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
             </children>
@@ -52,8 +54,14 @@
             <padding>
                 <Insets top="15" right="15" bottom="15" left="15"/>
             </padding>
-            <Button fx:id="btnCancelar" text="Cancelar" onAction="#onCancelar"/>
-            <Button fx:id="btnGuardar" text="Guardar" style="-fx-font-weight: bold;" onAction="#onGuardar"/>
+            <style>
+                -fx-border-color: #dee2e6;
+                -fx-border-width: 1 0 0 0;
+            </style>
+            
+            <Button fx:id="btnCancelar" text="Cancelar" onAction="#onCancelar" styleClass="boton-peligro"/>
+            
+            <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="boton-accion"/>
         </HBox>
     </bottom>
 

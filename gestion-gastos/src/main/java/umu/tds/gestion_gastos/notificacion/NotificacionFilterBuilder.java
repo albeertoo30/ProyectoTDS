@@ -1,35 +1,40 @@
 package umu.tds.gestion_gastos.notificacion;
 
 import java.time.LocalDate;
-import java.util.Objects;
-
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.filtros.Filtro;
 
 public class NotificacionFilterBuilder {
-    private INotificacionFilter filter = INotificacionFilter.alwaysTrue();
+
+    private Filtro<Notificacion> filter = Filtro.alwaysTrue();
 
     public NotificacionFilterBuilder fecha(LocalDate desde, LocalDate hasta) {
-        filter = filter.and(new NotificacionFilterFechaRange(desde, hasta));
+        if (desde != null || hasta != null) {
+            filter =filter.and(new NotificacionFilterFechaRange(desde, hasta));
+        }
         return this;
     }
 
     public NotificacionFilterBuilder categoria(Categoria categoria) {
-        INotificacionFilter catFilter = n -> {
-            if (categoria == null) return true;
-            Categoria nc = n.getCategoria();
-            return nc != null && nc.equals(categoria);
-        };
-        filter = filter.and(catFilter);
+        if (categoria != null) {
+            Filtro<Notificacion> catFilter = n -> {
+                Categoria nc = n.getCategoria();
+                return nc != null && nc.getNombre().equals(categoria.getNombre());
+            };
+            filter = filter.and(catFilter);
+        }
         return this;
     }
 
     public NotificacionFilterBuilder leida(Boolean leida) {
-        INotificacionFilter lFilter = n -> leida == null || n.isLeida() == leida;
-        filter = filter.and(lFilter);
+        if (leida != null) {
+            Filtro<Notificacion> lFilter = n -> n.isLeida() == leida;
+            filter = filter.and(lFilter);
+        }
         return this;
     }
 
-    public INotificacionFilter build() {
+    public Filtro<Notificacion> build() {
         return filter;
     }
 }

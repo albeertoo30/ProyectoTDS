@@ -1,5 +1,6 @@
 package umu.tds.gestion_gastos;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,8 +24,9 @@ import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 public class ConfiguracionImpl extends Configuracion {
 
     private final ControladorApp controlador;
-    private final Path rutaDatos;
-
+    private final String NombreApp ="gestion-gastos";
+    private final String NameAlertasJSON = "alertas.json";
+    private final String NameNotificacionesJSON = "notificaciones.json";
     
     
     public ConfiguracionImpl() {
@@ -36,16 +38,17 @@ public class ConfiguracionImpl extends Configuracion {
 
         IAlertaRepository alertaRepo = AlertaRepository.INSTANCE;
         INotificacionRepository notiRepo = NotificacionRepository.INSTANCE;
-        AlertManager alertManager = new AlertManager(gastoRepo, alertaRepo, notiRepo);
+        
+        IAlertManager alertManager = new AlertManager(gastoRepo, alertaRepo, notiRepo);
         gastoRepo.addListener(alertManager);
 
-        
         // Crear controlador con los repositorios
         this.controlador = new ControladorApp(gastoRepo, categoriaRepo,
         					notiRepo, alertaRepo,  alertManager, cuentaRepo, usuarioRepo);
     
-        this.rutaDatos = Paths.get(System.getProperty("user.home"), "gestion-gastos-data");
-
+    
+    
+    
     }    
     
     //Esto no se si va aqui o en el controlador
@@ -85,11 +88,25 @@ public class ConfiguracionImpl extends Configuracion {
         return "/umu/tds/data/usuarios.json";
     }
     
+
+    @Override
+    public String getRutaAlertas() {
+        return System.getProperty("user.home")
+               + File.separator
+               + NombreApp
+               + File.separator
+               + NameAlertasJSON;
+    }
     
     
     @Override 
-    public Path getRutaDatos() {
-        return rutaDatos;
+    public String getRutaNotificaciones() {
+    	return System.getProperty("user.home")
+                + File.separator
+                + NombreApp
+                + File.separator
+                + NameNotificacionesJSON;
     }
+    
     
 }

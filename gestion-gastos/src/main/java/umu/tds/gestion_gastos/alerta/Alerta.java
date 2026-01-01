@@ -73,6 +73,10 @@ public class Alerta {
 		this.activa = false;
 	}
 	
+	public void activarAlarma() {
+		this.activa = true;
+	}
+	
 	public double getLimite() {
 		return this.limite;
 	}

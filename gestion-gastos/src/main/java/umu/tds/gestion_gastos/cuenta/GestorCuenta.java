@@ -40,7 +40,7 @@ public class GestorCuenta {
 		
 		for(Gasto g : gastos) {
 			
-			// TODO: gasto debe tener getUsuario?
+			// TODO: gasto debe tener getUsuario!
 			Usuario pagador = g.getUsuario();
 			double importe = g.getCantidad();
 			

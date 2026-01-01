@@ -27,8 +27,10 @@ public abstract class Configuracion {
     
     public abstract String getRutaUsuarios();
     
-    public abstract Path getRutaDatos();
+    public abstract String getRutaAlertas();
  
+    public abstract String getRutaNotificaciones();
+    
   //Esto no se si va aqui o en el controlador
     public abstract void cargarTodo() throws IOException;
     
