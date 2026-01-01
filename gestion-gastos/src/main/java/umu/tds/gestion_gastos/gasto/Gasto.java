@@ -3,6 +3,7 @@ package umu.tds.gestion_gastos.gasto;
 import java.time.LocalDate;
 
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.usuario.Usuario;
 
 public class Gasto {
@@ -11,19 +12,21 @@ public class Gasto {
 	private LocalDate fecha;
 	private double cantidad;
 	private String descripcion;
-	//private Cuenta cuenta; para cuando se cree la clase cuenta
-	private Usuario usuario;
 	private Categoria categoria;
+	private Cuenta cuenta;
+	private Usuario usuario;
+	
 	
 	// Constructor
-	public Gasto(int id, LocalDate fecha, double cantidad, String descripcion, Usuario usuario, Categoria categoria) {
+	public Gasto(int id, LocalDate fecha, double cantidad, String descripcion, Categoria categoria, Cuenta cuenta, Usuario usuario) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
 		this.cantidad = cantidad;
 		this.descripcion = descripcion;
-		this.usuario = usuario;
 		this.categoria = categoria;
+		this.cuenta = cuenta;
+		this.usuario = usuario;
 	}
 	
 	// Constructor vacío para Jackson

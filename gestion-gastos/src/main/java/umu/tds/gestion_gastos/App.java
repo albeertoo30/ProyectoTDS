@@ -11,6 +11,7 @@ import umu.tds.gestion_gastos.vista.categoria.FormularioCategoriaController;
 import umu.tds.gestion_gastos.vista.cuenta.FormularioCuentaController;
 import umu.tds.gestion_gastos.vista.gasto.*;
 //import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.vista.inicio.VentanaInicioController;
 
 public class App extends Application {
 
@@ -23,14 +24,14 @@ public class App extends Application {
         // Cargar vista
         FXMLLoader loader = new FXMLLoader(
             getClass().getResource(
-            		"/umu/tds/gestion_gastos/gasto/GastosView.fxml"
+            		"/umu/tds/gestion_gastos/inicio/VentanaInicio.fxml"
             )
         );
 
         Parent root = loader.load();
 
         // Inyectar controlador de aplicación
-        ControladorGastosView viewController = loader.getController();
+        VentanaInicioController viewController = loader.getController();
         viewController.setControlador(
             Configuracion.getInstancia().getControladorApp()
         );
