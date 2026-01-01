@@ -49,9 +49,8 @@
                        GridPane.rowIndex="2"
                        GridPane.columnIndex="0"/>
                 <ComboBox fx:id="campoCategoria"
-          				GridPane.rowIndex="2"
-          				GridPane.columnIndex="1"
-          				maxWidth="Infinity"/>
+                          GridPane.rowIndex="2"
+                          GridPane.columnIndex="1"/>
 
                 <!-- DESCRIPCIÓN -->
                 <Label text="Descripción:"

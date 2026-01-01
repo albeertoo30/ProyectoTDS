@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="umu.tds.gestion_gastos.vista.inicio.ControladorInicioView">
+
+    <!-- ===== TÍTULO ===== -->
+    <top>
+        <VBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="40"/>
+            </padding>
+
+            <Label text="Bienvenido a tu Gestor de Gastos">
+                <font>
+                    <Font size="28"/>
+                </font>
+            </Label>
+
+            <Label text="Controla tus gastos personales y compartidos de forma sencilla"
+                   style="-fx-text-fill: gray;"/>
+        </VBox>
+    </top>
+
+    <!-- ===== BOTONES PRINCIPALES ===== -->
+    <center>
+        <VBox alignment="CENTER" spacing="25">
+            <padding>
+                <Insets top="40"/>
+            </padding>
+
+            <Button text="Mi cuenta personal"
+                    fx:id="btnCuentaPersonal"
+                    prefWidth="260"
+                    prefHeight="45"
+                    style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+            <Button text="Cuentas compartidas"
+                    fx:id="btnCuentasCompartidas"
+                    prefWidth="260"
+                    prefHeight="45"
+                    style="-fx-font-size: 14px;"/>
+        </VBox>
+    </center>
+
+</BorderPane>

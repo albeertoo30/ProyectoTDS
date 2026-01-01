@@ -148,4 +148,14 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
 		
 	}
 
+	@Override
+	public void cargar(String ruta) throws IOException {
+		cargarDatos();
+	}
+
+	@Override
+	public void guardar(String ruta) throws IOException {
+		guardarDatos();
+	}
+
 }

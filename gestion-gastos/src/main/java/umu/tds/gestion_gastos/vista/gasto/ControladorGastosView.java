@@ -1,6 +1,8 @@
 package umu.tds.gestion_gastos.vista.gasto;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,6 +25,7 @@ import javafx.stage.Stage;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.vista.categoria.ControladorCategoriasView;
 
 public class ControladorGastosView {
 
@@ -36,8 +39,11 @@ public class ControladorGastosView {
     @FXML private TextField filtroMin;
     @FXML private TextField filtroMax;
 
+    @FXML private Button btnCategorias;
+    @FXML private Button btnNotificaciones;
+    @FXML private Button btnFiltrar;
     @FXML private Button btnLimpiarFiltros;
-    @FXML private Button btnAñadir;
+    @FXML private Button btnAnadir;
     @FXML private Button btnEditar;
     @FXML private Button btnEliminar;
 
@@ -85,6 +91,48 @@ public class ControladorGastosView {
         }
     }
 
+    // BOTON CATEGORIAS
+    @FXML
+    private void onIrACategorias() throws IOException {
+        abrirVentana(
+            "/umu/tds/gestion_gastos/categorias/CategoriaView.fxml",
+            "Categorías"
+        );
+    }
+
+    // BOTON NOTIFICACIONES
+    @FXML
+    private void onIrANotificaciones() throws IOException {
+        abrirVentana(
+            "/umu/tds/gestion_gastos/notificacion/VentanaNotificacion.fxml",
+            "Notificaciones"
+        );
+    }
+
+    // Método auxiliar para abrir ventanas
+    private void abrirVentana(String rutaFXML, String titulo) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+        Parent root = loader.load();
+        
+        // Inyectar el controlador si es necesario
+        Object controller = loader.getController();
+        
+        // Si el controlador tiene método setControlador, inyectarlo
+        if (controller instanceof ControladorCategoriasView) {
+            ((ControladorCategoriasView) controller).setControlador(controlador);
+        }
+        // Agregar otros controladores según sea necesario
+        
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle(titulo);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        
+        // Refrescar tabla al cerrar (por si se modificaron categorías)
+        refrescarTabla();
+    }
+    
     // BOTÓN AÑADIR
     @FXML
     private void onNuevoGasto() throws IOException {
@@ -117,6 +165,31 @@ public class ControladorGastosView {
         }
     }
 
+    // BOTON FILTRAR
+    @FXML
+    private void onAplicarFiltros() {
+        try {
+            // Recoger valores de la vista
+            LocalDate fecha = filtroFecha.getValue();
+            Categoria categoria = filtroCategoria.getValue();
+            String minStr = filtroMin.getText().trim();
+            String maxStr = filtroMax.getText().trim();
+            
+            // Convertir a Double (null si vacío)
+            Double min = minStr.isEmpty() ? null : Double.parseDouble(minStr);
+            Double max = maxStr.isEmpty() ? null : Double.parseDouble(maxStr);
+            
+            // Delegar en ControladorApp
+            List<Gasto> gastosFiltrados = controlador.obtenerGastosFiltrados(fecha, categoria, min, max);
+            
+            // Actualizar vista
+            gastosObservable.setAll(gastosFiltrados);
+            
+        } catch (NumberFormatException e) {
+            mostrarError("Los valores de importe deben ser números válidos.");
+        }
+    }
+    
     // BOTÓN LIMPIAR FILTROS
     @FXML
     private void onLimpiarFiltros() {

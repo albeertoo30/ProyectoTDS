@@ -1,7 +1,11 @@
 package umu.tds.gestion_gastos.gasto;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import umu.tds.gestion_gastos.categoria.Categoria;
 
 public class GestorGastos {
 	
@@ -61,4 +65,20 @@ public class GestorGastos {
 				.collect(Collectors.toList());
 	}
 	
+	// Otra opción de filtrado
+	public List<Gasto> obtenerGastosFiltrados(LocalDate fecha, Categoria categoria, Double min, Double max) {
+	    String nombreCategoria = categoria != null ? categoria.getNombre() : null;
+	    
+	    return obtenerGastosFiltrados(nombreCategoria, min, max).stream()
+	        .filter(g -> fecha == null || g.getFecha().equals(fecha))
+	        .collect(Collectors.toList());
+	}
+	
+	public void cargar(String ruta) throws IOException{
+		repositorio.cargar(ruta);
+	}
+	
+	public void guardar(String ruta) throws IOException{
+		repositorio.guardar(ruta);
+	}
 }

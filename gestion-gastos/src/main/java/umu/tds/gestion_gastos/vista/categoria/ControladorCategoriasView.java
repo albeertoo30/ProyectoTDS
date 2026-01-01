@@ -17,7 +17,7 @@ import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 
 public class ControladorCategoriasView {
 
-    @FXML private Button btnAñadir;
+    @FXML private Button btnAnadir;
     @FXML private Button btnEditar;
     @FXML private Button btnEliminar;
 
@@ -55,7 +55,7 @@ public class ControladorCategoriasView {
     //BOTONES
 
     @FXML
-    private void onAñadirCategoria() throws IOException {
+    private void onAnadirCategoria() throws IOException {
         abrirFormulario(null);
     }
 
