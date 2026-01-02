@@ -89,6 +89,7 @@ public class ConfiguracionImpl extends Configuracion {
     }
     
 
+    //Esto te lo pilla de local.
     @Override
     public String getRutaAlertas() {
         return System.getProperty("user.home")
@@ -108,5 +109,7 @@ public class ConfiguracionImpl extends Configuracion {
                 + NameNotificacionesJSON;
     }
     
+    
+    //Necesito el getCuentaActual para filtrar.
     
 }

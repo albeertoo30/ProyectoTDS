@@ -22,7 +22,8 @@ public interface INotificacionRepository {
 	void cargar(String rutaBase) throws IOException;
 	void guardar(String rutaBase) throws IOException;
 	void limpiarHistorial();
-	void crearNotificacion(String msg, double cantidad, String alertId, Categoria categoria);
+	void crearNotificacion(String msg, double cantidad, String alertId, Categoria categoria, String idCuenta);
+	List<Notificacion> getNotificacionesPorCuenta(String id);
 	
 	
 	

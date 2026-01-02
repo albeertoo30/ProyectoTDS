@@ -21,11 +21,12 @@ public class Notificacion {
 	private LocalDate fecha;
 	private String alertaId;
 	private Categoria categoria;
+	private String idCuenta;
 	private boolean leida;
 	
 	//Constructor
 	public Notificacion(String mensaje, double importe, 
-			String alertaId, Categoria categoria) {
+			String alertaId, Categoria categoria, String idCuenta) {
 	
 		this.id = UUID.randomUUID().toString();
 		this.mensaje = Objects.requireNonNull(mensaje);
@@ -34,6 +35,7 @@ public class Notificacion {
 		this.alertaId = alertaId;
 		this.categoria = categoria;
 		this.leida = false;
+		this.idCuenta = idCuenta;
 	}
 	
 	public Notificacion() {}
@@ -49,6 +51,13 @@ public class Notificacion {
 	 */
 	public String getId() {
 		return id;
+	}
+
+	/**
+	 * @return the idCuenta
+	 */
+	public String getIDCuenta() {
+		return idCuenta;
 	}
 
 	/**

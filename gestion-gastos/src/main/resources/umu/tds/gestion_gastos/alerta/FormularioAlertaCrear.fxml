@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="15" stylesheets="@../estilos/app.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="umu.tds.gestion_gastos.alerta.controlador.ControladorCrearAlerta">
+
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+
+    <Label styleClass="label-titulo" text="Crear alerta" />
+   <Separator prefWidth="200.0" />
+
+    <TextField fx:id="tfDescripcion" promptText="Descripción" />
+
+    <TextField fx:id="tfLimite" promptText="Límite (€)" />
+
+    <ComboBox fx:id="cbCategorias" promptText="Categoría (opcional)" />
+
+    <ComboBox fx:id="cbTipo" promptText="Tipo de alerta" />
+   <Separator prefWidth="200.0" />
+
+    <HBox alignment="TOP_RIGHT" spacing="10">
+        <Button onAction="#onCrearAlerta" styleClass="boton-accion" text="Crear" />
+        <Button onAction="#onCancelar" styleClass="boton-peligro" text="Cancelar" />
+    </HBox>
+
+</VBox>

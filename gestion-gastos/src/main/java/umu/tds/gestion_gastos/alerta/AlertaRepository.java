@@ -91,8 +91,8 @@ public enum AlertaRepository implements IAlertaRepository{ // Es observer de Gas
 	
 	
 	@Override
-	public void crearAlerta(String descripcion, Categoria categoria, AlertaStrategy strategy, double limite) {
-		Alerta alerta = new Alerta(descripcion, categoria, strategy, limite);
+	public void crearAlerta(String descripcion, Categoria categoria, AlertaStrategy strategy, double limite, String idCUenta) {
+		Alerta alerta = new Alerta(descripcion, categoria, strategy, limite, idCUenta);
 		add(alerta);
 	}
 	  
@@ -153,6 +153,13 @@ public enum AlertaRepository implements IAlertaRepository{ // Es observer de Gas
 	@Override
 	public Optional<Alerta> getById(String id) {
 		return listaAlertas.stream().filter(x -> x.getId().equals(id)).findFirst();
+	}
+
+	@Override
+	public List<Alerta> getAlertasPorCuenta(String cuentaActual) {
+		return this.listaAlertas.stream()
+				.filter(a -> a.getIDCuenta().equals(cuentaActual))
+				.collect(Collectors.toList());
 	}
 	
     

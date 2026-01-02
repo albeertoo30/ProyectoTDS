@@ -36,4 +36,8 @@ public abstract class Configuracion {
     
     public abstract void guardarTodo() throws IOException;
     
+    public abstract String getCuentaActual();
+    
+    
+    
 }

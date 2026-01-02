@@ -2,6 +2,7 @@ package umu.tds.gestion_gastos.alerta;
 import java.time.LocalDate;
 import java.util.List;
 
+import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.gasto.GastoRepository;
@@ -42,7 +43,7 @@ public class AlertManager implements IAlertManager {
     
     private void crearNotificacionAlerta(Alerta alerta, Gasto nuevoGasto, List<Gasto> todosGastos) {
         String mensaje = generarMensajeNotificacion(alerta);
-    	notiRepo.crearNotificacion(mensaje, alerta.getLimite(), alerta.getId(), alerta.getCategoria());
+    	notiRepo.crearNotificacion(mensaje, alerta.getLimite(), alerta.getId(), alerta.getCategoria(), Configuracion.getInstancia().getCuentaActual());
 
     }
     

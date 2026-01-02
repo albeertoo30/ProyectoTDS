@@ -59,7 +59,7 @@ public class ControladorVentanaNotificacion {
         nuevas.clear();
         vistas.clear();
 
-        List<Notificacion> todas = controlador.getNotificaciones();
+        List<Notificacion> todas = controlador.getNotificacionesPorCuenta();
         for (Notificacion n : todas) {
             if (n.isLeida()) vistas.add(n);
             else nuevas.add(n);

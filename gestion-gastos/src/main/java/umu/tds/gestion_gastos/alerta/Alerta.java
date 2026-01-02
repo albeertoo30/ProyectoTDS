@@ -17,6 +17,7 @@ public class Alerta {
 	private boolean activa;
 	private String descripcion;
 	private Categoria categoria; // opcional: null = todas las categorías
+	private String idCuenta;
 	private AlertaStrategy strategy;
 	
 	//Constructores
@@ -26,12 +27,14 @@ public class Alerta {
 	public Alerta(@JsonProperty("descripcion") String descripcion,
                   @JsonProperty("categoria") Categoria categoria,
                   @JsonProperty("strategy") AlertaStrategy strategy,
-				  @JsonProperty("limite")double limite) {
+				  @JsonProperty("limite")double limite,
+				  @JsonProperty("idCuenta")String idCuenta) {
 		this.id = UUID.randomUUID().toString();
 		this.limite = limite;
 		this.descripcion = descripcion;
 		this.categoria = categoria;
 		this.strategy = strategy;
+		this.idCuenta = idCuenta;
 		//Por defecto cuando se crea se activa
 		this.activa = true;
 	}
@@ -90,6 +93,10 @@ public class Alerta {
         return String.format("Alerta[id=%s, descripcion='%s', limite=%.2f, categoria=%s, activa=%s]",
             id, descripcion, limite, categoria != null ? categoria : "todas", activa);
     }
+
+	public String getIDCuenta() {
+		return this.idCuenta;
+	}
 	
 	
 }

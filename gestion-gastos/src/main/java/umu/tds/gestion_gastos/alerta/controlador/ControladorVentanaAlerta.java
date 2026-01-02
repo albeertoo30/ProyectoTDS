@@ -3,13 +3,24 @@ package umu.tds.gestion_gastos.alerta.controlador;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.alerta.Alerta;
 import umu.tds.gestion_gastos.alerta.AlertaFilterBuilder;
+import umu.tds.gestion_gastos.alerta.AlertaMensual;
+import umu.tds.gestion_gastos.alerta.AlertaSemanal;
+import umu.tds.gestion_gastos.alerta.AlertaStrategy;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.filtros.Filtro;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ControladorVentanaAlerta {
@@ -51,7 +62,7 @@ public class ControladorVentanaAlerta {
         activas.clear();
         inactivas.clear();
 
-        List<Alerta> todas = controlador.getAlertas();
+        List<Alerta> todas = controlador.getAlertasPorCuenta();
         for (Alerta a : todas) {
             if (a.isActiva()) activas.add(a);
             else inactivas.add(a);
@@ -174,4 +185,26 @@ public class ControladorVentanaAlerta {
         }
         cargarAlertas();
     }
+    
+
+    @FXML
+    private void onNuevaAlerta() throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+            getClass().getResource("/umu/tds/gestion_gastos/alerta/vista/CrearAlerta.fxml")
+        );
+        Parent root = loader.load();
+
+        ControladorCrearAlerta c = loader.getController();
+        c.setControlador(controlador);
+
+        Stage stage = new Stage();
+        stage.setTitle("Crear alerta");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+
+        cargarAlertas();
+    }
+
+
+    
 }
