@@ -38,15 +38,14 @@ public class FormularioGastoController {
     private Runnable onSaveCallback;
 
     //@Override
-    public void initialize(URL location, ResourceBundle resources) {
-        configurarConvertidores();
-        configurarListenerCuenta();
-    }
+    // public void initialize(URL location, ResourceBundle resources) {}
     
     public void setControlador(ControladorApp controlador) {
         this.controlador = controlador;
         cargarCategorias();
         cargarCuentas();
+        configurarConvertidores();
+        configurarListenerCuenta();
     }
 
     public void setGasto(Gasto g) {
@@ -74,12 +73,15 @@ public class FormularioGastoController {
         // Convertidor Categoría
         campoCategoria.setConverter(new StringConverter<Categoria>() {
             @Override
-            public String toString(Categoria c) { return c == null ? "" : c.getNombre(); }
+            public String toString(Categoria c) { 
+                String resultado = c == null ? "" : c.getNombre();
+                return resultado;
+            }
             @Override
             public Categoria fromString(String s) { return null; }
         });
 
-        // Convertidor Cuenta (Maneja String y Objeto Cuenta)
+        // Convertidor Cuenta (Acepta String y Objeto Cuenta)
         campoCuenta.setConverter(new StringConverter<Object>() {
             @Override
             public String toString(Object obj) {
@@ -104,7 +106,7 @@ public class FormularioGastoController {
     // Dependencia Cuenta -> Usuario
     private void configurarListenerCuenta() {
         campoCuenta.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal == null) return;
+        	if (newVal == null || controlador == null) return;
             
             campoUsuario.getItems().clear();
             Usuario usuarioActual = controlador.getUsuarioActual(); 
@@ -143,9 +145,7 @@ public class FormularioGastoController {
         if (campoFecha.getValue() == null || 
             campoCategoria.getValue() == null || 
             campoCantidad.getText().isBlank() ||
-            campoCuenta.getValue() == null ||
-            campoUsuario.getValue() == null) {
-            
+            campoCuenta.getValue() == null) {
             mostrarError("Todos los campos son obligatorios");
             return;
         }
@@ -156,17 +156,34 @@ public class FormularioGastoController {
             Categoria cat = campoCategoria.getValue();
             double cantidad = Double.parseDouble(campoCantidad.getText());
             String desc = campoDescripcion.getText();
-            Usuario pagador = campoUsuario.getValue();
-
+            Usuario pagador = null;
             Object seleccionCuenta = campoCuenta.getValue();
-            Cuenta cuenta = (seleccionCuenta instanceof Cuenta) ? (Cuenta) seleccionCuenta : null;
+            Cuenta cuentaDestino = null;
+
+            if (seleccionCuenta.equals("Individual")) {
+                // CASO INDIVIDUAL:
+                // Asignamos directamente el usuario actual de la sesión.
+                pagador = controlador.getUsuarioActual();
+                cuentaDestino = null; // En individual la cuenta es null
+                
+            } else if (seleccionCuenta instanceof Cuenta) {
+                // CASO COMPARTIDA:
+                // Aquí sí es obligatorio que el usuario haya seleccionado algo en el combo
+                cuentaDestino = (Cuenta) seleccionCuenta;
+                pagador = campoUsuario.getValue();
+                
+                if (pagador == null) {
+                    mostrarError("En una cuenta compartida debes indicar quién ha pagado (Usuario).");
+                    return;
+                }
+            }
 
             // 3. Delegación al Controlador (Patrón Creador / Controlador)
             if (gastoEditando == null) {
-                controlador.crearGasto(fecha, cantidad, desc, cat, pagador, cuenta);
+                controlador.crearGasto(fecha, cantidad, desc, cat, pagador, cuentaDestino);
             } else {
                 // EDICIÓN: Pasamos el objeto a editar y los nuevos datos
-                controlador.actualizarGasto(gastoEditando, fecha, cantidad, desc, cat, pagador, cuenta);
+                controlador.actualizarGasto(gastoEditando, fecha, cantidad, desc, cat, pagador, cuentaDestino);
             }
 
             if (onSaveCallback != null) onSaveCallback.run();

@@ -24,14 +24,14 @@ public class App extends Application {
         // Cargar vista
         FXMLLoader loader = new FXMLLoader(
             getClass().getResource(
-            		"/umu/tds/gestion_gastos/gasto/GastosView.fxml"
+            		"/umu/tds/gestion_gastos/inicio/VentanaInicio.fxml"
             )
         );
 
         Parent root = loader.load();
 
         // Inyectar controlador de aplicación
-        ControladorGastosView viewController = loader.getController();
+        VentanaInicioController viewController = loader.getController();
         viewController.setControlador(
             Configuracion.getInstancia().getControladorApp()
         );

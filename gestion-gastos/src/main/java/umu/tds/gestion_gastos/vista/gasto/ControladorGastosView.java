@@ -3,6 +3,7 @@ package umu.tds.gestion_gastos.vista.gasto;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,10 +23,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.usuario.Usuario;
 import umu.tds.gestion_gastos.vista.categoria.ControladorCategoriasView;
+import umu.tds.gestion_gastos.vista.inicio.VentanaInicioController;
 
 public class ControladorGastosView {
 
@@ -34,11 +38,13 @@ public class ControladorGastosView {
     @FXML private TableColumn<Gasto, String> colCategoria;
     @FXML private TableColumn<Gasto, Double> colCantidad;
     @FXML private TableColumn<Gasto, String> colDescripcion;
+    @FXML private TableColumn<Gasto, String> colCuenta;
     @FXML private DatePicker filtroFecha;
     @FXML private ComboBox<Categoria> filtroCategoria;
     @FXML private TextField filtroMin;
     @FXML private TextField filtroMax;
 
+    @FXML private Button btnInicio;
     @FXML private Button btnCategorias;
     @FXML private Button btnNotificaciones;
     @FXML private Button btnFiltrar;
@@ -62,9 +68,9 @@ public class ControladorGastosView {
     }
 
     @FXML
-    public void initialize() { 	
-    	tablaGastos.setItems(gastosObservable);
-   
+    public void initialize() {
+        tablaGastos.setItems(gastosObservable);
+
         colFecha.setCellValueFactory(cellData ->
             new SimpleStringProperty(cellData.getValue().getFecha().toString())
         );
@@ -83,14 +89,70 @@ public class ControladorGastosView {
         colDescripcion.setCellValueFactory(cellData ->
             new SimpleStringProperty(cellData.getValue().getDescripcion())
         );
+        
+        colCuenta.setCellValueFactory(cellData -> {
+            Gasto gasto = cellData.getValue();
+            if (gasto.getCuenta() == null) {
+                // Si la cuenta es null, asumimos que es un gasto INDIVIDUAL
+                return new SimpleStringProperty("Individual");
+            } else {
+                // Si hay objeto cuenta, mostramos su nombre
+                return new SimpleStringProperty(gasto.getCuenta().getNombre());
+            }
+        });
+        
+        filtroCategoria.setConverter(new StringConverter<Categoria>() {
+            @Override
+            public String toString(Categoria categoria) {
+                return categoria == null ? "" : categoria.getNombre();
+            }
+            @Override
+            public Categoria fromString(String string) {
+                return null;
+            }
+        });
     }
-
+    
+    
     private void refrescarTabla() {
         if (controlador != null) {
-            gastosObservable.setAll(controlador.obtenerGastos());
+        	Usuario actual = controlador.getUsuarioActual();
+        	List<Gasto> misGastos = controlador.obtenerGastos().stream()
+        			.filter(g -> g.getUsuario() != null && g.getUsuario().equals(actual))
+        			.collect(Collectors.toList());
+            gastosObservable.setAll(misGastos);
         }
     }
 
+    // VOLVER A LA VENTANA DE INICIO
+    @FXML
+    private void onVolverInicio() {
+        try {
+            // Cargar la vista de Inicio
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/umu/tds/gestion_gastos/inicio/VentanaInicio.fxml"));
+            Parent root = loader.load();
+
+            // Inyectar el controlador principal a la ventana de inicio
+            // (Para no perder la sesión del usuario ni los datos cargados)
+            VentanaInicioController controladorInicio = loader.getController();
+            controladorInicio.setControlador(this.controlador);
+
+            // Crear y mostrar la ventana de Inicio
+            Stage stageInicio = new Stage();
+            stageInicio.setScene(new Scene(root, 1200, 700));
+            stageInicio.setTitle("Gestor de Gastos");
+            stageInicio.show();
+
+            // Cerrar la ventana actual (GastosView)
+            Stage stageActual = (Stage) btnCategorias.getScene().getWindow();
+            stageActual.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarError("No se pudo volver a la pantalla de inicio.");
+        }
+    }
+    
     // BOTON CATEGORIAS
     @FXML
     private void onIrACategorias() throws IOException {
@@ -179,11 +241,18 @@ public class ControladorGastosView {
             Double min = minStr.isEmpty() ? null : Double.parseDouble(minStr);
             Double max = maxStr.isEmpty() ? null : Double.parseDouble(maxStr);
             
+            Usuario actual = controlador.getUsuarioActual();
+            
             // Delegar en ControladorApp
             List<Gasto> gastosFiltrados = controlador.obtenerGastosFiltrados(fecha, categoria, min, max);
             
+            // Por si acaso
+            List<Gasto> misGastos = gastosFiltrados.stream()
+        			.filter(g -> g.getUsuario() != null && g.getUsuario().equals(actual))
+        			.collect(Collectors.toList());
+            
             // Actualizar vista
-            gastosObservable.setAll(gastosFiltrados);
+            gastosObservable.setAll(misGastos);
             
         } catch (NumberFormatException e) {
             mostrarError("Los valores de importe deben ser números válidos.");
