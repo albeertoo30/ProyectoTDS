@@ -1,7 +1,9 @@
 package umu.tds.gestion_gastos.vista.gasto;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,8 +16,11 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.cuenta.Cuenta;
+import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.usuario.Usuario;
 
 public class FormularioGastoController {
 
@@ -23,17 +28,25 @@ public class FormularioGastoController {
     @FXML private ComboBox<Categoria> campoCategoria;
     @FXML private TextField campoCantidad;
     @FXML private TextArea campoDescripcion;
+    @FXML private ComboBox<Object> campoCuenta;
+    @FXML private ComboBox<Usuario> campoUsuario;
     @FXML private Button btnGuardar;
     @FXML private Button btnCancelar;
 
     private ControladorApp controlador;
-
     private Gasto gastoEditando;
     private Runnable onSaveCallback;
 
+    //@Override
+    public void initialize(URL location, ResourceBundle resources) {
+        configurarConvertidores();
+        configurarListenerCuenta();
+    }
+    
     public void setControlador(ControladorApp controlador) {
         this.controlador = controlador;
         cargarCategorias();
+        cargarCuentas();
     }
 
     public void setGasto(Gasto g) {
@@ -43,55 +56,127 @@ public class FormularioGastoController {
             campoCategoria.setValue(g.getCategoria());
             campoCantidad.setText(String.valueOf(g.getCantidad()));
             campoDescripcion.setText(g.getDescripcion());
+            if(g.getCuenta() == null) {
+            	campoCuenta.setValue("Individual");
+            }else {
+            	campoCuenta.setValue(g.getCuenta());
+            }
+            campoUsuario.setValue(g.getUsuario());
         }
     }
 
     public void setOnSave(Runnable r) {
         this.onSaveCallback = r;
     }
-
-    @FXML
-    private void initialize() {
-        campoCategoria.setConverter(new StringConverter<>() {
+    
+    // Configura cómo se muestran los objetos en los ComboBox
+    private void configurarConvertidores() {
+        // Convertidor Categoría
+        campoCategoria.setConverter(new StringConverter<Categoria>() {
             @Override
-            public String toString(Categoria categoria) {
-                return categoria == null ? "" : categoria.getNombre();
+            public String toString(Categoria c) { return c == null ? "" : c.getNombre(); }
+            @Override
+            public Categoria fromString(String s) { return null; }
+        });
+
+        // Convertidor Cuenta (Maneja String y Objeto Cuenta)
+        campoCuenta.setConverter(new StringConverter<Object>() {
+            @Override
+            public String toString(Object obj) {
+                if (obj == null) return "";
+                if (obj instanceof String) return (String) obj; // Caso "Individual"
+                if (obj instanceof Cuenta) return ((Cuenta) obj).getNombre(); // Caso Cuenta Compartida
+                return obj.toString();
             }
             @Override
-            public Categoria fromString(String string) {
-                return null; // No se usa
+            public Object fromString(String string) { return null; }
+        });
+        
+        // Convertidor Usuario
+        campoUsuario.setConverter(new StringConverter<Usuario>() {
+            @Override
+            public String toString(Usuario u) { return u == null ? "" : u.getNombre(); }
+            @Override
+            public Usuario fromString(String s) { return null; }
+        });
+    }
+
+    // Dependencia Cuenta -> Usuario
+    private void configurarListenerCuenta() {
+        campoCuenta.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal == null) return;
+            
+            campoUsuario.getItems().clear();
+            Usuario usuarioActual = controlador.getUsuarioActual(); 
+
+            if (newVal.equals("Individual")) {
+                // Caso Individual: Usuario es "Yo" (usuario actual) y está bloqueado
+                campoUsuario.getItems().add(usuarioActual); 
+                campoUsuario.setValue(usuarioActual);
+                campoUsuario.setDisable(true); // Deshabilitado porque es obvio
+                
+            } else if (newVal instanceof CuentaCompartida) {
+                // Caso Compartida: Cargar miembros
+                CuentaCompartida cuentaSeleccionada = (CuentaCompartida) newVal;
+                campoUsuario.setDisable(false); // Habilitado para elegir quién pagó
+                
+                 // Obtenemos los miembros de la cuenta
+                List<Usuario> miembros = cuentaSeleccionada.getMiembros();
+                
+                if (miembros != null && !miembros.isEmpty()) {
+                    campoUsuario.getItems().addAll(miembros);
+                    
+                    // Si el usuario actual está en esa cuenta, lo pre-seleccionamos
+                    if (miembros.contains(usuarioActual)) {
+                        campoUsuario.getSelectionModel().select(usuarioActual);
+                    } else {
+                        campoUsuario.getSelectionModel().selectFirst();
+                    }
+                }
             }
         });
     }
 
     @FXML
     private void onGuardar() {
-    	if (campoFecha.getValue() == null || campoCategoria.getValue() == null || campoCantidad.getText().isBlank()) {
-    		mostrarError("Todos los campos son obligatorios");
-    		return;
-    	}
+        // 1. Validaciones de interfaz
+        if (campoFecha.getValue() == null || 
+            campoCategoria.getValue() == null || 
+            campoCantidad.getText().isBlank() ||
+            campoCuenta.getValue() == null ||
+            campoUsuario.getValue() == null) {
+            
+            mostrarError("Todos los campos son obligatorios");
+            return;
+        }
+
         try {
+            // 2. Extracción de datos de la vista
             LocalDate fecha = campoFecha.getValue();
             Categoria cat = campoCategoria.getValue();
             double cantidad = Double.parseDouble(campoCantidad.getText());
             String desc = campoDescripcion.getText();
+            Usuario pagador = campoUsuario.getValue();
 
+            Object seleccionCuenta = campoCuenta.getValue();
+            Cuenta cuenta = (seleccionCuenta instanceof Cuenta) ? (Cuenta) seleccionCuenta : null;
+
+            // 3. Delegación al Controlador (Patrón Creador / Controlador)
             if (gastoEditando == null) {
-                // ID = 0 provisional (lo corregiremos con persistencia)
-                Gasto nuevo = new Gasto(0, fecha, cantidad, desc, cat);
-                controlador.registrarGasto(nuevo);
+                controlador.crearGasto(fecha, cantidad, desc, cat, pagador, cuenta);
             } else {
-                gastoEditando.setFecha(fecha);
-                gastoEditando.setCategoria(cat);
-                gastoEditando.setCantidad(cantidad);
-                gastoEditando.setDescripcion(desc);
-                controlador.editarGasto(gastoEditando);
+                // EDICIÓN: Pasamos el objeto a editar y los nuevos datos
+                controlador.actualizarGasto(gastoEditando, fecha, cantidad, desc, cat, pagador, cuenta);
             }
 
             if (onSaveCallback != null) onSaveCallback.run();
             cerrar();
+
+        } catch (NumberFormatException e) {
+            mostrarError("La cantidad debe ser un número válido.");
         } catch (Exception e) {
-            mostrarError("Datos incorrectos: " + e.getMessage());
+            mostrarError("Error al guardar: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -109,6 +194,22 @@ public class FormularioGastoController {
         }
     }
 
+    private void cargarCuentas() {
+        if (controlador != null) {
+            campoCuenta.getItems().clear();
+            
+            // 1. Añadir opción por defecto
+            campoCuenta.getItems().add("Individual");
+            
+            // 2. Añadir cuentas compartidas reales
+            List<Cuenta> cuentasCompartidas = controlador.obtenerCuentasCompartidas();
+            campoCuenta.getItems().addAll(cuentasCompartidas);
+            
+            // 3. Seleccionar "Individual" por defecto
+            campoCuenta.getSelectionModel().select("Individual");
+        }
+    }
+    
     private void cerrar() {
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();

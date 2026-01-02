@@ -3,7 +3,9 @@ package umu.tds.gestion_gastos.negocio.controladores;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.alerta.AlertManager;
@@ -16,6 +18,7 @@ import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.categoria.CategoriaRepository;
 import umu.tds.gestion_gastos.categoria.GestorCategorias;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
+import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
 import umu.tds.gestion_gastos.cuenta.CuentaRepository;
 import umu.tds.gestion_gastos.cuenta.GestorCuenta;
 import umu.tds.gestion_gastos.filtros.Filtro;
@@ -88,9 +91,6 @@ public class ControladorApp { //Yo le crearia una interfaz
     public void guardarAlertas() throws IOException {
         repoAlertas.guardar(Configuracion.getInstancia().getRutaAlertas());
     }
-
-    
-    
     
     private void inicializarSesion() {
     	this.usuarioActual = this.gestorUsuarios.inicializarSesion();
@@ -101,14 +101,14 @@ public class ControladorApp { //Yo le crearia una interfaz
         return gestorGastos.obtenerTodos();
     }
 
-    public void registrarGasto(Gasto gasto) {
-        gestorGastos.registrarGasto(gasto);
+    public void crearGasto(LocalDate fecha, double cantidad, String descripcion, Categoria categoria, Usuario pagador, Cuenta cuenta) {
+    	gestorGastos.crearGasto(fecha, cantidad, descripcion, categoria, pagador, cuenta);
     }
 
-    public void editarGasto(Gasto gasto) {
-        gestorGastos.editarGasto(gasto);
+    public void actualizarGasto(Gasto gastoExistente, LocalDate fecha, double cantidad, String descripcion, Categoria categoria, Usuario pagador, Cuenta cuenta) {
+    	gestorGastos.modificarGasto(gastoExistente, fecha, cantidad, descripcion, categoria, pagador, cuenta);
     }
-
+    
     public void eliminarGasto(int id) {
         gestorGastos.eliminarGasto(id);
     }
@@ -216,6 +216,16 @@ public class ControladorApp { //Yo le crearia una interfaz
     
     public List<Cuenta> obtenerTodasLasCuentas() {
     	return this.gestorCuentas.getAll();
+    }
+    
+    public List<Cuenta> obtenerCuentasCompartidas() {
+    	List<Cuenta> resultado = new ArrayList<Cuenta>();
+        for(Cuenta c: this.gestorCuentas.getAll()) {
+        	if(c instanceof CuentaCompartida cc) {
+        		resultado.add(cc);
+        	}
+        }
+        return resultado;
     }
     
     public void eliminarCuenta(int id) {

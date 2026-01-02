@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.cuenta.Cuenta;
+import umu.tds.gestion_gastos.usuario.Usuario;
 
 public class GestorGastos {
 	
@@ -20,11 +22,36 @@ public class GestorGastos {
         return repositorio.getAll();
     }
 	
-	// Funcionalidad
+	
+    // PATRÓN CREADOR: GestorGastos tiene la información para crear y registrar el Gasto.
+    public void crearGasto(LocalDate fecha, double cantidad, String descripcion, Categoria categoria, Usuario pagador, Cuenta cuenta) {
+    	//ID 0 provisionalmente hasta que la persistencia asigne el real
+        Gasto nuevoGasto = new Gasto(0, fecha, cantidad, descripcion, categoria);
+        
+        // Asignación de cuenta y usuario pagador
+        nuevoGasto.setUsuario(pagador);
+        nuevoGasto.setCuenta(cuenta);
+
+        // Registro en el repositorio
+        registrarGasto(nuevoGasto); 
+    }
+	
 	public void registrarGasto(Gasto g) {
 		if (g == null) throw new IllegalArgumentException("El gasto no puede ser nulo");
         if (g.getCantidad() <= 0) throw new IllegalArgumentException("La cantidad debe ser positiva");
         repositorio.add(g);
+	}
+	
+	
+	public void modificarGasto(Gasto gasto, LocalDate fecha, double cantidad, String descripcion, Categoria categoria, Usuario pagador, Cuenta cuenta) {
+		gasto.setFecha(fecha);
+		gasto.setCantidad(cantidad);
+		gasto.setDescripcion(descripcion);
+		gasto.setCategoria(categoria);
+		gasto.setUsuario(pagador);
+		gasto.setCuenta(cuenta);
+
+		editarGasto(gasto); 
 	}
 	
 	public void editarGasto(Gasto g) {
