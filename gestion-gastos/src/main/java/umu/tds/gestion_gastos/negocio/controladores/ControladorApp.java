@@ -156,6 +156,11 @@ public class ControladorApp { //Yo le crearia una interfaz
     public List<Alerta> getAlertas() {
     	return repoAlertas.getAlertas();
     }
+    
+    public List<Alerta> getAlertasPorCuenta() {
+    	return repoAlertas.getAlertasPorCuenta(Configuracion.getInstancia().getCuentaActual());
+    }
+    
     public List<Alerta> getAlertasActivas() {
     	return repoAlertas.getAlertasActivas();
     }
@@ -186,6 +191,10 @@ public class ControladorApp { //Yo le crearia una interfaz
        
     public List<Notificacion> getNotificaciones() {
     	return repoNotificaciones.getNotificaciones();
+    }
+    
+    public List<Notificacion> getNotificacionesPorCuenta(){
+    	return repoNotificaciones.getNotificacionesPorCuenta(Configuracion.getInstancia().getCuentaActual());
     }
     
     public List<Notificacion> getNotificacionesOrdenadasDesFecha(){
@@ -241,8 +250,5 @@ public class ControladorApp { //Yo le crearia una interfaz
     public List<Usuario> obtenerTodosLosUsuarios() {
         return gestorUsuarios.obtenerOtrosUsuarios(usuarioActual.getId());
     }
-    
-
-    
     
 }
