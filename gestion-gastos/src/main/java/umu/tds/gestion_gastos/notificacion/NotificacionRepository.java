@@ -146,9 +146,16 @@ public enum NotificacionRepository implements INotificacionRepository{
 
 
 	@Override
-	public void crearNotificacion(String msg, double cantidad, String alertId, Categoria categoria) {
-		Notificacion noti = new Notificacion(msg, cantidad, alertId, categoria);
+	public void crearNotificacion(String msg, double cantidad, String alertId, Categoria categoria, String idCuenta) {
+		Notificacion noti = new Notificacion(msg, cantidad, alertId, categoria, idCuenta);
 		this.add(noti);
+	}
+
+	@Override
+	public List<Notificacion> getNotificacionesPorCuenta(String id) {
+		return this.listaNotificaciones.stream()
+		.filter(a -> a.getIDCuenta().equals(id))
+		.collect(Collectors.toList());
 	}
 	
 	

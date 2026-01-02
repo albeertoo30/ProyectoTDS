@@ -1,6 +1,7 @@
 package umu.tds.gestion_gastos.negocio.controladores;
 
 import java.io.IOException;
+import java.io.ObjectInputFilter.Config;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
@@ -156,12 +157,17 @@ public class ControladorApp { //Yo le crearia una interfaz
     public List<Alerta> getAlertas() {
     	return repoAlertas.getAlertas();
     }
+    
+    public List<Alerta> getAlertasPorCuenta() {
+    	return repoAlertas.getAlertasPorCuenta(Configuracion.getInstancia().getCuentaActual());
+    }
+    
     public List<Alerta> getAlertasActivas() {
     	return repoAlertas.getAlertasActivas();
     }
  
-	public void crearAlerta(String descripcion, Categoria categoria, AlertaStrategy strategy, double limite) {
-		repoAlertas.crearAlerta(descripcion, categoria, strategy, limite);
+	public void crearAlerta(String descripcion, Categoria categoria, AlertaStrategy strategy, double limite, String idCuenta) {
+		repoAlertas.crearAlerta(descripcion, categoria, strategy, limite, idCuenta);
 	}
  
     public List<Alerta> filtrarAlertas(Filtro<Alerta> filter){
@@ -188,6 +194,11 @@ public class ControladorApp { //Yo le crearia una interfaz
     	return repoNotificaciones.getNotificaciones();
     }
     
+    public List<Notificacion> getNotificacionesPorCuenta(){
+    	
+    	return repoNotificaciones.getNotificacionesPorCuenta(Configuracion.getInstancia().getCuentaActual());
+    }
+    
     public List<Notificacion> getNotificacionesOrdenadasDesFecha(){
     	return repoNotificaciones.getAllOrderedByDateDesc();
     }
@@ -207,6 +218,8 @@ public class ControladorApp { //Yo le crearia una interfaz
     public void limpiarHistorialNotificaciones() {
     	repoNotificaciones.limpiarHistorial();
     }
+    
+    
     
     //Cuentas
     

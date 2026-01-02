@@ -57,8 +57,9 @@ public interface IAlertaRepository {
      * @param Categoria de la alerta
      * @param Estrategia de la alerta
      * @param limite de la alerta
+     * @param id de la cuenta
      */
-    void crearAlerta(String descripcion, Categoria categoria, AlertaStrategy strategy, double limite);
+    void crearAlerta(String descripcion, Categoria categoria, AlertaStrategy strategy, double limite, String idCuenta);
     
     
     /**
@@ -89,5 +90,8 @@ public interface IAlertaRepository {
 	
 	
 	Optional<Alerta> getById(String id);
+
+	
+	List<Alerta> getAlertasPorCuenta(String cuentaActual);
 	
 }

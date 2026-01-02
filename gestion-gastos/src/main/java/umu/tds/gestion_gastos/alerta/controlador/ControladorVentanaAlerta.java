@@ -51,7 +51,7 @@ public class ControladorVentanaAlerta {
         activas.clear();
         inactivas.clear();
 
-        List<Alerta> todas = controlador.getAlertas();
+        List<Alerta> todas = controlador.getAlertasPorCuenta();
         for (Alerta a : todas) {
             if (a.isActiva()) activas.add(a);
             else inactivas.add(a);
