@@ -7,18 +7,16 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="umu.tds.gestion_gastos.vista.gasto.FormularioGastoController">
 
-    <!-- ======== TÍTULO SUPERIOR ======== -->
     <top>
         <Label text="Registrar / Editar Gasto"
                style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 15;" />
     </top>
 
-    <!-- ======== CENTRO: FORMULARIO ======== -->
     <center>
         <GridPane hgap="15" vgap="15">
-    		<padding>
-        		<Insets top="20" right="20" bottom="20" left="20"/>
-    		</padding>
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
             <columnConstraints>
                 <ColumnConstraints halignment="RIGHT"/>
@@ -27,7 +25,6 @@
 
             <children>
 
-                <!-- CANTIDAD -->
                 <Label text="Cantidad (€):"
                        GridPane.rowIndex="0"
                        GridPane.columnIndex="0"/>
@@ -36,7 +33,6 @@
                            GridPane.rowIndex="0"
                            GridPane.columnIndex="1"/>
 
-                <!-- FECHA -->
                 <Label text="Fecha:"
                        GridPane.rowIndex="1"
                        GridPane.columnIndex="0"/>
@@ -44,7 +40,6 @@
                             GridPane.rowIndex="1"
                             GridPane.columnIndex="1"/>
 
-                <!-- CATEGORÍA -->
                 <Label text="Categoría:"
                        GridPane.rowIndex="2"
                        GridPane.columnIndex="0"/>
@@ -52,27 +47,44 @@
                           GridPane.rowIndex="2"
                           GridPane.columnIndex="1"/>
 
-                <!-- DESCRIPCIÓN -->
-                <Label text="Descripción:"
+                <Label text="Cuenta:"
                        GridPane.rowIndex="3"
+                       GridPane.columnIndex="0"/>
+                <ComboBox fx:id="campoCuenta"
+                          promptText="Selecciona cuenta"
+                          maxWidth="Infinity"
+                          GridPane.rowIndex="3"
+                          GridPane.columnIndex="1"/>
+
+                <Label text="Usuario:"
+                       GridPane.rowIndex="4"
+                       GridPane.columnIndex="0"/>
+                <ComboBox fx:id="campoUsuario"
+                          disable="true"
+                          promptText="Autor del gasto"
+                          maxWidth="Infinity"
+                          GridPane.rowIndex="4"
+                          GridPane.columnIndex="1"/>
+
+                <Label text="Descripción:"
+                       GridPane.rowIndex="5"
                        GridPane.columnIndex="0"/>
                 <TextArea fx:id="campoDescripcion"
                           prefRowCount="3"
                           promptText="Introduce una breve descripción"
-                          GridPane.rowIndex="3"
+                          GridPane.rowIndex="5"
                           GridPane.columnIndex="1"/>
 
             </children>
         </GridPane>
     </center>
 
-    <!-- ======== BOTONES INFERIORES ======== -->
     <bottom>
         <HBox spacing="15"
               alignment="CENTER_RIGHT">
             <padding>
-    				<Insets top="15" right="15" bottom="15" left="15"/>
-			</padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
             <Button fx:id="btnCancelar"
                     text="Cancelar"
                     style="-fx-background-color: lightgray;"

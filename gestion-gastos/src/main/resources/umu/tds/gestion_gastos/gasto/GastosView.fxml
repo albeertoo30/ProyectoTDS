@@ -12,7 +12,11 @@
     <!-- ▬▬▬▬▬▬▬▬▬ TOP: TÍTULO Y NAVEGACIÓN ▬▬▬▬▬▬▬▬▬ -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f4f4f4;">
-            <Label text="Gastos" styleClass="label-titulo"/>
+        
+			<Button fx:id="btnInicio" text="Volver a Inicio"
+					styleClass="button, boton-secundario"
+					onAction="#onVolverInicio"/>
+            <Label text="Mis Gastos" styleClass="label-titulo"/>
             
             <!-- Spacer para empujar los botones a la derecha -->
             <Region HBox.hgrow="ALWAYS"/>
@@ -74,9 +78,10 @@
         <TableView fx:id="tablaGastos">
             <columns>
                 <TableColumn fx:id="colFecha" text="Fecha" prefWidth="120"/>
-                <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="120"/>
+                <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="160"/>
                 <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="240"/>
                 <TableColumn fx:id="colCantidad" text="Cantidad (€)" prefWidth="120"/>
+                <TableColumn fx:id="colCuenta" text="Cuenta" prefWidth="200"/>
             </columns>
         </TableView>
     </center>

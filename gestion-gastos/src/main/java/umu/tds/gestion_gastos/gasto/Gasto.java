@@ -2,6 +2,8 @@ package umu.tds.gestion_gastos.gasto;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.usuario.Usuario;
@@ -9,6 +11,7 @@ import umu.tds.gestion_gastos.usuario.Usuario;
 public class Gasto {
 	
 	private int id;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fecha;
 	private double cantidad;
 	private String descripcion;
@@ -17,7 +20,16 @@ public class Gasto {
 	private Usuario usuario;
 	
 	
-	// Constructor
+	// Constructor 1 (antes de usuario y cuenta para no tener que modificar codigo)
+	public Gasto(int id, LocalDate fecha, double cantidad, String descripcion, Categoria categoria) {
+		super();
+		this.id = id;
+		this.fecha = fecha;
+		this.cantidad = cantidad;
+		this.descripcion = descripcion;
+		this.categoria = categoria;
+	}
+	
 	public Gasto(int id, LocalDate fecha, double cantidad, String descripcion, Categoria categoria, Cuenta cuenta, Usuario usuario) {
 		super();
 		this.id = id;
@@ -32,7 +44,7 @@ public class Gasto {
 	// Constructor vacío para Jackson
 	public Gasto() {}
 
-	// Getters (falta cuenta)
+	// Getters
 	public int getId() {
 		return id;
 	}
@@ -57,6 +69,10 @@ public class Gasto {
 		return categoria;
 	}
 	
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+	
 	// Setters
 	public void setCategoria(Categoria categoria) {
 		 this.categoria = categoria;
@@ -76,6 +92,14 @@ public class Gasto {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+	
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
+	}
+
+	public void setUsuario(Usuario pagador) {
+		this.usuario = pagador;
 	}
 
 }

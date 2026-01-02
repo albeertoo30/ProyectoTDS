@@ -1,6 +1,8 @@
 package umu.tds.gestion_gastos.cuenta;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import umu.tds.gestion_gastos.gasto.Gasto;
@@ -21,7 +23,9 @@ public interface Cuenta {
     String getNombre();
     void setNombre(String nombre);
     
+    @JsonIgnore
     List<Gasto> getGastos();
+    @JsonIgnore
     void agregarGasto(Gasto g);
     
     double obtenerSaldo(String idUsuario);
