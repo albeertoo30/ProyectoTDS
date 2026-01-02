@@ -108,11 +108,6 @@ public class ConfiguracionImpl extends Configuracion {
                 + File.separator
                 + NameNotificacionesJSON;
     }
-
-	@Override
-	public String getCuentaActual() {
-		return "abc";
-	}
     
     
     //Necesito el getCuentaActual para filtrar.
