@@ -1,6 +1,8 @@
 package umu.tds.gestion_gastos.notificacion;
 
 import java.time.LocalDate;
+
+import umu.tds.gestion_gastos.alerta.AlertaFilterBuilder;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.filtros.Filtro;
 
@@ -30,6 +32,13 @@ public class NotificacionFilterBuilder {
         if (leida != null) {
             Filtro<Notificacion> lFilter = n -> n.isLeida() == leida;
             filter = filter.and(lFilter);
+        }
+        return this;
+    }
+
+    public NotificacionFilterBuilder cuenta(String cuenta) {
+        if (cuenta != null) {
+            filter = filter.and(a -> cuenta.equals(a.getIdCuenta()));
         }
         return this;
     }

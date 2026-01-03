@@ -31,6 +31,13 @@ public class AlertaFilterBuilder {
         }
         return this;
     }
+    
+    public AlertaFilterBuilder cuenta(String cuenta) {
+        if (cuenta != null) {
+            filter = filter.and(a -> cuenta.equals(a.getIdCuenta()));
+        }
+        return this;
+    }
 
     public Filtro<Alerta> build() {
         return filter;

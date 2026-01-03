@@ -46,7 +46,7 @@ public class AlertManager implements IAlertManager {
     
     private void crearNotificacionAlerta(Alerta alerta, Gasto nuevoGasto, List<Gasto> todosGastos) {
         generarMensajeNotificacion(alerta);
-    	notiRepo.crearNotificacion(alerta.getDescripcion(), alerta.getLimite(), alerta.getId(), alerta.getCategoria(), Configuracion.getInstancia().getCuentaActual());
+    	notiRepo.crearNotificacion(alerta.getDescripcion(), alerta.getLimite(), alerta.getId(), alerta.getCategoria(), alerta.getIdCuenta());
 
     }
     

@@ -50,6 +50,9 @@ public class DetalleCuentaController {
 
     public void setCuenta(CuentaCompartida cuenta) {
         this.cuentaActual = cuenta;
+
+        //Para filtrar alertas y notificaciones segun la cuenta actual. Nombre porque el ID esta raro
+        Configuracion.getInstancia().setCuentaActual(cuentaActual.getNombre());
         actualizarVista();
     }
 
@@ -113,8 +116,6 @@ public class DetalleCuentaController {
                 .collect(Collectors.toList());
         tablaGastos.getItems().setAll(filtrados);
         
-        //Para filtrar alertas y notificaciones segun la cuenta actual. Nombre porque el ID esta raro
-        Configuracion.getInstancia().setCuentaActual(cuentaActual.getNombre());
         
     }
 

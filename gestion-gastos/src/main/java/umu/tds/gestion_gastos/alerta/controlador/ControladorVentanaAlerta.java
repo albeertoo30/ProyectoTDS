@@ -141,7 +141,8 @@ public class ControladorVentanaAlerta {
         Double limiteHasta = tfLimiteHasta.getText().isEmpty() ? null : Double.valueOf(tfLimiteHasta.getText());
 
         Filtro<Alerta> filtroCompuesto = new AlertaFilterBuilder()
-                .limite(limiteDesde, limiteHasta)
+                .cuenta(Configuracion.getInstancia().getCuentaActual())  //Raro pero no se como hacerlo de otra forma
+        		.limite(limiteDesde, limiteHasta)
                 .categoria(cbCategorias.getValue())
                 .build();
 
