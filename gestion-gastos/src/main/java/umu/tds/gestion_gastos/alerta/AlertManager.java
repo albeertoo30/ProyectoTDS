@@ -36,15 +36,25 @@ public class AlertManager implements IAlertManager {
     	
         for (Alerta a : alertaRepo.getAlertasActivas()) {
         	//La estrategia se encarga del filtrado
-            if(a.seSuperaCon(gasto, todosGastos))
-            	crearNotificacionAlerta(a, gasto , todosGastos);
+            
+        	boolean supera =  a.seSuperaCon(gasto, todosGastos);
+        	
+        	//Solo crea la notificacion si se supera, si no esta notificada y si la alerta es de la cuenta del gasto
+        													//Violacion grasp, cambiarlo
+        	if(supera && !a.isNotificada() && a.getIdCuenta().equals(gasto.getCuenta().getNombre())) {
+        		crearNotificacionAlerta(a);
+        		a.marcarComoNotificada();
+        		//.update(a);  //Esto no lo tengo muy claro
+        	}
+        	
+            	
         }
     }
 
-    @Override public void onGastoModificado(Gasto gasto) { onGastoNuevo(gasto); }
+    @Override public void onGastoModificado(Gasto gasto) { onGastoNuevo(gasto);} //Una vez salta ha saltado
     @Override public void onGastoEliminado(Gasto gasto) { /* opcional: re-evaluar */ }
     
-    private void crearNotificacionAlerta(Alerta alerta, Gasto nuevoGasto, List<Gasto> todosGastos) {
+    private void crearNotificacionAlerta(Alerta alerta) {
         generarMensajeNotificacion(alerta);
     	notiRepo.crearNotificacion(alerta.getDescripcion(), alerta.getLimite(), alerta.getId(), alerta.getCategoria(), alerta.getIdCuenta());
 

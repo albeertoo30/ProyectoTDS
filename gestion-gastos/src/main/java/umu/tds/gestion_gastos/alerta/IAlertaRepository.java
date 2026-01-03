@@ -93,5 +93,7 @@ public interface IAlertaRepository {
 
 	
 	List<Alerta> getAlertasPorCuenta(String cuentaActual);
-	
+
+    //void update(Alerta alerta);
+
 }
