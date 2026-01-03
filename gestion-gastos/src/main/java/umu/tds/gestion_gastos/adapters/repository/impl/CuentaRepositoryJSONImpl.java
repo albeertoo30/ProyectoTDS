@@ -84,6 +84,8 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
             int maxId = this.cuentas.stream().mapToInt(Cuenta::getId).max().orElse(0);
             cuenta.setId(maxId + 1);
         }
+        //borrar antes de guardarla otra vez para evitar duplicados
+        cuentas.removeIf(c -> c.getId() == cuenta.getId());
         this.cuentas.add(cuenta);
         guardarDatos();
         return cuenta;

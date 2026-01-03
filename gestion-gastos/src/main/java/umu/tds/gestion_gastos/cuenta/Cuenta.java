@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import umu.tds.gestion_gastos.gasto.Gasto;
+import umu.tds.gestion_gastos.usuario.Usuario;
 
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, 
@@ -23,10 +24,14 @@ public interface Cuenta {
     String getNombre();
     void setNombre(String nombre);
     
-    @JsonIgnore
+
+    List<Usuario> getMiembros();
+    
     List<Gasto> getGastos();
     @JsonIgnore
     void agregarGasto(Gasto g);
+    @JsonIgnore
+    double getCuotaUsuario(Usuario u);
     
     double obtenerSaldo(String idUsuario);
 }

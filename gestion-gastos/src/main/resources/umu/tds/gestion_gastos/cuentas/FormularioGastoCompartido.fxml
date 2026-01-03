@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="umu.tds.gestion_gastos.vista.cuenta.FormularioGastoCompartidoController"
+            stylesheets="@../estilos/app.css">
+
+    <top>
+        <VBox style="-fx-padding: 15; -fx-background-color: #e9ecef;">
+            <Label text="Añadir Gasto Compartido" styleClass="label-titulo"/>
+        </VBox>
+    </top>
+
+    <center>
+        <GridPane hgap="15" vgap="15">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="100"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <children>
+
+                <Label text="Cantidad (€):" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="campoCantidad" promptText="Ej: 25.50" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Fecha:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                <DatePicker fx:id="campoFecha" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+                <Label text="Categoría:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="campoCategoria" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity" promptText="Selecciona..."/>
+
+                <Label text="Pagado por:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #0275d8;"/>
+                <ComboBox fx:id="campoUsuario" maxWidth="Infinity" promptText="¿Quién ha pagado?" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Descripción:" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                <TextArea fx:id="campoDescripcion" prefRowCount="3" promptText="Introduce una breve descripción" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            </children>
+        </GridPane>
+    </center>
+
+    <bottom>
+        <HBox spacing="15" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <style>
+                -fx-border-color: #dee2e6;
+                -fx-border-width: 1 0 0 0;
+            </style>
+            
+            <Button fx:id="btnCancelar" text="Cancelar" onAction="#onCancelar" styleClass="boton-peligro"/>
+            <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="boton-accion"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
