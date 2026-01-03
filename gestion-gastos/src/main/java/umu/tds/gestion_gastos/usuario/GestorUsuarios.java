@@ -52,10 +52,6 @@ public class GestorUsuarios {
             Usuario nuevo = new Usuario((int) Math.floor(Math.random() * 1000), "Yo (Propietario)");
             this.usuarioRepo.guardar(nuevo);
             
-            // Creamos un par de amigos para probar
-            // TODO:  BORRAR ESTO LUEGO O DEJAR SI QUEREMOS USUARIOS POR DEFECTO
-            this.crearUsuario(new Usuario(this.generarId(), "Pepe"));
-            this.crearUsuario(new Usuario(this.generarId(), "Maria"));
             
             return nuevo;
         } else {
