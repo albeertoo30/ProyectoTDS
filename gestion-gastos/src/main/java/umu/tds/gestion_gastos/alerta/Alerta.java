@@ -94,7 +94,7 @@ public class Alerta {
             id, descripcion, limite, categoria != null ? categoria : "todas", activa);
     }
 
-	public String getIDCuenta() {
+	public String getIdCuenta() {
 		return this.idCuenta;
 	}
 	

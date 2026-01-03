@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.sceneManager.SceneManager;
 import umu.tds.gestion_gastos.vista.gasto.ControladorGastosView;
 
 public class VentanaInicioController {
@@ -49,12 +50,16 @@ public class VentanaInicioController {
 
 
     @FXML
-    private void onCuentasCompartidas() {
-        new Alert(
+    private void onCuentasCompartidas() throws IOException {
+        /*new Alert(
             Alert.AlertType.INFORMATION,
             "Funcionalidad de cuentas compartidas pendiente de implementar.",
             ButtonType.OK
         ).showAndWait();
+    	*/
+    	
+    	controlador.getSceneManager().abrirVentanaCuentasCompartidas();
+    
     }
 
     private void mostrarError(String msg) {

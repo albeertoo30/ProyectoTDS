@@ -154,7 +154,7 @@ public enum NotificacionRepository implements INotificacionRepository{
 	@Override
 	public List<Notificacion> getNotificacionesPorCuenta(String id) {
 		return this.listaNotificaciones.stream()
-		.filter(a -> a.getIDCuenta().equals(id))
+		.filter(a -> a.getIdCuenta().equals(id))
 		.collect(Collectors.toList());
 	}
 	

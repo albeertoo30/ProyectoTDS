@@ -94,11 +94,12 @@ public class ControladorVentanaNotificacion {
                 setText(null);
             } else {
                 String categoriaText = n.getCategoria() != null ? n.getCategoria().getNombre() : "Sin categoría";
-                setText(String.format("[%s] %s | %.2f€ | %s", 
+                setText(String.format("[%s] %s | %.2f€ | %s | %s ", 
                     n.getFecha(), 
                     n.getMensaje(), 
                     n.getImporte(), 
-                    categoriaText
+                    categoriaText,
+                    n.getIdCuenta()
                 ));
             }
         }

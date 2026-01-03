@@ -3,12 +3,15 @@ package umu.tds.gestion_gastos.vista.cuenta;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -17,9 +20,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import umu.tds.gestion_gastos.Configuracion;
+import umu.tds.gestion_gastos.alerta.controlador.ControladorCrearAlerta;
+import umu.tds.gestion_gastos.alerta.controlador.ControladorVentanaAlerta;
 import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.notificacion.controlador.ControladorVentanaNotificacion;
 import umu.tds.gestion_gastos.usuario.Usuario;
 
 public class DetalleCuentaController {
@@ -105,6 +112,10 @@ public class DetalleCuentaController {
                 .filter(g -> g.getUsuario() != null && g.getUsuario().equals(u))
                 .collect(Collectors.toList());
         tablaGastos.getItems().setAll(filtrados);
+        
+        //Para filtrar alertas y notificaciones segun la cuenta actual. Nombre porque el ID esta raro
+        Configuracion.getInstancia().setCuentaActual(cuentaActual.getNombre());
+        
     }
 
     private void actualizarVista() {
@@ -258,4 +269,21 @@ public class DetalleCuentaController {
             mostrarError("Error al abrir estadísticas.");
         }
     }
+    
+    
+    @FXML
+    private void onAlertas() throws IOException {
+    	controlador.getSceneManager().abrirVentanaAlertas();
+    }
+
+    
+    
+    @FXML
+    private void onNotificaciones() throws IOException {
+    	controlador.getSceneManager().abrirVentanaNotificaciones();
+    }
+    
+    
+    
+    
 }

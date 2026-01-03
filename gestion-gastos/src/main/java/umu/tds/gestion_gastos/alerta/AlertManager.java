@@ -24,6 +24,9 @@ public class AlertManager implements IAlertManager {
         this.gastoRepo = gastoRepo;
         this.alertaRepo = alertaRepo;
         this.notiRepo = notiRepo;
+        
+        //Lo agregamos como listener del repo
+        gastoRepo.addListener(this); 
     }
 
     @Override
@@ -42,26 +45,14 @@ public class AlertManager implements IAlertManager {
     @Override public void onGastoEliminado(Gasto gasto) { /* opcional: re-evaluar */ }
     
     private void crearNotificacionAlerta(Alerta alerta, Gasto nuevoGasto, List<Gasto> todosGastos) {
-        String mensaje = generarMensajeNotificacion(alerta);
-    	notiRepo.crearNotificacion(mensaje, alerta.getLimite(), alerta.getId(), alerta.getCategoria(), Configuracion.getInstancia().getCuentaActual());
+        generarMensajeNotificacion(alerta);
+    	notiRepo.crearNotificacion(alerta.getDescripcion(), alerta.getLimite(), alerta.getId(), alerta.getCategoria(), Configuracion.getInstancia().getCuentaActual());
 
     }
     
-    private String generarMensajeNotificacion(Alerta alerta) {
+    private void generarMensajeNotificacion(Alerta alerta) {
     	System.out.println("Limite de: " + alerta.getLimite() + " superado");
-    	System.out.println(alerta.toString());
-    	
-        StringBuilder mensaje = new StringBuilder();
+    	System.out.println(alerta);
 
-        mensaje.append("LÍMITE SUPERADO\n");
-        mensaje.append("Alerta: ").append(alerta.getDescripcion()).append("\n");
-        mensaje.append("Límite: ").append(String.format("%.2f€", alerta.getLimite())).append("\n");
-        
-        if (alerta.getCategoria() != null) {
-            mensaje.append("Categoría: ").append(alerta.getCategoria().getNombre()).append("\n");
-        } else {
-            mensaje.append("Categoría: TODAS\n");
-        }
-        return mensaje.toString();
     }
 }

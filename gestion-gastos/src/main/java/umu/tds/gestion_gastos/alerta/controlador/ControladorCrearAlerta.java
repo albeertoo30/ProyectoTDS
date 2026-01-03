@@ -49,8 +49,7 @@ public class ControladorCrearAlerta {
                     categoria,
                     strategy,
                     limite,
-                    Configuracion.getInstancia().getCuentaActual()
-            );
+                    Configuracion.getInstancia().getCuentaActual());
 
             mostrarInfo("Alerta creada correctamente");
             cerrarVentana();

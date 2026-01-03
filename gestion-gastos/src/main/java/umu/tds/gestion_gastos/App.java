@@ -1,10 +1,13 @@
 package umu.tds.gestion_gastos;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.notificacion.controlador.ControladorVentanaNotificacion;
 import umu.tds.gestion_gastos.vista.categoria.ControladorCategoriasView;
 import umu.tds.gestion_gastos.vista.categoria.FormularioCategoriaController;
@@ -20,7 +23,16 @@ public class App extends Application {
 
         // Inicializar Configuración
         Configuracion.setInstancia(new ConfiguracionImpl());
+    	ControladorApp appController = Configuracion.getInstancia().getControladorApp();
 
+     // Cargar los datos desde JSON
+    	try {
+    	    appController.cargarDatos();
+    	} catch (IOException e) {
+    	    e.printStackTrace();
+    	}
+        
+        
         // Cargar vista
         FXMLLoader loader = new FXMLLoader(
             getClass().getResource(

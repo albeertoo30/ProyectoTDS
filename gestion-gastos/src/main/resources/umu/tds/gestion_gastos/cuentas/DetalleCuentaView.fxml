@@ -45,6 +45,9 @@
             
 <HBox spacing="10" alignment="CENTER_RIGHT">
                 
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Alertas" onAction="#onAlertas" styleClass="boton-info"/>
+                <Button text="Notificaciones" onAction="#onNotificaciones" styleClass="boton-info"/>
                 <Button text="Nuevo Gasto" onAction="#onNuevoGasto" styleClass="boton-accion"/>
                 
                 <Button text="Editar Gasto" onAction="#onEditarGasto" styleClass="boton-info"/>

@@ -24,6 +24,11 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
     private List<Gasto> gastos;
     private final File fichero;
     private int nextId;
+    
+    //Agregado para el patron observer
+    private List<GastoListener> listeners;
+
+    
 
     public GastoRepositoryJSONImpl(String rutaFichero) {
         this.mapper = new ObjectMapper();
@@ -32,6 +37,8 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
         
         // Inicializar el fichero desde resources o crear uno nuevo
         this.fichero = inicializarFichero(rutaFichero);
+        
+        this.listeners = new ArrayList<>();
         
         cargarDatos();
         inicializarNextId();
@@ -75,6 +82,7 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
         gasto.setId(nextId++);
         gastos.add(gasto);
         guardarDatos();
+        notifyGastoCreado(gasto);
     }
 
     @Override
@@ -83,6 +91,7 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
             if (gastos.get(i).getId() == gasto.getId()) {
                 gastos.set(i, gasto);
                 guardarDatos();
+                notifyGastoActualizado(gasto);
                 return;
             }
         }
@@ -95,6 +104,7 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
     public void remove(Gasto gasto) {
         gastos.removeIf(g -> g.getId() == gasto.getId());
         guardarDatos();
+        notifyGastoEliminado(gasto);
     }
 
     @Override
@@ -142,11 +152,27 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
                 .orElse(0) + 1;
     }
 
+    //OBSERVER MANUAL, nos saltamos lo del changed. Estos metodos no estan en la interfaz. 
 	@Override
 	public void addListener(GastoListener gastoListener) {
-		// TODO Auto-generated method stub
-		
+	    if (!listeners.contains(gastoListener)) listeners.add(gastoListener);		
 	}
+
+	private void notifyGastoCreado(Gasto g) {
+	    for (GastoListener l : listeners) l.onGastoNuevo(g);
+	}
+
+	private void notifyGastoActualizado(Gasto g) {
+	    for (GastoListener l : listeners) l.onGastoModificado(g);
+	}
+
+	private void notifyGastoEliminado(Gasto g) {
+	    for (GastoListener l : listeners) l.onGastoEliminado(g);
+	}
+	
+	
+	//JSON
+	
 
 	@Override
 	public void cargar(String ruta) throws IOException {

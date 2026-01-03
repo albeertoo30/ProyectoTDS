@@ -19,6 +19,7 @@ import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.NotificacionRepository;
+import umu.tds.gestion_gastos.sceneManager.SceneManager;
 import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 
 public class ConfiguracionImpl extends Configuracion {
@@ -27,7 +28,7 @@ public class ConfiguracionImpl extends Configuracion {
     private final String NombreApp ="gestion-gastos";
     private final String NameAlertasJSON = "alertas.json";
     private final String NameNotificacionesJSON = "notificaciones.json";
-    
+    private String idCuentaActual;
     
     public ConfiguracionImpl() {
         // Crear repositorios con las rutas correctas
@@ -39,16 +40,16 @@ public class ConfiguracionImpl extends Configuracion {
         IAlertaRepository alertaRepo = AlertaRepository.INSTANCE;
         INotificacionRepository notiRepo = NotificacionRepository.INSTANCE;
         
+        
         IAlertManager alertManager = new AlertManager(gastoRepo, alertaRepo, notiRepo);
         gastoRepo.addListener(alertManager);
 
         // Crear controlador con los repositorios
         this.controlador = new ControladorApp(gastoRepo, categoriaRepo,
-        					notiRepo, alertaRepo,  alertManager, cuentaRepo, usuarioRepo);
+        					notiRepo, alertaRepo,  alertManager, cuentaRepo, usuarioRepo, SceneManager.INSTANCE);
     
-    
-    
-    
+        SceneManager.INSTANCE.init(this.controlador);
+        
     }    
     
     //Esto no se si va aqui o en el controlador
@@ -110,6 +111,15 @@ public class ConfiguracionImpl extends Configuracion {
     }
     
     
-    //Necesito el getCuentaActual para filtrar.
+    //Para el filtrado por cuentas
     
+    @Override 
+    public String getCuentaActual() {
+    	return this.idCuentaActual;
+    }
+    
+    @Override 
+    public void setCuentaActual(String id) {
+    	this.idCuentaActual = id;
+    }
 }

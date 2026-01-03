@@ -38,6 +38,7 @@ public abstract class Configuracion {
     
     public abstract String getCuentaActual();
     
+    public abstract void setCuentaActual(String id);
     
     
 }
