@@ -30,6 +30,8 @@ public interface Cuenta {
     List<Gasto> getGastos();
     @JsonIgnore
     void agregarGasto(Gasto g);
+    @JsonIgnore
+    double getCuotaUsuario(Usuario u);
     
     double obtenerSaldo(String idUsuario);
 }

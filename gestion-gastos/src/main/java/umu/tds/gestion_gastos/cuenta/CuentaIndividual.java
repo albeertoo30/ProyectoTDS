@@ -67,6 +67,11 @@ public class CuentaIndividual implements Cuenta{
 	public List<Usuario> getMiembros() {
 		return null;
 	}
+
+	@Override
+	public double getCuotaUsuario(Usuario u) {
+		return 100.0;
+	}
     
     
 }

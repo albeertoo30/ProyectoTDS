@@ -1,6 +1,10 @@
 package umu.tds.gestion_gastos.vista.cuenta;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -8,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,6 +35,7 @@ public class DetalleCuentaController {
 
     private ControladorApp controlador;
     private CuentaCompartida cuentaActual;
+    private Map<Usuario, Double> balancesCalculados = new HashMap<>();
 
     public void setControlador(ControladorApp controlador) {
         this.controlador = controlador;
@@ -49,14 +55,70 @@ public class DetalleCuentaController {
             Usuario u = cell.getValue().getUsuario();
             return new SimpleStringProperty(u != null ? u.getNombre() : "Desconocido");
         });
+
+        listaMiembros.setCellFactory(param -> new ListCell<Usuario>() {
+            @Override
+            protected void updateItem(Usuario item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setStyle(""); 
+                } else {
+                    double saldo = balancesCalculados.getOrDefault(item, 0.0);
+                    String textoExtra = "";
+                    String estilo = "";
+
+                    if (saldo > 0.01) {
+                        textoExtra = String.format(" (+%.2f €)", saldo);
+                        estilo = "-fx-text-fill: #28a745; -fx-font-weight: bold;"; 
+                    } else if (saldo < -0.01) {
+                        textoExtra = String.format(" (%.2f €)", saldo); 
+                        estilo = "-fx-text-fill: #dc3545; -fx-font-weight: bold;";
+                    } else {
+                        estilo = "-fx-text-fill: black;";
+                    }
+
+                    setText(item.getNombre() + textoExtra);
+                    setStyle(estilo);
+                }
+            }
+        });
+
+        listaMiembros.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                filtrarGastosPorUsuario(newVal);
+            } else {
+                tablaGastos.getItems().setAll(cuentaActual.getGastos());
+            }
+        });
+    }
+
+    private void recalcularSaldos() {
+        if (cuentaActual == null) return;
+        this.balancesCalculados = controlador.calcularSaldos(cuentaActual.getId());
+    }
+
+    private void filtrarGastosPorUsuario(Usuario u) {
+        List<Gasto> filtrados = cuentaActual.getGastos().stream()
+                .filter(g -> g.getUsuario() != null && g.getUsuario().equals(u))
+                .collect(Collectors.toList());
+        tablaGastos.getItems().setAll(filtrados);
     }
 
     private void actualizarVista() {
         if (cuentaActual == null) return;
         
         lblNombreCuenta.setText(cuentaActual.getNombre());
+        
+        recalcularSaldos();
+        
         listaMiembros.getItems().setAll(cuentaActual.getMiembros());
+        listaMiembros.refresh();
+        
         tablaGastos.getItems().setAll(cuentaActual.getGastos());
+        tablaGastos.refresh();
     }
 
     @FXML
@@ -77,20 +139,13 @@ public class DetalleCuentaController {
             stage.setScene(new javafx.scene.Scene(root));
             stage.showAndWait();
 
-
             if (formController.isGuardado()) {
                 Gasto nuevoGasto = formController.getGastoCreado();
-                
-                //Vincular gasto a esta cuenta
                 nuevoGasto.setCuenta(this.cuentaActual);
-                
                 this.cuentaActual.agregarGasto(nuevoGasto);
                 
                 controlador.registrarCuenta(this.cuentaActual);
-                
                 actualizarVista();
-                
-                System.out.println("Gasto añadido y guardado.");
             }
 
         } catch (Exception e) {
@@ -98,10 +153,6 @@ public class DetalleCuentaController {
             mostrarError("Error al abrir formulario: " + e.getMessage());
         }
     }
-    
-
-    private void mostrarError(String msg) {
-        new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).showAndWait();
 
     @FXML
     private void onEditarGasto() {
@@ -118,8 +169,6 @@ public class DetalleCuentaController {
             FormularioGastoCompartidoController formController = loader.getController();
             
             formController.initData(cuentaActual.getMiembros(), controlador.obtenerCategorias());
-            
-            // 2. Relleneamos campos con el gasto a editar
             formController.setGastoEditar(seleccionado);
 
             Stage stage = new Stage();
@@ -129,15 +178,8 @@ public class DetalleCuentaController {
             stage.showAndWait();
 
             if (formController.isGuardado()) {
-
                 controlador.registrarCuenta(this.cuentaActual);
-                
-                
-                tablaGastos.refresh(); 
                 actualizarVista(); 
-                
-                
-                System.out.println("Gasto editado correctamente.");
             }
 
         } catch (Exception e) {
@@ -164,9 +206,7 @@ public class DetalleCuentaController {
             boolean borrado = cuentaActual.getGastos().remove(seleccionado);
             
             if (borrado) {
-                // cuenta actualizada en el JSON
                 controlador.registrarCuenta(this.cuentaActual);
-                
                 actualizarVista();
             } else {
                 mostrarError("No se pudo borrar el gasto de la lista.");
@@ -178,5 +218,44 @@ public class DetalleCuentaController {
     private void onVolver() {
         Stage stage = (Stage) lblNombreCuenta.getScene().getWindow();
         stage.close();
+    }
+
+    private void mostrarError(String msg) {
+        new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).showAndWait();
+    }
+    
+
+    @FXML
+    private void onLimpiarFiltro() {
+        listaMiembros.getSelectionModel().clearSelection();
+        tablaGastos.getItems().setAll(cuentaActual.getGastos()); 
+    }
+
+
+    @FXML
+    private void onVerEstadisticas() {
+        if (cuentaActual.getGastos().isEmpty()) {
+            mostrarError("No hay datos para mostrar gráficas.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/umu/tds/gestion_gastos/cuentas/EstadisticasView.fxml"));
+            javafx.scene.Parent root = loader.load();
+
+            EstadisticasController statsController = loader.getController();
+            
+            // pasamos datos al controaldor de estadidsticas
+            statsController.initData(cuentaActual.getNombre(), cuentaActual.getGastos());
+
+            Stage stage = new Stage();
+            stage.setTitle("Estadísticas - " + cuentaActual.getNombre());
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.show(); 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarError("Error al abrir estadísticas.");
+        }
     }
 }

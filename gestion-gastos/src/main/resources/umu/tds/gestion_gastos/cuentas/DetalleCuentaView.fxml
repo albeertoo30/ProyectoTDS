@@ -15,11 +15,15 @@
         </VBox>
     </top>
 
-    <left>
-        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-pref-width: 200; -fx-border-color: #dee2e6; -fx-border-width: 0 1 0 0;">
+	<left>
+        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-pref-width: 220; -fx-border-color: #dee2e6; -fx-border-width: 0 1 0 0;">
             <Label text="MIEMBROS" styleClass="label-subtitulo" style="-fx-font-size: 14px;"/>
+            
             <ListView fx:id="listaMiembros" VBox.vgrow="ALWAYS"/>
-            <Button text="Ver Saldos" maxWidth="Infinity" disable="true" styleClass="boton-secundario"/>
+            
+            <Button text="Ver Todos (Limpiar)" maxWidth="Infinity" onAction="#onLimpiarFiltro" style="-fx-font-size: 11px;"/>
+            
+            <Button text="📊 Ver Gráficas" maxWidth="Infinity" onAction="#onVerEstadisticas" styleClass="boton-secundario"/>
         </VBox>
     </left>
 
