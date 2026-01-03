@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
-import umu.tds.gestion_gastos.sceneManager.SceneManager;
+import umu.tds.gestion_gastos.scene_manager.SceneManager;
 import umu.tds.gestion_gastos.vista.gasto.ControladorGastosView;
 
 public class VentanaInicioController {

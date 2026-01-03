@@ -27,7 +27,7 @@ import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.gasto.GestorGastos;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
-import umu.tds.gestion_gastos.sceneManager.SceneManager;
+import umu.tds.gestion_gastos.scene_manager.SceneManager;
 import umu.tds.gestion_gastos.usuario.GestorUsuarios;
 import umu.tds.gestion_gastos.usuario.Usuario;
 import umu.tds.gestion_gastos.usuario.UsuarioRepository;

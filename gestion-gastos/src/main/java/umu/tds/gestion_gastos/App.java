@@ -25,7 +25,7 @@ public class App extends Application {
         Configuracion.setInstancia(new ConfiguracionImpl());
     	ControladorApp appController = Configuracion.getInstancia().getControladorApp();
 
-     // Cargar los datos desde JSON
+    	// Cargar los datos desde JSON
     	try {
     	    appController.cargarDatos();
     	} catch (IOException e) {

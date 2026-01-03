@@ -19,7 +19,7 @@ import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.NotificacionRepository;
-import umu.tds.gestion_gastos.sceneManager.SceneManager;
+import umu.tds.gestion_gastos.scene_manager.SceneManager;
 import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 
 public class ConfiguracionImpl extends Configuracion {

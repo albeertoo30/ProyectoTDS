@@ -11,6 +11,8 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.categoria.CategoriaRepository;
@@ -23,7 +25,8 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
 
     public CategoriaRepositoryJSONImpl(String rutaFichero) {
         this.mapper = new ObjectMapper();
-        
+        this.mapper.registerModule(new JavaTimeModule());
+        this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
         // Inicializar el fichero desde resources o crear uno nuevo
         this.fichero = inicializarFichero(rutaFichero);
         
@@ -49,7 +52,9 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
                               StandardCopyOption.REPLACE_EXISTING);
                     inputStream.close();
                 } else {
-                    archivoLocal.createNewFile();
+                	if(!archivoLocal.exists()) {
+                		archivoLocal.createNewFile();
+                	}
                     mapper.writeValue(archivoLocal, new ArrayList<>());
                 }
             }
@@ -76,22 +81,10 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
 
     @Override
     public void remove(Categoria categoria) {
-        categorias.remove(categoria);
-        guardarDatos();
+        boolean borrado = this.categorias.removeIf(c -> c.getNombre().equalsIgnoreCase(categoria.getNombre()));
+        if (borrado) guardarDatos();
     }
-
-    @Override
-    public List<Categoria> getAll() {
-        return new ArrayList<>(categorias);
-    }
-
-    @Override
-    public Optional<Categoria> findByName(String nombre) {
-        return categorias.stream()
-                .filter(c -> c.getNombre().equalsIgnoreCase(nombre))
-                .findFirst();
-    }
-
+    
     @Override
     public void update(Categoria categoria) {
         for (int i = 0; i < categorias.size(); i++) {
@@ -106,27 +99,40 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
         );
     }
 
+    @Override
+    public List<Categoria> getAll() {
+        return new ArrayList<>(categorias);
+    }
+
+    @Override
+    public Optional<Categoria> findByName(String nombre) {
+        return categorias.stream()
+                .filter(c -> c.getNombre().equalsIgnoreCase(nombre))
+                .findFirst();
+    }
+
+   
     // Persistencia JSON
 
     private void cargarDatos() {
         try {
-            if (fichero.length() == 0) {
+            if (fichero.length() <= 2) {
                 categorias = new ArrayList<>();
                 return;
             }
-            categorias = mapper.readValue(
-                fichero,
-                new TypeReference<List<Categoria>>() {}
-            );
+            categorias = mapper.readValue(fichero, new TypeReference<List<Categoria>>() {});
         } catch (IOException e) {
-            throw new RuntimeException("Error cargando categorías", e);
+            e.printStackTrace();
+            categorias = new ArrayList<Categoria>();
         }
     }
 
     private void guardarDatos() {
         try {
-            mapper.writerWithDefaultPrettyPrinter()
+            mapper.writerFor(new TypeReference<List<Categoria>>() {})
+                  .with(SerializationFeature.INDENT_OUTPUT)
                   .writeValue(fichero, categorias);
+                  
         } catch (IOException e) {
             throw new RuntimeException("Error guardando categorías", e);
         }
