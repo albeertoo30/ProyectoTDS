@@ -28,7 +28,6 @@ public class EstadisticasController {
 
         Map<String, Double> porCategoria = new HashMap<>();
         Map<String, Double> porUsuario = new HashMap<>();
-
         //obtener datos
         for (Gasto g : gastos) {
             // Categoría
