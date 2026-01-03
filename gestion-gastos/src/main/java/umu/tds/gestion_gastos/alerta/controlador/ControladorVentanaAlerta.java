@@ -74,6 +74,7 @@ public class ControladorVentanaAlerta {
         ListViewInactivas.setCellFactory(lv -> new CeldaAlerta());
     }
 
+    //Ahora se muestra a la cuenta que pertenece (que no tiene sentido porque es la individual siempre)
     private static class CeldaAlerta extends ListCell<Alerta> {
         @Override
         protected void updateItem(Alerta a, boolean empty) {
@@ -82,11 +83,12 @@ public class ControladorVentanaAlerta {
                 setText(null);
             } else {
                 String categoriaText = a.getCategoria() != null ? a.getCategoria().getNombre() : "Sin categoría";
-                setText(String.format("%s | %.2f€ | %s | %s",
+                setText(String.format("%s | %.2f€ | %s | %s | %s ",
                         a.getDescripcion(),
                         a.getLimite(),
                         categoriaText,
-                        a.isActiva() ? "Activa" : "Inactiva"
+                        a.isActiva() ? "Activa" : "Inactiva",
+                        a.getIdCuenta()
                 ));
             }
         }
@@ -190,7 +192,7 @@ public class ControladorVentanaAlerta {
     @FXML
     private void onNuevaAlerta() throws IOException {
         FXMLLoader loader = new FXMLLoader(
-            getClass().getResource("/umu/tds/gestion_gastos/alerta/vista/CrearAlerta.fxml")
+            getClass().getResource("/umu/tds/gestion_gastos/alerta/FormularioAlertaCrear.fxml")
         );
         Parent root = loader.load();
 

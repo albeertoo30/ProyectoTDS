@@ -56,7 +56,7 @@ public class Notificacion {
 	/**
 	 * @return the idCuenta
 	 */
-	public String getIDCuenta() {
+	public String getIdCuenta() {
 		return idCuenta;
 	}
 

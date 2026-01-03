@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
@@ -111,6 +112,9 @@ public class ControladorGastosView {
                 return null;
             }
         });
+        
+        //Se supone que es la cuenta individual.
+        Configuracion.getInstancia().setCuentaActual("Individual");
     }
     
     
@@ -165,11 +169,17 @@ public class ControladorGastosView {
     // BOTON NOTIFICACIONES
     @FXML
     private void onIrANotificaciones() throws IOException {
-        abrirVentana(
-            "/umu/tds/gestion_gastos/notificacion/VentanaNotificacion.fxml",
-            "Notificaciones"
-        );
+    	controlador.getSceneManager().abrirVentanaNotificaciones();
     }
+    
+    //BOTON ALERTAS
+    
+    @FXML
+    private void onIrAAlertas() throws IOException {
+        controlador.getSceneManager().abrirVentanaAlertas();
+    }    
+    
+    
 
     // Método auxiliar para abrir ventanas
     private void abrirVentana(String rutaFXML, String titulo) throws IOException {

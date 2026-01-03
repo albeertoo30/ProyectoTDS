@@ -158,7 +158,7 @@ public enum AlertaRepository implements IAlertaRepository{ // Es observer de Gas
 	@Override
 	public List<Alerta> getAlertasPorCuenta(String cuentaActual) {
 		return this.listaAlertas.stream()
-				.filter(a -> a.getIDCuenta().equals(cuentaActual))
+				.filter(a -> a.getIdCuenta().equals(cuentaActual))
 				.collect(Collectors.toList());
 	}
 	

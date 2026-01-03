@@ -27,7 +27,7 @@ import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.gasto.GestorGastos;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
-import umu.tds.gestion_gastos.notificacion.NotificacionRepository;
+import umu.tds.gestion_gastos.sceneManager.SceneManager;
 import umu.tds.gestion_gastos.usuario.GestorUsuarios;
 import umu.tds.gestion_gastos.usuario.Usuario;
 import umu.tds.gestion_gastos.usuario.UsuarioRepository;
@@ -41,12 +41,13 @@ public class ControladorApp { //Yo le crearia una interfaz
     private final IAlertManager gestorAlertas;
     private final GestorCuenta gestorCuentas;
     private final GestorUsuarios gestorUsuarios;
+    private final SceneManager sceneManager;
     
     private Usuario usuarioActual;
     
     public ControladorApp(GastoRepository gastoRepo, CategoriaRepository categoriaRepo,
     		INotificacionRepository notificacionRepo, IAlertaRepository alertaRepo,
-    		IAlertManager gestorAlertas, CuentaRepository cuentaRepo, UsuarioRepository usuarioRepo) {
+    		IAlertManager gestorAlertas, CuentaRepository cuentaRepo, UsuarioRepository usuarioRepo, SceneManager sceneManager) {
         
     	this.gestorGastos = new GestorGastos(gastoRepo);
         this.gestorCategorias = new GestorCategorias(categoriaRepo);
@@ -55,9 +56,16 @@ public class ControladorApp { //Yo le crearia una interfaz
         this.gestorAlertas = gestorAlertas;
         this.gestorCuentas = new GestorCuenta(cuentaRepo);
         this.gestorUsuarios = new GestorUsuarios(usuarioRepo);
+        this.sceneManager = sceneManager;
         
         this.inicializarSesion();
     }
+    
+    //SceneManager
+    public SceneManager getSceneManager() {
+    	return this.sceneManager;
+    }
+    
     
     //Operaciones de persistencia de datos van en la configuracion o en el controlador? 
     public void cargarDatos() throws IOException {
@@ -81,7 +89,16 @@ public class ControladorApp { //Yo le crearia una interfaz
     
     }
 
+    public void cargarNotificaciones() throws IOException {
+        repoNotificaciones.cargar(Configuracion.getInstancia().getRutaNotificaciones());
+    }
 
+    //Lo usamos con activar/desactvar/eliminar porque seria absurdo guardar todo.
+    public void cargarAlertas() throws IOException {
+        repoAlertas.cargar(Configuracion.getInstancia().getRutaAlertas());
+    }
+    
+    
     //Lo usamos con marcar leida porque seria absurdo guardar todo.
     public void guardarNotificaciones() throws IOException {
         repoNotificaciones.guardar(Configuracion.getInstancia().getRutaNotificaciones());
@@ -165,8 +182,8 @@ public class ControladorApp { //Yo le crearia una interfaz
     	return repoAlertas.getAlertasActivas();
     }
  
-	public void crearAlerta(String descripcion, Categoria categoria, AlertaStrategy strategy, double limite) {
-		repoAlertas.crearAlerta(descripcion, categoria, strategy, limite);
+	public void crearAlerta(String descripcion, Categoria categoria, AlertaStrategy strategy, double limite, String idCuenta) {
+		repoAlertas.crearAlerta(descripcion, categoria, strategy, limite, idCuenta);
 	}
  
     public List<Alerta> filtrarAlertas(Filtro<Alerta> filter){

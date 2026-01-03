@@ -28,6 +28,9 @@
             <Button fx:id="btnNotificaciones" text="Notificaciones" 
                     styleClass="button, boton-info"
                     onAction="#onIrANotificaciones"/>
+            <Button fx:id="btnAlertas" text="Alertas" 
+                    styleClass="button, boton-info"
+                    onAction="#onIrAAlertas"/>
             
             <padding>
                 <Insets top="20" bottom="20" left="20" right="20"/>

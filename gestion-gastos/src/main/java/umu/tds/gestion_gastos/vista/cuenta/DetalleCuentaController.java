@@ -1,9 +1,13 @@
 package umu.tds.gestion_gastos.vista.cuenta;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -11,9 +15,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import umu.tds.gestion_gastos.Configuracion;
+import umu.tds.gestion_gastos.alerta.controlador.ControladorCrearAlerta;
+import umu.tds.gestion_gastos.alerta.controlador.ControladorVentanaAlerta;
 import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.notificacion.controlador.ControladorVentanaNotificacion;
 import umu.tds.gestion_gastos.usuario.Usuario;
 
 public class DetalleCuentaController {
@@ -47,6 +55,10 @@ public class DetalleCuentaController {
         
         // TODO: CAMPO USUARIO O PAGADOR EN GASTO
         colPagador.setCellValueFactory(cell -> new SimpleStringProperty("Pendiente")); 
+        
+        //Para filtrar alertas y notificaciones segun la cuenta actual. Nombre porque el ID esta raro
+        Configuracion.getInstancia().setCuentaActual(cuentaActual.getNombre());
+        
     }
 
     private void actualizarVista() {
@@ -80,4 +92,21 @@ public class DetalleCuentaController {
         Stage stage = (Stage) lblNombreCuenta.getScene().getWindow();
         stage.close();
     }
+    
+    
+    @FXML
+    private void onAlertas() throws IOException {
+    	controlador.getSceneManager().abrirVentanaAlertas();
+    }
+
+    
+    
+    @FXML
+    private void onNotificaciones() throws IOException {
+    	controlador.getSceneManager().abrirVentanaNotificaciones();
+    }
+    
+    
+    
+    
 }
