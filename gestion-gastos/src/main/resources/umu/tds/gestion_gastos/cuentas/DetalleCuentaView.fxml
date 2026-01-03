@@ -39,9 +39,14 @@
                 </placeholder>
             </TableView>
             
-            <HBox spacing="10" alignment="CENTER_RIGHT">
+<HBox spacing="10" alignment="CENTER_RIGHT">
+                
                 <Button text="Nuevo Gasto" onAction="#onNuevoGasto" styleClass="boton-accion"/>
+                
+                <Button text="Editar Gasto" onAction="#onEditarGasto" styleClass="boton-info"/>
+                
                 <Button text="Eliminar Gasto" onAction="#onEliminarGasto" styleClass="boton-peligro"/>
+                
             </HBox>
         </VBox>
     </center>

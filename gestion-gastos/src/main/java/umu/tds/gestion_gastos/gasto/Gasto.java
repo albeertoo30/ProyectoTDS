@@ -3,6 +3,7 @@ package umu.tds.gestion_gastos.gasto;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
@@ -69,6 +70,7 @@ public class Gasto {
 		return categoria;
 	}
 	
+	@JsonIgnore
 	public Cuenta getCuenta() {
 		return cuenta;
 	}

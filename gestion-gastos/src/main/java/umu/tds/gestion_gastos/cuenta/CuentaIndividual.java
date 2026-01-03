@@ -62,6 +62,11 @@ public class CuentaIndividual implements Cuenta{
     public Usuario getPropietario() { return propietario; }
     //para jackson
     public void setPropietario(Usuario propietario) { this.propietario = propietario; }
+
+	@Override
+	public List<Usuario> getMiembros() {
+		return null;
+	}
     
     
 }
