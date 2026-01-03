@@ -20,6 +20,9 @@ public class Alerta {
 	private String idCuenta;
 	private AlertaStrategy strategy;
 	
+	//Nuevo para que no se dupliquen las notificaciones
+	private boolean notificada;
+	
 	//Constructores
 	public Alerta() {}
 	
@@ -37,6 +40,9 @@ public class Alerta {
 		this.idCuenta = idCuenta;
 		//Por defecto cuando se crea se activa
 		this.activa = true;
+		
+		//Inicialmente cuando se crea no se ha notificado en principio.
+		this.notificada = false;
 	}
 	
 	
@@ -97,6 +103,21 @@ public class Alerta {
 	public String getIdCuenta() {
 		return this.idCuenta;
 	}
+	
+	
+	// Para noti dup
+	
+	public boolean isNotificada() {
+        return notificada;
+    }
+
+    public void marcarComoNotificada() {
+        this.notificada = true;
+    }
+
+    public void resetNotificada() {
+        this.notificada = false;
+    }
 	
 	
 }

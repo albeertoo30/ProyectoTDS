@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.filtros.Filtro;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
@@ -138,7 +139,8 @@ public class ControladorVentanaNotificacion {
     @FXML
     private void onAplicarFiltros() {
         Filtro<Notificacion> filtroCompuesto = new NotificacionFilterBuilder()
-            .fecha(dpDesde.getValue(), dpHasta.getValue())
+            .cuenta(Configuracion.getInstancia().getCuentaActual())
+        	.fecha(dpDesde.getValue(), dpHasta.getValue())
             .categoria(cbCategorias.getValue())
             .build();
         

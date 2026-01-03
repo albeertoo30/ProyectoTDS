@@ -161,6 +161,11 @@ public enum AlertaRepository implements IAlertaRepository{ // Es observer de Gas
 				.filter(a -> a.getIdCuenta().equals(cuentaActual))
 				.collect(Collectors.toList());
 	}
+
+	//@Override
+	//	public void update(Alerta alertaActualizada) {
+	//	getById(alertaActualizada.getId()).ifPresent(n -> n.se)
+	//}
 	
     
     
