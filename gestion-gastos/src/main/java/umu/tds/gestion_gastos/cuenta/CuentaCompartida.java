@@ -26,7 +26,6 @@ public class CuentaCompartida implements Cuenta {
     // Equitativo por defecto
     private Map<String, Double> porcentajesParticipacion;
     
-    // --- CONSTRUCTOR VACÍO OBLIGATORIO PARA JACKSON ---
     public CuentaCompartida() {
         this.miembros = new ArrayList<>();
         this.gastos = new ArrayList<>();
@@ -77,11 +76,13 @@ public class CuentaCompartida implements Cuenta {
         return this.porcentajesParticipacion == null || this.porcentajesParticipacion.isEmpty();
     }
     
+    @Override
     public double getCuotaUsuario(Usuario user) {
-        if(this.esEquitativa()) {
+        if (this.esEquitativa()) {
             return this.miembros.isEmpty() ? 0 : 100.0 / this.miembros.size();
         } else {
-            return this.porcentajesParticipacion.getOrDefault(user, 0.0);
+            String key = String.valueOf(user.getId());
+            return this.porcentajesParticipacion.getOrDefault(key, 0.0);
         }
     }
 

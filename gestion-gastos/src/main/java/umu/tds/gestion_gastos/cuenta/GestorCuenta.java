@@ -33,34 +33,38 @@ public class GestorCuenta {
 	}
 	
 	public Map<Usuario, Double> calcularSaldos(int idCuenta) {
-		Cuenta cuenta = this.repositorio.getById(idCuenta);
-		
-		Map<Usuario, Double> saldos = new HashMap<>();
-		List<Gasto> gastos = cuenta.getGastos();
-		
-		for(Gasto g : gastos) {
-			Usuario pagador = g.getUsuario();
-			double importe = g.getCantidad();
-			
-			//Si no exixste el pagador en el mapa, asignamos el importe
-			//Si si existe, se lo sumamos con Double::sum
-			saldos.merge(pagador, importe, Double::sum);
-			
-			//Ahora restamos a cada uno su parte para calcular los saldos negativos.
-			
-			for(Usuario miembro : cuenta.getMiembros()) {
-				//Calculamos la asignacion de ese usuario en la cuenta
-				double porc = cuenta.getCuotaUsuario(miembro);
-				//Lo que debe es el importe * su participacion [0-100.0]
-				double cantidadDeber = importe * (porc / 100.0);
-				
-				//Mismo que antes pero en negfativo para restar
-				saldos.merge(miembro, -cantidadDeber, Double::sum);
-			}
-			
-		}
-		
-	}
+        Cuenta cuenta = this.repositorio.getById(idCuenta); // OJO: Asegúrate de que tu repo tiene getById
+        Map<Usuario, Double> saldos = new HashMap<>();
+        
+        // Validación de seguridad
+        if (cuenta == null || cuenta.getGastos() == null) return saldos;
+        
+        List<Gasto> gastos = cuenta.getGastos();
+        
+        // 1. ITERAMOS SOBRE LOS GASTOS REALES
+        for(Gasto g : gastos) {
+            Usuario pagador = g.getUsuario();
+            double importe = g.getCantidad();
+            
+            // A) El que paga, SUMA saldo (le deben dinero)
+            if (pagador != null) {
+                saldos.merge(pagador, importe, Double::sum);
+            }
+            
+            // B) Todos los miembros RESTAN su parte (deben dinero)
+            for(Usuario miembro : cuenta.getMiembros()) {
+                // Aquí usamos el método polimórfico que acabamos de arreglar
+                double porcentaje = cuenta.getCuotaUsuario(miembro); 
+                
+                double cantidadQueDebe = importe * (porcentaje / 100.0);
+                
+                // Restamos la deuda
+                saldos.merge(miembro, -cantidadQueDebe, Double::sum);
+            }
+        }
+        
+        return saldos;
+    }
 	
 	public boolean eliminarCuenta() {
 		// TODO

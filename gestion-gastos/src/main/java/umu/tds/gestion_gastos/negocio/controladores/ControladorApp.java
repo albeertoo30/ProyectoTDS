@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import umu.tds.gestion_gastos.Configuracion;
@@ -256,6 +257,10 @@ public class ControladorApp { //Yo le crearia una interfaz
     
     public void eliminarCuenta(int id) {
     	this.gestorCuentas.eliminarCuenta(id);
+    }
+    
+    public Map<Usuario, Double> calcularSaldos(int idCuenta) {
+        return this.gestorCuentas.calcularSaldos(idCuenta);
     }
     
     //Usuarios
