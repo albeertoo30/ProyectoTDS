@@ -53,6 +53,7 @@ public class ControladorGastosView {
     @FXML private Button btnAnadir;
     @FXML private Button btnEditar;
     @FXML private Button btnEliminar;
+    @FXML private Button btnEstadisticas;
 
     
     private final ObservableList<Gasto> gastosObservable = FXCollections.observableArrayList();
@@ -179,7 +180,38 @@ public class ControladorGastosView {
         controlador.getSceneManager().abrirVentanaAlertas();
     }    
     
-    
+    // BOTÓN ESTADÍSTICAS
+    @FXML
+    private void onVerEstadisticas() {
+        try {
+            // 1. Cargar el archivo FXML de la ventana de estadísticas
+            // Ajusta la ruta si decidiste guardarlo en otro paquete, 
+            // pero basándonos en lo anterior debería ser esta:
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/umu/tds/gestion_gastos/gasto/Estadisticas.fxml"));
+            Parent root = loader.load();
+
+            // 2. Obtener el controlador de la nueva ventana
+            EstadisticasController controller = loader.getController();
+            
+            // 3. Inyectar el ControladorApp
+            // Esto es CRUCIAL para que la ventana pueda pedir los gastos y pintarlos
+            controller.setControlador(this.controlador);
+
+            // 4. Configurar y mostrar el Stage (Ventana)
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Mis Estadísticas");
+            
+            // APPLICATION_MODAL bloquea la ventana de gastos hasta que cierres las estadísticas
+            stage.initModality(Modality.APPLICATION_MODAL); 
+            
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarError("Error al abrir las estadísticas: " + e.getMessage());
+        }
+    }
 
     // Método auxiliar para abrir ventanas
     private void abrirVentana(String rutaFXML, String titulo) throws IOException {
