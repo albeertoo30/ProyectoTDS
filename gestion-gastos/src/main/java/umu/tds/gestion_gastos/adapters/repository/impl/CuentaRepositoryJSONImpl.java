@@ -18,6 +18,7 @@ import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
 import umu.tds.gestion_gastos.cuenta.CuentaIndividual;
 import umu.tds.gestion_gastos.cuenta.CuentaRepository;
+import umu.tds.gestion_gastos.gasto.Gasto;
 
 public class CuentaRepositoryJSONImpl implements CuentaRepository {
 
@@ -34,7 +35,6 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         this.mapper.registerSubtypes(new NamedType(CuentaIndividual.class, "INDIVIDUAL"));
         this.mapper.registerSubtypes(new NamedType(CuentaCompartida.class, "COMPARTIDA"));
 
-
         this.fichero = inicializarFichero(rutaFichero);
         cargarDatos();
     }
@@ -47,31 +47,22 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
             if (!dataDir.exists()) {
                 dataDir.mkdirs();
             }
-            
 
             File archivoLocal = new File(dataDir, "cuentas.json");
-            
-
             if (!archivoLocal.exists() || archivoLocal.length() <= 2) {
-
                 InputStream inputStream = getClass().getResourceAsStream(rutaFichero);
-                
                 if (inputStream != null) {
-
                     Files.copy(inputStream, archivoLocal.toPath(), 
                               StandardCopyOption.REPLACE_EXISTING);
                     inputStream.close();
                 } else {
-
                     if (!archivoLocal.exists()) {
                         archivoLocal.createNewFile();
                     }
                     mapper.writeValue(archivoLocal, new ArrayList<>());
                 }
             }
-            
             return archivoLocal;
-            
         } catch (IOException e) {
             throw new RuntimeException("Error inicializando fichero de cuentas", e);
         }
@@ -99,10 +90,11 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
     }
     
     @Override
-    public boolean update(int id, String nombre) {
-       for(Cuenta c : cuentas) {
-           if(c.getId() == id) {
-               c.setNombre(nombre);
+    public boolean update(Cuenta cuentaModificada) {
+       for(int i = 0; i < cuentas.size(); i++) {
+           if(cuentas.get(i).getId() == cuentaModificada.getId()) {
+               // Reemplazamos el objeto viejo por el nuevo (que trae los gastos)
+               cuentas.set(i, cuentaModificada);
                guardarDatos();
                return true;
            }
@@ -127,12 +119,25 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
                 return;
             }
             cuentas = mapper.readValue(fichero, new TypeReference<List<Cuenta>>() {});
+            restaurarReferencias();
         } catch (IOException e) {
             e.printStackTrace();
             cuentas = new ArrayList<>();
         }
     }
 
+    private void restaurarReferencias() {
+        if (this.cuentas == null) return;
+        for (Cuenta c : this.cuentas) {
+            List<Gasto> gastos = c.getGastos();
+            if (gastos != null) {
+                for (Gasto g : gastos) {
+                    g.setCuenta(c); 
+                }
+            }
+        }
+    }
+    
     private void guardarDatos() {
     	try {
             mapper.writerFor(new TypeReference<List<Cuenta>>() {})
@@ -142,5 +147,15 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         } catch (IOException e) {
             throw new RuntimeException("Error guardando cuentas", e);
         }
+    }
+    
+    @Override
+    public void cargar(String rutaRecurso) throws IOException {
+        cargarDatos();
+    }
+
+    @Override
+    public void guardar(String rutaRecurso) throws IOException {
+        guardarDatos();
     }
 }

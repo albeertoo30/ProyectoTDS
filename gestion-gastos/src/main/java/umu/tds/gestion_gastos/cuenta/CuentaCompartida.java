@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -37,6 +38,7 @@ public class CuentaCompartida implements Cuenta {
         this(); // Llama al vacío para inicializar listas
         this.id = id;
         this.nombre = nombre;
+        this.gastos = new ArrayList<>();
     }
 
     public CuentaCompartida(int id, String nombre, List<Usuario> miembros) {
@@ -90,4 +92,23 @@ public class CuentaCompartida implements Cuenta {
     public double obtenerSaldo(String idUsuario) {
         return 0; // Pendiente implementar
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CuentaCompartida other = (CuentaCompartida) obj;
+		return id == other.id;
+	}
+    
+    
 }

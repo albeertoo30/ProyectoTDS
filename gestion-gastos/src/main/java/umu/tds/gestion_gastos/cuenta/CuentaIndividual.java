@@ -3,6 +3,7 @@ package umu.tds.gestion_gastos.cuenta;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -72,6 +73,22 @@ public class CuentaIndividual implements Cuenta{
 	public double getCuotaUsuario(Usuario u) {
 		return 100.0;
 	}
-    
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CuentaIndividual other = (CuentaIndividual) obj;
+		return this.getId() == other.getId(); 
+	}
     
 }

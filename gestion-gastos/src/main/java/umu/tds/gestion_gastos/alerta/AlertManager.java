@@ -1,9 +1,12 @@
 package umu.tds.gestion_gastos.alerta;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.cuenta.Cuenta;
+import umu.tds.gestion_gastos.cuenta.CuentaRepository;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
@@ -16,23 +19,20 @@ import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
  * */
 
 public class AlertManager implements IAlertManager {
-    private final GastoRepository gastoRepo;
+    private final CuentaRepository cuentaRepo;
     private final IAlertaRepository alertaRepo;
     private final INotificacionRepository notiRepo;
 
-    public AlertManager(GastoRepository gastoRepo, IAlertaRepository alertaRepo, INotificacionRepository notiRepo) {
-        this.gastoRepo = gastoRepo;
+    public AlertManager(CuentaRepository cuentaRepo, IAlertaRepository alertaRepo, INotificacionRepository notiRepo) {
+        this.cuentaRepo = cuentaRepo;
         this.alertaRepo = alertaRepo;
         this.notiRepo = notiRepo;
-        
-        //Lo agregamos como listener del repo
-        gastoRepo.addListener(this); 
     }
 
     @Override
     public void onGastoNuevo(Gasto gasto) {
     	//Necesario ver todos para calcular totales correctamente
-    	List<Gasto> todosGastos = gastoRepo.getAll();
+    	List<Gasto> todosGastos = obtenerTodosLosGastos();
     	
         for (Alerta a : alertaRepo.getAlertasActivas()) {
         	//La estrategia se encarga del filtrado
@@ -51,6 +51,17 @@ public class AlertManager implements IAlertManager {
         }
     }
 
+    private List<Gasto> obtenerTodosLosGastos() {
+        List<Gasto> todos = new ArrayList<>();      
+        for (Cuenta c : cuentaRepo.getAll()) {
+            for (Gasto g : c.getGastos()) {
+                g.setCuenta(c);
+                todos.add(g);
+            }
+        }
+        return todos;
+    }
+    
     @Override public void onGastoModificado(Gasto gasto) { onGastoNuevo(gasto);} //Una vez salta ha saltado
     @Override public void onGastoEliminado(Gasto gasto) { /* opcional: re-evaluar */ }
     

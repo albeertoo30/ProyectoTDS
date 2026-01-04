@@ -44,18 +44,25 @@ public class ControladorApp { //Yo le crearia una interfaz
     private final GestorUsuarios gestorUsuarios;
     private final SceneManager sceneManager;
     
+    private final CuentaRepository repoCuentas;
+    
     private Usuario usuarioActual;
     
-    public ControladorApp(GastoRepository gastoRepo, CategoriaRepository categoriaRepo,
+    public ControladorApp(CuentaRepository cuentaRepo, CategoriaRepository categoriaRepo, // GastoRepository YA NO SE USA
     		INotificacionRepository notificacionRepo, IAlertaRepository alertaRepo,
-    		IAlertManager gestorAlertas, CuentaRepository cuentaRepo, UsuarioRepository usuarioRepo, SceneManager sceneManager) {
+    		IAlertManager gestorAlertas, UsuarioRepository usuarioRepo, SceneManager sceneManager) {
         
-    	this.gestorGastos = new GestorGastos(gastoRepo);
+        // Guardamos la referencia al repositorio de cuentas
+        this.repoCuentas = cuentaRepo;
+
+        // --- CAMBIO CRUCIAL: Inyección del MISMO repositorio a ambos gestores ---
+    	this.gestorGastos = new GestorGastos(cuentaRepo);
+        this.gestorCuentas = new GestorCuenta(cuentaRepo);
+        
         this.gestorCategorias = new GestorCategorias(categoriaRepo);
         this.repoNotificaciones = notificacionRepo;
         this.repoAlertas = alertaRepo;
         this.gestorAlertas = gestorAlertas;
-        this.gestorCuentas = new GestorCuenta(cuentaRepo);
         this.gestorUsuarios = new GestorUsuarios(usuarioRepo);
         this.sceneManager = sceneManager;
         
@@ -70,19 +77,21 @@ public class ControladorApp { //Yo le crearia una interfaz
     
     //Operaciones de persistencia de datos van en la configuracion o en el controlador? 
     public void cargarDatos() throws IOException {
-        String rutaAbsolutaGastos = Configuracion.getInstancia().getRutaGastos();
+    	String rutaAbsolutaCuentas = Configuracion.getInstancia().getRutaCuentas();
         String rutaAbsolutaCate = Configuracion.getInstancia().getRutaCategorias();      		
-        //gestorGastos.cargar(rutaAbsolutaGastos);
-        //gestorCategorias.cargar(rutaAbsolutaCate);
+        repoCuentas.cargar(rutaAbsolutaCuentas);
+        gestorCategorias.cargar(rutaAbsolutaCate);
         
         repoAlertas.cargar(Configuracion.getInstancia().getRutaAlertas());
         repoNotificaciones.cargar(Configuracion.getInstancia().getRutaNotificaciones());
     }
 
     public void guardarDatos() throws IOException {
-        String rutaAbsolutaGastos = Configuracion.getInstancia().getRutaGastos();
+        String rutaAbsolutaCuentas = Configuracion.getInstancia().getRutaCuentas();
         String rutaAbsolutaCate = Configuracion.getInstancia().getRutaCategorias();      		
-        gestorGastos.guardar(rutaAbsolutaGastos);
+        
+        // --- CAMBIO: Guardar Cuentas en lugar de Gastos ---
+        repoCuentas.guardar(rutaAbsolutaCuentas);
         gestorCategorias.guardar(rutaAbsolutaCate);
         
         repoAlertas.guardar(Configuracion.getInstancia().getRutaAlertas());
@@ -245,14 +254,15 @@ public class ControladorApp { //Yo le crearia una interfaz
     	return this.gestorCuentas.getAll();
     }
     
+    // Auxiliar para FormularioGasto
+    public List<Cuenta> obtenerCuentas() {
+        return obtenerTodasLasCuentas(); // Alias para consistencia
+    }
+    
     public List<Cuenta> obtenerCuentasCompartidas() {
-    	List<Cuenta> resultado = new ArrayList<Cuenta>();
-        for(Cuenta c: this.gestorCuentas.getAll()) {
-        	if(c instanceof CuentaCompartida cc) {
-        		resultado.add(cc);
-        	}
-        }
-        return resultado;
+    	return this.gestorCuentas.getAll().stream()
+                .filter(c -> c instanceof CuentaCompartida)
+                .collect(Collectors.toList());
     }
     
     public void eliminarCuenta(int id) {
