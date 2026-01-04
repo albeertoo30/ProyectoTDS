@@ -13,6 +13,7 @@ import umu.tds.gestion_gastos.adapters.repository.impl.AlertaRepositoryJSONImpl;
 import umu.tds.gestion_gastos.alerta.AlertManager;
 import umu.tds.gestion_gastos.alerta.Alerta;
 import umu.tds.gestion_gastos.alerta.AlertaStrategy;
+import umu.tds.gestion_gastos.alerta.GastoListener;
 import umu.tds.gestion_gastos.alerta.IAlertManager;
 import umu.tds.gestion_gastos.alerta.IAlertaRepository;
 import umu.tds.gestion_gastos.categoria.Categoria;
@@ -283,4 +284,8 @@ public class ControladorApp { //Yo le crearia una interfaz
         return gestorUsuarios.obtenerOtrosUsuarios(usuarioActual.getId());
     }
     
+    // Añade este método
+    public void addGastoListener(GastoListener listener) {
+        this.gestorGastos.addListener(listener);
+    }
 }
