@@ -40,10 +40,11 @@ public class AlertManager implements IAlertManager {
         	boolean supera =  a.seSuperaCon(gasto, todosGastos);
         	
         	//Solo crea la notificacion si se supera, si no esta notificada y si la alerta es de la cuenta del gasto
-        													//Violacion grasp, cambiarlo
-        	if(supera && !a.isNotificada() && a.getIdCuenta().equals(gasto.getCuenta().getNombre())) {
-        		crearNotificacionAlerta(a);
-        		a.marcarComoNotificada();
+        													//Violacion grasp, cambiarlo. Cambiado. Ya no se persisten las Cuentas en gastos, nueva comprobacion en gasto
+        	if(supera && !a.isNotificada() &&  a.perteneceA(gasto.getNombreCuenta())) {
+        		crearNotificacionAlerta(a);   //a.getIdCuenta().equals(gasto.getCuenta().getNombre())
+        		a.marcarComoNotificada();	//a.perteneceA(gasto.getNombreCuenta())
+        		
         		//.update(a);  //Esto no lo tengo muy claro
         	}
         	
@@ -57,7 +58,7 @@ public class AlertManager implements IAlertManager {
     private void crearNotificacionAlerta(Alerta alerta) {
         generarMensajeNotificacion(alerta);
     	notiRepo.crearNotificacion(alerta.getDescripcion(), alerta.getLimite(), alerta.getId(), alerta.getCategoria(), alerta.getIdCuenta());
-
+    	
     }
     
     private void generarMensajeNotificacion(Alerta alerta) {

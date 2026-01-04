@@ -25,9 +25,10 @@ import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 public class ConfiguracionImpl extends Configuracion {
 
     private final ControladorApp controlador;
-    private final String NombreApp ="gestion-gastos";
+    private final String NombreApp =".gestion_gastos";
     private final String NameAlertasJSON = "alertas.json";
     private final String NameNotificacionesJSON = "notificaciones.json";
+    private final String data = "data";
     private String idCuentaActual;
     
     public ConfiguracionImpl() {
@@ -90,12 +91,16 @@ public class ConfiguracionImpl extends Configuracion {
     }
     
 
-    //Esto te lo pilla de local.
+    //Se puede factorizar en un unico metodo al que solo 
+    //le pasamos el nombre del json porque es igual pero por 
+    //no modificar ahora lo dejamos asi.
     @Override
     public String getRutaAlertas() {
         return System.getProperty("user.home")
                + File.separator
                + NombreApp
+               + File.separator
+               + data
                + File.separator
                + NameAlertasJSON;
     }
@@ -106,6 +111,8 @@ public class ConfiguracionImpl extends Configuracion {
     	return System.getProperty("user.home")
                 + File.separator
                 + NombreApp
+                + File.separator
+                + data
                 + File.separator
                 + NameNotificacionesJSON;
     }
