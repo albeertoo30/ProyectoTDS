@@ -118,6 +118,12 @@ public class Alerta {
     public void resetNotificada() {
         this.notificada = false;
     }
+    
+    //Para no violar grasp
+    						//Recordar que idCuenta en verdad es el nombre
+    public boolean perteneceA(String idCuenta) {
+    	return this.idCuenta.equals(idCuenta);
+    }
 	
 	
 }

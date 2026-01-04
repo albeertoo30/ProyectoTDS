@@ -75,6 +75,17 @@ public class Gasto {
 		return cuenta;
 	}
 	
+	//para no violar grasp en alertManager
+	//Recordar que en verdad es el nombre
+	//Si es null peta, puede que haga falta una comprobacion
+	//Para el caso de individual.
+
+	@JsonIgnore
+	public String getNombreCuenta() {
+		return cuenta == null ? "Individual" : cuenta.getNombre();
+	}
+	
+	
 	// Setters
 	public void setCategoria(Categoria categoria) {
 		 this.categoria = categoria;

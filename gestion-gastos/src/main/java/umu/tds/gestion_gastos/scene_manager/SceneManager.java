@@ -1,12 +1,16 @@
 package umu.tds.gestion_gastos.scene_manager;
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.alerta.controlador.ControladorVentanaAlerta;
+import umu.tds.gestion_gastos.notificacion.Notificacion;
 import umu.tds.gestion_gastos.notificacion.controlador.ControladorVentanaNotificacion;
 import umu.tds.gestion_gastos.vista.cuenta.ListaCuentasViewController;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
@@ -90,7 +94,7 @@ public enum SceneManager {
             vc.setControlador(controlador);
 
             Stage stage = new Stage();
-            stage.setTitle("Notificaciones");
+            stage.setTitle("Cuentas Compartidas");
             stage.setScene(new Scene(root));
 
             stage.setOnCloseRequest(e -> {
@@ -103,5 +107,26 @@ public enum SceneManager {
 
             stage.showAndWait();
         }
+    
+    
+    
+    //Lo dejo por si se me ocurre como implementarlo sin hacer otro observer o sin violar grasp
+    public void mostrarPopupNotificacion(Notificacion notificacion) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Alerta de gasto");
+            alert.setHeaderText("Se ha superado un límite");
+
+            alert.setContentText(
+                    notificacion.getMensaje() +
+                    "\n\nImporte límite: " + notificacion.getImporte() + "€"
+            );
+
+            alert.showAndWait();
+        });
+    }
+    
+    
+    
     
 }

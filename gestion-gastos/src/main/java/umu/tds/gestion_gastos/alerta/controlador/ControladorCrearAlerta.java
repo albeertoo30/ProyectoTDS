@@ -38,7 +38,7 @@ public class ControladorCrearAlerta {
             double limite = Double.parseDouble(tfLimite.getText());
 
             if (descripcion.isBlank() || tipo == null) {
-                mostrarError("Debes rellenar descripción y tipo");
+                mostrarError("Debes rellenar todo");
                 return;
             }
 
