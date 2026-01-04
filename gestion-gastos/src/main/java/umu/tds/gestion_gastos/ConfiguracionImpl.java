@@ -19,7 +19,7 @@ import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.NotificacionRepository;
-import umu.tds.gestion_gastos.sceneManager.SceneManager;
+import umu.tds.gestion_gastos.scene_manager.SceneManager;
 import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 
 public class ConfiguracionImpl extends Configuracion {
@@ -33,8 +33,7 @@ public class ConfiguracionImpl extends Configuracion {
     
     public ConfiguracionImpl() {
         // Crear repositorios con las rutas correctas
-        GastoRepository gastoRepo = new GastoRepositoryJSONImpl(getRutaGastos());
-        CategoriaRepository categoriaRepo = new CategoriaRepositoryJSONImpl(getRutaCategorias());
+    	CategoriaRepository categoriaRepo = new CategoriaRepositoryJSONImpl(getRutaCategorias());
         CuentaRepository cuentaRepo = new CuentaRepositoryJSONImpl(getRutaCuentas());
         UsuarioRepository usuarioRepo = new UsuarioRepositoryJSONImpl(getRutaUsuarios());
 
@@ -42,12 +41,12 @@ public class ConfiguracionImpl extends Configuracion {
         INotificacionRepository notiRepo = NotificacionRepository.INSTANCE;
         
         
-        IAlertManager alertManager = new AlertManager(gastoRepo, alertaRepo, notiRepo);
-        gastoRepo.addListener(alertManager);
+        IAlertManager alertManager = new AlertManager(cuentaRepo, alertaRepo, notiRepo);
+        //gastoRepo.addListener(alertManager);
 
         // Crear controlador con los repositorios
-        this.controlador = new ControladorApp(gastoRepo, categoriaRepo,
-        					notiRepo, alertaRepo,  alertManager, cuentaRepo, usuarioRepo, SceneManager.INSTANCE);
+        this.controlador = new ControladorApp(cuentaRepo, categoriaRepo,
+        					notiRepo, alertaRepo, alertManager, usuarioRepo, SceneManager.INSTANCE);
     
         SceneManager.INSTANCE.init(this.controlador);
         
@@ -63,17 +62,15 @@ public class ConfiguracionImpl extends Configuracion {
     	this.controlador.guardarDatos();
     }
     
-    
-    
     @Override
     public ControladorApp getControladorApp() {
         return controlador;
     }
 
-    @Override
+    /*@Override
     public String getRutaGastos() {
         return "/umu/tds/data/gastos.json";
-    }
+    }*/
 
     @Override
     public String getRutaCategorias() {
@@ -129,4 +126,5 @@ public class ConfiguracionImpl extends Configuracion {
     public void setCuentaActual(String id) {
     	this.idCuentaActual = id;
     }
+
 }

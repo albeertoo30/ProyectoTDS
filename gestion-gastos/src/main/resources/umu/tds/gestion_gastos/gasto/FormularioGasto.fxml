@@ -5,27 +5,33 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="umu.tds.gestion_gastos.vista.gasto.FormularioGastoController">
+            fx:controller="umu.tds.gestion_gastos.vista.gasto.FormularioGastoController"
+            stylesheets="@/umu/tds/gestion_gastos/estilos/app.css">
 
     <top>
-        <Label text="Registrar / Editar Gasto"
-               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 15;" />
+        <VBox alignment="CENTER" style="-fx-padding: 15;">
+            <Label text="Registrar / Editar Gasto"
+                   styleClass="label-titulo" />
+        </VBox>
     </top>
 
     <center>
-        <GridPane hgap="15" vgap="15">
+        <GridPane hgap="15" vgap="15" 
+                  style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+            
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
             <columnConstraints>
-                <ColumnConstraints halignment="RIGHT"/>
+                <ColumnConstraints halignment="RIGHT" minWidth="80"/>
                 <ColumnConstraints hgrow="ALWAYS"/>
             </columnConstraints>
 
             <children>
 
                 <Label text="Cantidad (€):"
+                       style="-fx-font-weight: bold; -fx-text-fill: #555;"
                        GridPane.rowIndex="0"
                        GridPane.columnIndex="0"/>
                 <TextField fx:id="campoCantidad"
@@ -34,20 +40,25 @@
                            GridPane.columnIndex="1"/>
 
                 <Label text="Fecha:"
+                       style="-fx-font-weight: bold; -fx-text-fill: #555;"
                        GridPane.rowIndex="1"
                        GridPane.columnIndex="0"/>
                 <DatePicker fx:id="campoFecha"
+                            maxWidth="Infinity"
                             GridPane.rowIndex="1"
                             GridPane.columnIndex="1"/>
 
                 <Label text="Categoría:"
+                       style="-fx-font-weight: bold; -fx-text-fill: #555;"
                        GridPane.rowIndex="2"
                        GridPane.columnIndex="0"/>
                 <ComboBox fx:id="campoCategoria"
+                          maxWidth="Infinity"
                           GridPane.rowIndex="2"
                           GridPane.columnIndex="1"/>
 
                 <Label text="Cuenta:"
+                       style="-fx-font-weight: bold; -fx-text-fill: #555;"
                        GridPane.rowIndex="3"
                        GridPane.columnIndex="0"/>
                 <ComboBox fx:id="campoCuenta"
@@ -57,6 +68,7 @@
                           GridPane.columnIndex="1"/>
 
                 <Label text="Usuario:"
+                       style="-fx-font-weight: bold; -fx-text-fill: #555;"
                        GridPane.rowIndex="4"
                        GridPane.columnIndex="0"/>
                 <ComboBox fx:id="campoUsuario"
@@ -67,10 +79,12 @@
                           GridPane.columnIndex="1"/>
 
                 <Label text="Descripción:"
+                       style="-fx-font-weight: bold; -fx-text-fill: #555;"
                        GridPane.rowIndex="5"
                        GridPane.columnIndex="0"/>
                 <TextArea fx:id="campoDescripcion"
                           prefRowCount="3"
+                          wrapText="true"
                           promptText="Introduce una breve descripción"
                           GridPane.rowIndex="5"
                           GridPane.columnIndex="1"/>
@@ -81,17 +95,17 @@
 
     <bottom>
         <HBox spacing="15"
-              alignment="CENTER_RIGHT">
-            <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
-            </padding>
+              alignment="CENTER_RIGHT"
+              style="-fx-padding: 15;">
+            
             <Button fx:id="btnCancelar"
                     text="Cancelar"
-                    style="-fx-background-color: lightgray;"
+                    styleClass="button, boton-secundario"
                     onAction="#onCancelar"/>
+            
             <Button fx:id="btnGuardar"
                     text="Guardar"
-                    style="-fx-font-weight: bold;"
+                    styleClass="button, boton-accion"
                     onAction="#onGuardar"/>
         </HBox>
     </bottom>

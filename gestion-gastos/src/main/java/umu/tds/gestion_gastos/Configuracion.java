@@ -19,7 +19,7 @@ public abstract class Configuracion {
 
     public abstract ControladorApp getControladorApp();
 
-    public abstract String getRutaGastos();
+    //public abstract String getRutaGastos();
 
     public abstract String getRutaCategorias();
     

@@ -72,6 +72,10 @@
                         HBox.hgrow="ALWAYS"
                         maxWidth="Infinity"/>
             </HBox>
+            
+            <Button fx:id="btnEstadisticas" text="📊 Ver Gráficas" 
+                    styleClass="button, boton-info"
+                    onAction="#onVerEstadisticas"/>
 
         </VBox>
     </left>

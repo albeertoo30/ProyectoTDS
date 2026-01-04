@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="umu.tds.gestion_gastos.vista.gasto.EstadisticasController"
+            prefWidth="1000" prefHeight="600"
+            stylesheets="@/umu/tds/gestion_gastos/estilos/app.css">
+
+    <top>
+        <VBox alignment="CENTER" style="-fx-padding: 15;">
+            <Label text="Estadísticas de Gastos" 
+                   styleClass="label-titulo"/>
+        </VBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.4" style="-fx-padding: 10; -fx-background-color: transparent;">
+            
+            <VBox alignment="CENTER" style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 5;">
+                <Label text="Distribución por Categorías" style="-fx-font-weight: bold; -fx-padding: 10;"/>
+                <PieChart fx:id="graficoQueso" legendSide="BOTTOM" title="Gastos"/>
+            </VBox>
+
+            <VBox alignment="CENTER" style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 5;">
+                <Label text="Calendario de Gastos" style="-fx-font-weight: bold; -fx-padding: 10;"/>
+                
+                <StackPane fx:id="contenedorCalendario" VBox.vgrow="ALWAYS"/>
+            </VBox>
+            
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" style="-fx-padding: 15; -fx-background-color: #f4f4f4;">
+            <Button text="Cerrar" 
+                    styleClass="button, boton-secundario"
+                    onAction="#onCerrar"/>
+        </HBox>
+    </bottom>
+                                        
+</BorderPane>

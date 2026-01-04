@@ -160,11 +160,23 @@ public class FormularioGastoController {
             Object seleccionCuenta = campoCuenta.getValue();
             Cuenta cuentaDestino = null;
 
-            if (seleccionCuenta.equals("Individual")) {
+            if (seleccionCuenta.equals("Individual") || (seleccionCuenta instanceof String && ((String)seleccionCuenta).equalsIgnoreCase("Individual"))) {
                 // CASO INDIVIDUAL:
-                // Asignamos directamente el usuario actual de la sesión.
                 pagador = controlador.getUsuarioActual();
-                cuentaDestino = null; // En individual la cuenta es null
+                
+                // BUSCAMOS LA CUENTA INDIVIDUAL REAL DEL USUARIO
+                // Asumimos que el controlador tiene acceso a todas las cuentas
+                cuentaDestino = controlador.obtenerTodasLasCuentas().stream()
+                    .filter(c -> c instanceof umu.tds.gestion_gastos.cuenta.CuentaIndividual) // Filtramos por tipo
+                    // Opcional: Si guardas el dueño en la cuenta, verifica que sea del usuario actual
+                    // .filter(c -> c.getPropietario().equals(pagador)) 
+                    .findFirst()
+                    .orElse(null);
+                
+                if (cuentaDestino == null) {
+                    mostrarError("Error crítico: No se encuentra tu Cuenta Individual. Contacta con soporte.");
+                    return;
+                }
                 
             } else if (seleccionCuenta instanceof Cuenta) {
                 // CASO COMPARTIDA:

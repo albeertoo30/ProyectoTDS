@@ -1,4 +1,4 @@
-package umu.tds.gestion_gastos.sceneManager;
+package umu.tds.gestion_gastos.scene_manager;
 import java.io.IOException;
 
 import javafx.application.Platform;
