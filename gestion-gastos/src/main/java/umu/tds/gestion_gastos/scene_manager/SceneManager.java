@@ -9,10 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.Configuracion;
-import umu.tds.gestion_gastos.alerta.controlador.ControladorVentanaAlerta;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
-import umu.tds.gestion_gastos.notificacion.controlador.ControladorVentanaNotificacion;
+import umu.tds.gestion_gastos.vista.alerta.ControladorVentanaAlerta;
 import umu.tds.gestion_gastos.vista.cuenta.ListaCuentasViewController;
+import umu.tds.gestion_gastos.vista.notificacion.ControladorVentanaNotificacion;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 
 public enum SceneManager {

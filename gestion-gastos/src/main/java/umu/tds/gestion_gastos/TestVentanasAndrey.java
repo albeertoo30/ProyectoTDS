@@ -8,10 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
-import umu.tds.gestion_gastos.notificacion.controlador.ControladorVentanaNotificacion;
 import umu.tds.gestion_gastos.vista.cuenta.FormularioCuentaController;
 import umu.tds.gestion_gastos.vista.gasto.*;
 //import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.vista.notificacion.ControladorVentanaNotificacion;
 
 public class TestVentanasAndrey extends Application {
 

@@ -19,7 +19,7 @@
 
 <BorderPane stylesheets="@../estilos/app.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="umu.tds.gestion_gastos.alerta.controlador.ControladorVentanaAlerta">
+            fx:controller="umu.tds.gestion_gastos.vista.alerta.ControladorVentanaAlerta">
 
     <top>
         <VBox spacing="10" BorderPane.alignment="CENTER">

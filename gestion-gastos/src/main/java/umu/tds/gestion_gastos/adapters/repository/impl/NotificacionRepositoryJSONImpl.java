@@ -1,4 +1,4 @@
-package umu.tds.gestion_gastos.notificacion;
+package umu.tds.gestion_gastos.adapters.repository.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,8 +24,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import umu.tds.gestion_gastos.alerta.Alerta;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.filtros.Filtro;
+import umu.tds.gestion_gastos.notificacion.*;
 
-public enum NotificacionRepository implements INotificacionRepository{
+public enum NotificacionRepositoryJSONImpl implements INotificacionRepository{
 
 	INSTANCE;
 
@@ -37,7 +38,7 @@ public enum NotificacionRepository implements INotificacionRepository{
 		return Collections.unmodifiableList(this.listaNotificaciones);
 	}
     
-	NotificacionRepository(){
+	NotificacionRepositoryJSONImpl(){
 		mapper = new ObjectMapper();
 		mapper.registerModule(new JavaTimeModule());
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

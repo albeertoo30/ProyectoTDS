@@ -21,13 +21,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.Configuracion;
-import umu.tds.gestion_gastos.alerta.controlador.ControladorCrearAlerta;
-import umu.tds.gestion_gastos.alerta.controlador.ControladorVentanaAlerta;
 import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
-import umu.tds.gestion_gastos.notificacion.controlador.ControladorVentanaNotificacion;
 import umu.tds.gestion_gastos.usuario.Usuario;
+import umu.tds.gestion_gastos.vista.alerta.ControladorCrearAlerta;
+import umu.tds.gestion_gastos.vista.alerta.ControladorVentanaAlerta;
+import umu.tds.gestion_gastos.vista.notificacion.ControladorVentanaNotificacion;
 
 public class DetalleCuentaController {
 

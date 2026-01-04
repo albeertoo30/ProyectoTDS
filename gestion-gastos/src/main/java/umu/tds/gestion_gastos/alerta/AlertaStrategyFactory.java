@@ -6,7 +6,7 @@ import java.util.List;
 public class AlertaStrategyFactory {
 
     public static List<String> getTiposDisponibles() {
-        return List.of("Semanal", "Mensual");
+        return List.of("Semanal", "Mensual", "Anual");
     }
 
     public static AlertaStrategy crear(String tipo) {

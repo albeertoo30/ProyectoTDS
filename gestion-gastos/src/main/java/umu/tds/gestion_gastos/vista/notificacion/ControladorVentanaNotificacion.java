@@ -1,4 +1,4 @@
-package umu.tds.gestion_gastos.notificacion.controlador;
+package umu.tds.gestion_gastos.vista.notificacion;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,4 +1,4 @@
-package umu.tds.gestion_gastos.alerta;
+package umu.tds.gestion_gastos.adapters.repository.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,11 +21,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import umu.tds.gestion_gastos.alerta.Alerta;
+import umu.tds.gestion_gastos.alerta.AlertaStrategy;
+import umu.tds.gestion_gastos.alerta.IAlertaRepository;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.filtros.Filtro;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
 
-public enum AlertaRepository implements IAlertaRepository{ // Es observer de Gasto, YA no, ahora es el gestor.
+public enum AlertaRepositoryJSONImpl implements IAlertaRepository{ // Es observer de Gasto, YA no, ahora es el gestor.
 
 	INSTANCE;
 	
@@ -33,7 +36,7 @@ public enum AlertaRepository implements IAlertaRepository{ // Es observer de Gas
 	private final List<Alerta> listaAlertas;
 	
 	
-	AlertaRepository(){
+	AlertaRepositoryJSONImpl(){
 		mapper = new ObjectMapper();
 		mapper.registerModule(new JavaTimeModule());
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

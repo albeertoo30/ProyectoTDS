@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="15" stylesheets="@../estilos/app.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="umu.tds.gestion_gastos.alerta.controlador.ControladorCrearAlerta">
+<VBox spacing="15" stylesheets="@../estilos/app.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="umu.tds.gestion_gastos.vista.alerta.ControladorCrearAlerta">
 
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />

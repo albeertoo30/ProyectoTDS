@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import umu.tds.gestion_gastos.Configuracion;
+import umu.tds.gestion_gastos.adapters.repository.impl.AlertaRepositoryJSONImpl;
 import umu.tds.gestion_gastos.alerta.AlertManager;
 import umu.tds.gestion_gastos.alerta.Alerta;
-import umu.tds.gestion_gastos.alerta.AlertaRepository;
 import umu.tds.gestion_gastos.alerta.AlertaStrategy;
 import umu.tds.gestion_gastos.alerta.IAlertManager;
 import umu.tds.gestion_gastos.alerta.IAlertaRepository;

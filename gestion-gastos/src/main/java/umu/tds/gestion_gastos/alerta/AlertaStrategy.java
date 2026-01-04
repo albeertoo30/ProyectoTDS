@@ -27,7 +27,8 @@ import umu.tds.gestion_gastos.gasto.Gasto;
 	)
 	@JsonSubTypes({
 	    @JsonSubTypes.Type(value = AlertaSemanal.class, name = "semanal"),
-	    @JsonSubTypes.Type(value = AlertaMensual.class, name = "mensual")	})
+	    @JsonSubTypes.Type(value = AlertaMensual.class, name = "mensual"),
+	    @JsonSubTypes.Type(value = AlertaMensual.class, name = "anual")   })
 public interface AlertaStrategy {
 
 	boolean seSupera(Alerta alerta, Gasto nuevoGasto, List<Gasto> todosGastos);
