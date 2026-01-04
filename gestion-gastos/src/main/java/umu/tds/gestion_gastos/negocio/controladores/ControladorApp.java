@@ -1,5 +1,6 @@
 package umu.tds.gestion_gastos.negocio.controladores;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -26,6 +27,8 @@ import umu.tds.gestion_gastos.filtros.Filtro;
 import umu.tds.gestion_gastos.gasto.Gasto;
 import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.gasto.GestorGastos;
+import umu.tds.gestion_gastos.importacion.IImportadorGastos;
+import umu.tds.gestion_gastos.importacion.ImportadorCSVAdapter;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
 import umu.tds.gestion_gastos.scene_manager.SceneManager;
@@ -55,7 +58,6 @@ public class ControladorApp { //Yo le crearia una interfaz
         // Guardamos la referencia al repositorio de cuentas
         this.repoCuentas = cuentaRepo;
 
-        // --- CAMBIO CRUCIAL: Inyección del MISMO repositorio a ambos gestores ---
     	this.gestorGastos = new GestorGastos(cuentaRepo);
         this.gestorCuentas = new GestorCuenta(cuentaRepo);
         
@@ -72,6 +74,46 @@ public class ControladorApp { //Yo le crearia una interfaz
     //SceneManager
     public SceneManager getSceneManager() {
     	return this.sceneManager;
+    }
+    
+    //importacion de datos
+    
+    public void importarGastos(File fichero) {
+        if (fichero == null || !fichero.exists()) {
+            System.err.println("Error: El fichero proporcionado no es válido.");
+            return;
+        }
+
+        try {
+            IImportadorGastos importador = new ImportadorCSVAdapter(
+                this.gestorCategorias, 
+                this.gestorCuentas, 
+                this.gestorUsuarios, 
+                this.usuarioActual
+            );
+
+            List<Gasto> gastosImportados = importador.importarGastos(fichero);
+            int gastosGuardados = 0;
+
+            for (Gasto g : gastosImportados) {
+                boolean exito = gestorGastos.crearGasto(
+                    g.getFecha(), 
+                    g.getCantidad(), 
+                    g.getDescripcion(), 
+                    g.getCategoria(), 
+                    g.getUsuario(),
+                    g.getCuenta() 
+                );
+                
+                if (exito) gastosGuardados++;
+            }
+            
+            System.out.println("Importación finalizada. Gastos guardados: " + gastosGuardados);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error crítico en la importación: " + e.getMessage());
+        }
     }
     
     

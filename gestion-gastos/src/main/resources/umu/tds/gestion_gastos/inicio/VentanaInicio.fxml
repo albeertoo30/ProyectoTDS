@@ -46,5 +46,17 @@
                     styleClass="button, boton-info"/>
         </VBox>
     </center>
+    
+    <bottom>
+        <VBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets bottom="30" top="10"/>
+            </padding>
+            <Separator maxWidth="300" />
+            <Button text="Importar Gastos (CSV)"
+                    onAction="#onImportar"
+                    styleClass="button"/>
+        </VBox>
+    </bottom>
 
 </BorderPane>
