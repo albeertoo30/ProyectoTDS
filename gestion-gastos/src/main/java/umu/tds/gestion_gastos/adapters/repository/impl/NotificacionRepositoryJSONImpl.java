@@ -114,7 +114,6 @@ public enum NotificacionRepositoryJSONImpl implements INotificacionRepository{
 	        return;
 	    }
 
-	    System.out.println("Leyendo notificaciones desde JSON...");
 	    try (InputStream is = Files.newInputStream(fichero)) {
 	        List<Notificacion> cargadas = mapper.readValue(is, new TypeReference<List<Notificacion>>() {});
 	        listaNotificaciones.clear();
@@ -126,12 +125,6 @@ public enum NotificacionRepositoryJSONImpl implements INotificacionRepository{
 	
 	@Override
 	public void guardar(String rutaJson) throws IOException {
-		// --- DEBUG ---
-        System.out.println(">>> Intentando guardar " + listaNotificaciones.size() + " notificaciones en: " + rutaJson);
-        if (!listaNotificaciones.isEmpty()) {
-            System.out.println(">>> Ejemplo primera notif: " + listaNotificaciones.get(0).getMensaje());
-        }
-        // -------------
 	    Path fichero = Paths.get(rutaJson);
 	    // Crear directorios si no existen
 	    Files.createDirectories(fichero.getParent());

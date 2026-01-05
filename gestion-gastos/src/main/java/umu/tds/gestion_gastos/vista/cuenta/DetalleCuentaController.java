@@ -204,6 +204,7 @@ public class DetalleCuentaController {
 
 			if (formController.isGuardado()) {
 				controlador.registrarCuenta(this.cuentaActual);
+				controlador.procesarNuevoGasto(seleccionado);
 				actualizarVista();
 			}
 

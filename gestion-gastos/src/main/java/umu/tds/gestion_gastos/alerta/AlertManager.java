@@ -72,14 +72,8 @@ public class AlertManager implements IAlertManager {
     @Override public void onGastoEliminado(Gasto gasto) { /* opcional: re-evaluar */ }
     
     private void crearNotificacionAlerta(Alerta alerta) {
-        generarMensajeNotificacion(alerta);
     	notiRepo.crearNotificacion(alerta.getDescripcion(), alerta.getLimite(), alerta.getId(), alerta.getCategoria(), alerta.getIdCuenta());
     	
     }
     
-    private void generarMensajeNotificacion(Alerta alerta) {
-    	System.out.println("Limite de: " + alerta.getLimite() + " superado");
-    	System.out.println(alerta);
-
-    }
 }

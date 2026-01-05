@@ -295,13 +295,11 @@ public class ControladorApp { //Yo le crearia una interfaz
     }
 
     public void procesarNuevoGasto(Gasto gasto) {
-        // 1. Delegamos la lógica al experto (AlertManager)
+        // Delegamos la lógica al experto (AlertManager)
         // Él decidirá si crea notificaciones y si marca alertas como leídas.
         gestorAlertas.onGastoNuevo(gasto);
 
-        // 2. PERSISTENCIA
         // El AlertManager modifica los repositorios en memoria (añade notificaciones, modifica alertas).
-        // Es CRUCIAL guardar esos cambios en los ficheros JSON ahora mismo.
         try {
             guardarNotificaciones(); // Para guardar la nueva notificación si se creó
             guardarAlertas();        // Para guardar el estado "notificada: true" de la alerta
