@@ -20,6 +20,8 @@ public class AlertaAnual implements AlertaStrategy {
         // PASO 2: Sumar gastos del MISMO AÑO
         double totalAnio = todosGastos.stream()
             .filter(gasto -> {
+            	// Filtro cuenta
+            	if (!cumpleCuenta(gasto, alerta)) return false;
                 // Filtro 1: Es del mismo año?
                 boolean mismoAnio = gasto.getFecha().getYear() == anioNuevoGasto;
                 

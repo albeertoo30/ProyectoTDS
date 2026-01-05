@@ -60,7 +60,6 @@ public enum AlertaRepositoryJSONImpl implements IAlertaRepository{ // Es observe
 	        return;
 	    }
 
-	    System.out.println("Leyendo notificaciones desde JSON...");
 	    try (InputStream is = Files.newInputStream(fichero)) {
 	        List<Alerta> cargadas = mapper.readValue(is, new TypeReference<List<Alerta>>() {});
 	        listaAlertas.clear();
@@ -170,7 +169,5 @@ public enum AlertaRepositoryJSONImpl implements IAlertaRepository{ // Es observe
 	//	getById(alertaActualizada.getId()).ifPresent(n -> n.se)
 	//}
 	
-    
-    
     
 }

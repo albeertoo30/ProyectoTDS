@@ -12,6 +12,7 @@ import umu.tds.gestion_gastos.adapters.repository.impl.GastoRepositoryJSONImpl;
 import umu.tds.gestion_gastos.adapters.repository.impl.NotificacionRepositoryJSONImpl;
 import umu.tds.gestion_gastos.adapters.repository.impl.UsuarioRepositoryJSONImpl;
 import umu.tds.gestion_gastos.alerta.AlertManager;
+import umu.tds.gestion_gastos.alerta.GastoListener;
 import umu.tds.gestion_gastos.alerta.IAlertManager;
 import umu.tds.gestion_gastos.alerta.IAlertaRepository;
 import umu.tds.gestion_gastos.categoria.CategoriaRepository;
@@ -48,6 +49,7 @@ public class ConfiguracionImpl extends Configuracion {
         this.controlador = new ControladorApp(cuentaRepo, categoriaRepo,
         					notiRepo, alertaRepo, alertManager, usuarioRepo, SceneManager.INSTANCE);
     
+        this.controlador.addGastoListener((GastoListener) alertManager);
         SceneManager.INSTANCE.init(this.controlador);
         
     }    

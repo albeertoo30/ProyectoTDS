@@ -23,6 +23,8 @@ public class AlertaSemanal implements AlertaStrategy{
         // Filtrar por semana Y por categoría (si la alerta tiene categoría específica)
         double totalSemana = todosGastos.stream()
             .filter(gasto -> {
+            	// Filtro de cuenta
+            	if (!cumpleCuenta(gasto, alerta)) return false;
                 // Filtro 1: para la semana
                 LocalDate fechaGasto = gasto.getFecha();
                 boolean mismaSemana = fechaGasto.getYear() == anioNuevoGasto && 
@@ -46,8 +48,5 @@ public class AlertaSemanal implements AlertaStrategy{
         // PASO 4: Comparar con el límite
         return totalSemana > alerta.getLimite();
     }
-    
-    
 
-	
 }

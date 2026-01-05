@@ -28,7 +28,7 @@ import umu.tds.gestion_gastos.gasto.Gasto;
 	@JsonSubTypes({
 	    @JsonSubTypes.Type(value = AlertaSemanal.class, name = "semanal"),
 	    @JsonSubTypes.Type(value = AlertaMensual.class, name = "mensual"),
-	    @JsonSubTypes.Type(value = AlertaMensual.class, name = "anual")   })
+	    @JsonSubTypes.Type(value = AlertaAnual.class, name = "anual")   })
 public interface AlertaStrategy {
 
 	boolean seSupera(Alerta alerta, Gasto nuevoGasto, List<Gasto> todosGastos);
@@ -53,4 +53,19 @@ public interface AlertaStrategy {
                    .equalsIgnoreCase(alerta.getCategoria().getNombre());
     }
 
+    /**
+     * MÉTODO auxiliar: Verifica si el gasto pertenece a la cuenta de la alerta.
+     * Soluciona el conflicto ID vs Nombre en cuentas compartidas.
+     */
+    default boolean cumpleCuenta(Gasto gasto, Alerta alerta) {
+        if (gasto.getCuenta() == null) return false;
+        
+        String idAlerta = alerta.getIdCuenta();          
+        String idGasto = String.valueOf(gasto.getCuenta().getId());
+        String nombreGasto = gasto.getCuenta().getNombre();
+
+        // Coincide si es igual al ID (Compartidas) O igual al Nombre (Individuales)
+        return idAlerta.equals(idGasto) || idAlerta.equalsIgnoreCase(nombreGasto);
+    }
+    
 }
