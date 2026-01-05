@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.alerta.Alerta;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.filtros.Filtro;
@@ -79,13 +80,23 @@ public enum NotificacionRepositoryJSONImpl implements INotificacionRepository{
 	
 	@Override
 	public void marcarLeida(String id) {
-		getById(id).ifPresent(Notificacion::marcarLeida);
+		getById(id).ifPresent(n -> {
+            n.marcarLeida();
+            // Guardar cambios
+            try { guardar(Configuracion.getInstancia().getRutaNotificaciones()); } 
+            catch (IOException e) { e.printStackTrace(); }
+        });
 	}
 
 	@Override
-	public void delete(String id) {
-		getById(id).ifPresent(listaNotificaciones::remove);
-	}
+    public void delete(String id) {
+        getById(id).ifPresent(n -> {
+            listaNotificaciones.remove(n);
+            // Guardar cambios
+            try { guardar(Configuracion.getInstancia().getRutaNotificaciones()); } 
+            catch (IOException e) { e.printStackTrace(); }
+        });
+    }
 	
 	//En realidad se guardan en local, en las pruebas usamos otra ruta.
 	@Override
@@ -115,6 +126,12 @@ public enum NotificacionRepositoryJSONImpl implements INotificacionRepository{
 	
 	@Override
 	public void guardar(String rutaJson) throws IOException {
+		// --- DEBUG ---
+        System.out.println(">>> Intentando guardar " + listaNotificaciones.size() + " notificaciones en: " + rutaJson);
+        if (!listaNotificaciones.isEmpty()) {
+            System.out.println(">>> Ejemplo primera notif: " + listaNotificaciones.get(0).getMensaje());
+        }
+        // -------------
 	    Path fichero = Paths.get(rutaJson);
 	    // Crear directorios si no existen
 	    Files.createDirectories(fichero.getParent());
@@ -150,6 +167,13 @@ public enum NotificacionRepositoryJSONImpl implements INotificacionRepository{
 	public void crearNotificacion(String msg, double cantidad, String alertId, Categoria categoria, String idCuenta) {
 		Notificacion noti = new Notificacion(msg, cantidad, alertId, categoria, idCuenta);
 		this.add(noti);
+		try {
+			String ruta = Configuracion.getInstancia().getRutaNotificaciones();
+			guardar(ruta);
+		} catch (IOException e) {
+			System.err.println("Error al guardar la notificación: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	@Override

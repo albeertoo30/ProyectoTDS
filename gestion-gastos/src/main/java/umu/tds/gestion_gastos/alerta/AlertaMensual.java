@@ -20,6 +20,8 @@ public class AlertaMensual implements AlertaStrategy{
         // PASO 2: Sumar gastos del MISMO MES
         double totalMes = todosGastos.stream()
             .filter(gasto -> {
+            	// Filtro cuenta
+            	if (!cumpleCuenta(gasto, alerta)) return false;
                 // Filtro 1: Es del mismo mes?
                 YearMonth mesGasto = YearMonth.from(gasto.getFecha());
                 boolean mismoMes = mesGasto.equals(mesNuevoGasto);
@@ -42,9 +44,6 @@ public class AlertaMensual implements AlertaStrategy{
         // PASO 4: Comparar con el límite
         return totalMes > alerta.getLimite();
     }
-	
-	
-	
 }
 
 

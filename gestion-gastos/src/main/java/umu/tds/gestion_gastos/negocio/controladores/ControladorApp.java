@@ -36,6 +36,8 @@ import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 
 public class ControladorApp { //Yo le crearia una interfaz 
 
+	private static ControladorApp instancia;
+	
     private final GestorGastos gestorGastos;
     private final GestorCategorias gestorCategorias;
     private final INotificacionRepository repoNotificaciones;
@@ -52,7 +54,7 @@ public class ControladorApp { //Yo le crearia una interfaz
     public ControladorApp(CuentaRepository cuentaRepo, CategoriaRepository categoriaRepo, // GastoRepository YA NO SE USA
     		INotificacionRepository notificacionRepo, IAlertaRepository alertaRepo,
     		IAlertManager gestorAlertas, UsuarioRepository usuarioRepo, SceneManager sceneManager) {
-        
+        instancia = this;
         // Guardamos la referencia al repositorio de cuentas
         this.repoCuentas = cuentaRepo;
 
@@ -75,6 +77,9 @@ public class ControladorApp { //Yo le crearia una interfaz
     	return this.sceneManager;
     }
     
+    public static ControladorApp getInstancia() {
+        return instancia;
+    }
     
     //Operaciones de persistencia de datos van en la configuracion o en el controlador? 
     public void cargarDatos() throws IOException {
@@ -284,8 +289,25 @@ public class ControladorApp { //Yo le crearia una interfaz
         return gestorUsuarios.obtenerOtrosUsuarios(usuarioActual.getId());
     }
     
-    // Añade este método
+    // Necesario para ConfiguracionImpl
     public void addGastoListener(GastoListener listener) {
         this.gestorGastos.addListener(listener);
+    }
+
+    public void procesarNuevoGasto(Gasto gasto) {
+        // 1. Delegamos la lógica al experto (AlertManager)
+        // Él decidirá si crea notificaciones y si marca alertas como leídas.
+        gestorAlertas.onGastoNuevo(gasto);
+
+        // 2. PERSISTENCIA
+        // El AlertManager modifica los repositorios en memoria (añade notificaciones, modifica alertas).
+        // Es CRUCIAL guardar esos cambios en los ficheros JSON ahora mismo.
+        try {
+            guardarNotificaciones(); // Para guardar la nueva notificación si se creó
+            guardarAlertas();        // Para guardar el estado "notificada: true" de la alerta
+        } catch (IOException e) {
+            System.err.println("Error guardando tras procesar gasto: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

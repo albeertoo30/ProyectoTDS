@@ -168,6 +168,7 @@ public class DetalleCuentaController {
 				this.cuentaActual.agregarGasto(nuevoGasto);
 
 				controlador.registrarCuenta(this.cuentaActual);
+				controlador.procesarNuevoGasto(nuevoGasto);
 				actualizarVista();
 			}
 

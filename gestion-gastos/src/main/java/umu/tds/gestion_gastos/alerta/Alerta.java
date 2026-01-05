@@ -1,6 +1,7 @@
 package umu.tds.gestion_gastos.alerta;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -59,8 +60,7 @@ public class Alerta {
 	
 
 	
-	public boolean seSuperaCon(Gasto nuevoGasto, java.util.List<Gasto> todosGastos) {
-		if (!activa || strategy== null) return false;
+	public boolean seSuperaCon(Gasto nuevoGasto, List<Gasto> todosGastos) {
 		return strategy.seSupera(this, nuevoGasto, todosGastos);
 	}	
 		

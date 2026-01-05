@@ -53,7 +53,11 @@ public class GestorGastos {
         cuenta.agregarGasto(nuevoGasto);
    
         boolean exito = repositorio.update(cuenta);
-        if(exito) notifyGastoCreado(nuevoGasto);
+        System.out.println(">>> DEBUG GestorGastos: Update realizado. Éxito=" + exito);
+        if (exito) {
+            System.out.println(">>> DEBUG GestorGastos: Notificando a " + listeners.size() + " listeners.");
+            notifyGastoCreado(nuevoGasto); 
+        }
         return exito;
     }
 	

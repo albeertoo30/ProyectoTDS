@@ -31,20 +31,25 @@ public class AlertManager implements IAlertManager {
 
     @Override
     public void onGastoNuevo(Gasto gasto) {
+    	if (gasto == null || gasto.getCuenta() == null) return;
     	//Necesario ver todos para calcular totales correctamente
     	List<Gasto> todosGastos = obtenerTodosLosGastos();
     	
         for (Alerta a : alertaRepo.getAlertasActivas()) {
         	//La estrategia se encarga del filtrado
-            
         	boolean supera =  a.seSuperaCon(gasto, todosGastos);
-        	
+        	String idAlerta = a.getIdCuenta();
+            String idGasto = String.valueOf(gasto.getCuenta().getId()); 
+            String nombreGasto = gasto.getCuenta().getNombre();
+            
+            // Comprobamos si coincide por ID (lo correcto) O por Nombre (por compatibilidad)
+            boolean esMismaCuenta = idAlerta.equals(idGasto) || 
+                                    idAlerta.equalsIgnoreCase(nombreGasto);
         	//Solo crea la notificacion si se supera, si no esta notificada y si la alerta es de la cuenta del gasto
         													//Violacion grasp, cambiarlo. Cambiado. Ya no se persisten las Cuentas en gastos, nueva comprobacion en gasto
-        	if(supera && !a.isNotificada() &&  a.perteneceA(gasto.getNombreCuenta())) {
+        	if(supera && !a.isNotificada() && esMismaCuenta) {
         		crearNotificacionAlerta(a);   //a.getIdCuenta().equals(gasto.getCuenta().getNombre())
-        		a.marcarComoNotificada();	//a.perteneceA(gasto.getNombreCuenta())
-        		
+        		a.marcarComoNotificada();	//a.perteneceA(gasto.getNombreCuenta())	
         		//.update(a);  //Esto no lo tengo muy claro
         	}
         	
