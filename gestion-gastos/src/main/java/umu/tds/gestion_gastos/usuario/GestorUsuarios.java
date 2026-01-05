@@ -66,10 +66,10 @@ public class GestorUsuarios {
                 .collect(Collectors.toList());
     }
     
-    private int generarId() {
+    public int generarId() {
         return (int) (Math.random() * 100000);
     }
-	
+    
 	
 	
 }

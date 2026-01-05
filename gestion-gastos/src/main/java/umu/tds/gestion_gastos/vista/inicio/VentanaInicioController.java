@@ -1,5 +1,6 @@
 package umu.tds.gestion_gastos.vista.inicio;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.scene_manager.SceneManager;
@@ -60,6 +62,25 @@ public class VentanaInicioController {
     	
     	controlador.getSceneManager().abrirVentanaCuentasCompartidas();
     
+    }
+    
+    @FXML
+    private void onImportar() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar archivo de gastos");
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Archivos CSV", "*.csv")
+        );
+
+        Stage stage = (Stage) btnCuentaPersonal.getScene().getWindow();
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null) {
+            // delegamos ene l controlador
+            controlador.importarGastos(file);
+            
+            new Alert(Alert.AlertType.INFORMATION, "Proceso de importación finalizado. Revisa la consola o los gastos.", ButtonType.OK).showAndWait();
+        }
     }
 
     private void mostrarError(String msg) {

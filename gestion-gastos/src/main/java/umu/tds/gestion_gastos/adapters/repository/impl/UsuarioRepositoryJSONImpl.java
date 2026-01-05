@@ -53,16 +53,26 @@ public class UsuarioRepositoryJSONImpl implements UsuarioRepository {
 
     @Override
     public void guardar(Usuario u) {
-        boolean existe = false;
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getId() == (u.getId())) {
-                usuarios.set(i, u);
-                existe = true;
-                break;
-            }
-        }
-        if (!existe) {
+    	//id autoincremental
+        if (u.getId() == 0) {
+            int maxId = usuarios.stream()
+                                .mapToInt(Usuario::getId)
+                                .max()
+                                .orElse(0);
+            u.setId(maxId + 1);
             usuarios.add(u);
+        } else {
+            boolean encontrado = false;
+            for (int i = 0; i < usuarios.size(); i++) {
+                if (usuarios.get(i).getId() == u.getId()) {
+                    usuarios.set(i, u);
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                usuarios.add(u);
+            }
         }
         guardarCambios();
     }
