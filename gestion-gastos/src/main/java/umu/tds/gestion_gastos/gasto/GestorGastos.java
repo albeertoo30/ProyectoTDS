@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import umu.tds.gestion_gastos.alerta.GastoListener;
 import umu.tds.gestion_gastos.categoria.Categoria;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.cuenta.CuentaRepository;
@@ -14,9 +15,11 @@ import umu.tds.gestion_gastos.usuario.Usuario;
 public class GestorGastos {
 	
 	private CuentaRepository repositorio;
+	private List<GastoListener> listeners;
 	
 	public GestorGastos(CuentaRepository repositorio) {
 		this.repositorio = repositorio;
+		this.listeners = new ArrayList<GastoListener>();
 	}
 	
 	// Obtener todos los gastos de todas las cuentas
@@ -43,14 +46,17 @@ public class GestorGastos {
     	if(cuenta == null) return false;
     	//ID 0 provisionalmente hasta que la persistencia asigne el real
         Gasto nuevoGasto = new Gasto(0, fecha, cantidad, descripcion, categoria);
-        
         // Asignación de cuenta y usuario pagador
         nuevoGasto.setUsuario(pagador);
         nuevoGasto.setCuenta(cuenta);
         // Añadir gasto a la cuenta
         cuenta.agregarGasto(nuevoGasto);
-        // Actualizar la cuenta entera
-        return repositorio.update(cuenta); 
+   
+        boolean exito = repositorio.update(cuenta);
+        if (exito) {
+            notifyGastoCreado(nuevoGasto); 
+        }
+        return exito;
     }
 	
 	// Método auxiliar
@@ -112,19 +118,30 @@ public class GestorGastos {
             // Guardamos la cuenta con el gasto modificado
             repositorio.update(antigua);
         }
-        
+        notifyGastoModificado(gasto);
 	}
 	
 	public void eliminarGasto(int id) {
 	    List<Cuenta> cuentas = repositorio.getAll();
+	    Gasto gastoABorrar = null;
+	    Cuenta cuentaGasto = null;
 	    for(Cuenta c: cuentas) {
-	    	boolean borrado = c.getGastos().removeIf(g -> g.getId() == id);
-	    	if(borrado) {
-	    		repositorio.update(c);
-	    		return;
+	    	for(Gasto g: c.getGastos()) {
+	    		if(g.getId() == id) {
+	    			gastoABorrar = g;
+	    			cuentaGasto = c;
+	    			break;
+	    		}
 	    	}
 	    }
-	    throw new IllegalArgumentException("No existe un gasto con ID " + id);
+	    if(gastoABorrar != null && cuentaGasto != null) {
+	    	cuentaGasto.getGastos().remove(gastoABorrar);
+	    	repositorio.update(cuentaGasto);
+	    	gastoABorrar.setCuenta(cuentaGasto);
+	    	notifyGastoEliminado(gastoABorrar);
+	    }else {
+	    	throw new IllegalArgumentException("No existe un gasto con ID " + id);
+	    }
 	}
 	
 	public Gasto obtenerPorId(int id) {
@@ -159,5 +176,25 @@ public class GestorGastos {
 	        .filter(g -> fecha == null || g.getFecha().equals(fecha))
 	        .collect(Collectors.toList());
 	}
+	
+	// Patrón observer
+	public void addListener(GastoListener listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
+    }
+
+    // 3. MÉTODOS DE NOTIFICACIÓN PRIVADOS
+    private void notifyGastoCreado(Gasto g) {
+        for (GastoListener l : listeners) l.onGastoNuevo(g);
+    }
+
+    private void notifyGastoModificado(Gasto g) {
+        for (GastoListener l : listeners) l.onGastoModificado(g);
+    }
+
+    private void notifyGastoEliminado(Gasto g) {
+        for (GastoListener l : listeners) l.onGastoEliminado(g);
+    }
 	
 }

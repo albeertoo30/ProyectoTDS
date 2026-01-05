@@ -24,7 +24,5 @@ public interface INotificacionRepository {
 	void limpiarHistorial();
 	void crearNotificacion(String msg, double cantidad, String alertId, Categoria categoria, String idCuenta);
 	List<Notificacion> getNotificacionesPorCuenta(String id);
-	
-	
-	
+
 }

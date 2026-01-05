@@ -168,6 +168,7 @@ public class DetalleCuentaController {
 				this.cuentaActual.agregarGasto(nuevoGasto);
 
 				controlador.registrarCuenta(this.cuentaActual);
+				controlador.procesarNuevoGasto(nuevoGasto);
 				actualizarVista();
 			}
 
@@ -203,6 +204,7 @@ public class DetalleCuentaController {
 
 			if (formController.isGuardado()) {
 				controlador.registrarCuenta(this.cuentaActual);
+				controlador.procesarNuevoGasto(seleccionado);
 				actualizarVista();
 			}
 

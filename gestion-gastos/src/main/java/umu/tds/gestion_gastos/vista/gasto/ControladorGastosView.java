@@ -115,7 +115,7 @@ public class ControladorGastosView {
         });
         
         //Se supone que es la cuenta individual.
-        Configuracion.getInstancia().setCuentaActual("Individual");
+        Configuracion.getInstancia().setCuentaActual("Cuenta Personal");
     }
     
     

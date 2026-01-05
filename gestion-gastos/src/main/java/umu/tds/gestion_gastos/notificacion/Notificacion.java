@@ -24,7 +24,9 @@ public class Notificacion {
 	private String idCuenta;
 	private boolean leida;
 	
-	//Constructor
+	//Constructores
+	public Notificacion() {}
+	
 	public Notificacion(String mensaje, double importe, 
 			String alertaId, Categoria categoria, String idCuenta) {
 	
@@ -37,8 +39,6 @@ public class Notificacion {
 		this.leida = false;
 		this.idCuenta = idCuenta;
 	}
-	
-	public Notificacion() {}
 	
 	
 	public void marcarLeida() {

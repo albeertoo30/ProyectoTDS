@@ -47,8 +47,6 @@ public enum AlertaRepositoryJSONImpl implements IAlertaRepository{ // Es observe
 	//En realidad se guardan en local, en las pruebas usamos otra ruta.
 	@Override
 	public void cargar(String rutaJson) throws IOException {
-	    System.out.println("Cargando alertas");
-
 	    Path fichero = Paths.get(rutaJson);
 	    Files.createDirectories(fichero.getParent());
 
@@ -60,7 +58,6 @@ public enum AlertaRepositoryJSONImpl implements IAlertaRepository{ // Es observe
 	        return;
 	    }
 
-	    System.out.println("Leyendo notificaciones desde JSON...");
 	    try (InputStream is = Files.newInputStream(fichero)) {
 	        List<Alerta> cargadas = mapper.readValue(is, new TypeReference<List<Alerta>>() {});
 	        listaAlertas.clear();
@@ -170,7 +167,5 @@ public enum AlertaRepositoryJSONImpl implements IAlertaRepository{ // Es observe
 	//	getById(alertaActualizada.getId()).ifPresent(n -> n.se)
 	//}
 	
-    
-    
     
 }
