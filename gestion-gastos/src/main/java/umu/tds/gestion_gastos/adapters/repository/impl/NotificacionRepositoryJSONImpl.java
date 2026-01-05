@@ -101,8 +101,6 @@ public enum NotificacionRepositoryJSONImpl implements INotificacionRepository{
 	//En realidad se guardan en local, en las pruebas usamos otra ruta.
 	@Override
 	public void cargar(String rutaJson) throws IOException {
-	    System.out.println("Cargando notificaciones");
-
 	    Path fichero = Paths.get(rutaJson);
 	    Files.createDirectories(fichero.getParent());
 
