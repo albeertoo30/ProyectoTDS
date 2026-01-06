@@ -2,7 +2,7 @@
 
 ## SINGLETON
 
-Para manejar que se sa una única instancia para los repositorios y para el controlador, esto lo manejamos gracias a la clase de Configuracion que es la que mantiene estas instancias. Algunas implementadas como enum y otras como implementación directa de la interfaz.
+Para manejar que se usa una única instancia para los repositorios y para el controlador, esto lo manejamos gracias a la clase de Configuracion que es la que mantiene estas instancias. Algunas implementadas como enum y otras como implementación directa de la interfaz.
 
 Esto nos evita problemas de:
 - concurrencia al acceder a los JSON
@@ -20,7 +20,7 @@ Ejemplo
 
 Usado en Alerta y Cuenta (con Polimorfismo)
 
-En las alertas tenemos la interfaz AlertaStrategy cuyas implementaciones son las diferentes periodicidades de las alertas, cada alerta necesita calcular si se supera un limite de manera diferente.
+En las alertas tenemos la interfaz AlertaStrategy cuyas implementaciones son las diferentes periodicidades de las alertas, cada alerta necesita calcular si se supera un límite de manera diferente.
 
 Esto nos facilita a la hora de crear más tipos de alertas, hace que cada alerta sea independiente y fácil de probar. (se apoya de una factoría)
 
@@ -55,7 +55,7 @@ Esto nos desacopla la vista de las clases concretas, facilita la extensibilidad 
 
 ## BUILDER
 
-AlertaFilterBuilder y NotificacionFilterBuilder nos permite construir filtros complejos de formma fluida combinando múltiples criterios.
+AlertaFilterBuilder y NotificacionFilterBuilder nos permite construir filtros complejos de forma fluida combinando múltiples criterios.
     
     //Operaciones con filtros.
     public Filtro<Alerta> crearFiltroCompuestoA(String cuenta, Double d, Double h, Categoria c ){   
@@ -71,7 +71,7 @@ AlertaFilterBuilder y NotificacionFilterBuilder nos permite construir filtros co
 
 Utilizado para notificar los gastos, la interfaz es una personalizada "GastoListener", nuestro observable es GestorGastos, que tiene una lista de listeners y los métodos para notificar, y el observer concreto es AlertManager.
 
-Cuando se toca un gasto, AlertManager necesita verificar si se supera algun limite de alerta y entonces crear notificaciones correspondientes. Este patrón nos permite desacoplar la gestion de gastos de la de alertas, tenemos la posibilidad de tener varios observadores que reaccionen a los cambios y nos facilita agregar nuevos comportamientos sin modificar GestorGastos.
+Cuando se toca un gasto, AlertManager necesita verificar si se supera algun límite de alerta y entonces crear notificaciones correspondientes. Este patrón nos permite desacoplar la gestión de gastos de la de alertas, tenemos la posibilidad de tener varios observadores que reaccionen a los cambios y nos facilita agregar nuevos comportamientos sin modificar GestorGastos.
 
 Flujo:
 
