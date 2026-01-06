@@ -52,8 +52,14 @@ public enum AlertaRepositoryJSONImpl implements IAlertaRepository{ // Es observe
 
 	    // Crear el archivo vacío si no existe
 	    if (!Files.exists(fichero)) {
-	        System.out.println("Archivo no existe, creando uno vacío...");
+	        System.out.println("Archivo no existe, creando uno vacío para Alertas...");
 	        Files.createFile(fichero);
+	        listaAlertas.clear();
+	        return;
+	    }
+	    
+	    //Si esta vacio no lo intentamos leer (para que no salga el aviso)
+	    if (Files.size(fichero) == 0) {
 	        listaAlertas.clear();
 	        return;
 	    }
@@ -61,7 +67,7 @@ public enum AlertaRepositoryJSONImpl implements IAlertaRepository{ // Es observe
 	    try (InputStream is = Files.newInputStream(fichero)) {
 	        List<Alerta> cargadas = mapper.readValue(is, new TypeReference<List<Alerta>>() {});
 	        listaAlertas.clear();
-	        if (cargadas != null) listaAlertas.addAll(cargadas);
+	        listaAlertas.addAll(cargadas);
 	    }
 	}
 

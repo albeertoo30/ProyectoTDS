@@ -1,4 +1,5 @@
 package umu.tds.gestion_gastos.alerta;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -67,5 +68,8 @@ public interface AlertaStrategy {
         // Coincide si es igual al ID (Compartidas) O igual al Nombre (Individuales)
         return idAlerta.equals(idGasto) || idAlerta.equalsIgnoreCase(nombreGasto);
     }
+    
+    boolean haCambiadoPeriodo(LocalDate ultima, LocalDate actual);
+    
     
 }

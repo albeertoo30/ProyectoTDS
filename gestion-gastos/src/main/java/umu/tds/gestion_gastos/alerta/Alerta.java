@@ -21,8 +21,9 @@ public class Alerta {
 	private String idCuenta;
 	private AlertaStrategy strategy;
 	
-	//Nuevo para que no se dupliquen las notificaciones
-	private boolean notificada;
+	//Nuevo(YANO) para que no se dupliquen las notificaciones
+	//private boolean notificada;
+	private LocalDate fechaUltimaNotificacion;
 	
 	//Constructores
 	public Alerta() {}
@@ -43,7 +44,7 @@ public class Alerta {
 		this.activa = true;
 		
 		//Inicialmente cuando se crea no se ha notificado en principio.
-		this.notificada = false;
+		//this.notificada = false;
 	}
 	
 	
@@ -106,8 +107,7 @@ public class Alerta {
 	
 	
 	// Para noti dup
-	
-	public boolean isNotificada() {
+	/* boolean isNotificada() {
         return notificada;
     }
 
@@ -118,7 +118,18 @@ public class Alerta {
     public void resetNotificada() {
         this.notificada = false;
     }
-    
+    */
+	
+	public boolean puedeNotificarse(LocalDate fechaNuevoGasto) {
+	    if (fechaUltimaNotificacion == null) return true;
+	    return strategy.haCambiadoPeriodo(fechaUltimaNotificacion, fechaNuevoGasto);
+	}
+
+	public void registrarNotificacion(LocalDate fecha) {
+	    this.fechaUltimaNotificacion = fecha;
+	}
+	
+	
     //Para no violar grasp
     						//Recordar que idCuenta en verdad es el nombre
     public boolean perteneceA(String idCuenta) {

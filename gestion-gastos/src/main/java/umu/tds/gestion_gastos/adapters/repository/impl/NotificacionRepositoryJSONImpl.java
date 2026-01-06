@@ -106,16 +106,20 @@ public enum NotificacionRepositoryJSONImpl implements INotificacionRepository{
 
 	    // Crear el archivo vacío si no existe
 	    if (!Files.exists(fichero)) {
-	        System.out.println("Archivo no existe, creando uno vacío...");
+	        System.out.println("Archivo no existe, creando uno vacío para Notificaciones...");
 	        Files.createFile(fichero);
 	        listaNotificaciones.clear();
 	        return;
 	    }
 
+	    if (Files.size(fichero) == 0) {
+	        listaNotificaciones.clear();
+	        return;
+	    }
 	    try (InputStream is = Files.newInputStream(fichero)) {
 	        List<Notificacion> cargadas = mapper.readValue(is, new TypeReference<List<Notificacion>>() {});
 	        listaNotificaciones.clear();
-	        if (cargadas != null) listaNotificaciones.addAll(cargadas);
+	        listaNotificaciones.addAll(cargadas);
 	    }
 	}
 
