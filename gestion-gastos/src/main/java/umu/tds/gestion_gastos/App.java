@@ -24,7 +24,6 @@ public class App extends Application {
         // Inicializar Configuración
         Configuracion.setInstancia(new ConfiguracionImpl());
     	ControladorApp appController = Configuracion.getInstancia().getControladorApp();
-    	System.out.println("HOLA ESTO ES UN DEBUG DE PRUEBA");
 
     	// Cargar los datos desde JSON
     	try {
