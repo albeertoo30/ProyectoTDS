@@ -21,9 +21,9 @@
             
             <ListView fx:id="listaMiembros" VBox.vgrow="ALWAYS"/>
             
-            <Button text="Ver Todos (Limpiar)" maxWidth="Infinity" onAction="#onLimpiarFiltro" style="-fx-font-size: 11px;"/>
+            <Button fx:id="btnLimpiar" text="Ver Todos (Limpiar)" maxWidth="Infinity" onAction="#onLimpiarFiltro" style="-fx-font-size: 11px;"/>
             
-            <Button text="📊 Ver Gráficas" maxWidth="Infinity" onAction="#onVerEstadisticas" styleClass="boton-info"/>
+            <Button fx:id="btnGraficas" text="📊 Ver Gráficas" maxWidth="Infinity" onAction="#onVerEstadisticas" styleClass="boton-info"/>
         </VBox>
     </left>
 
@@ -47,21 +47,21 @@
             	<Button fx:id="btnCategorias" text="Categorías" 
                     styleClass="button, boton-info"
                     onAction="#onIrACategorias"/>
-                <Button text="Alertas" onAction="#onAlertas" styleClass="boton-info"/>
-                <Button text="Notificaciones" onAction="#onNotificaciones" styleClass="boton-info"/>
+                <Button fx:id="btnAlertas" text="Alertas" onAction="#onAlertas" styleClass="boton-info"/>
+                <Button fx:id="btnNotis" text="Notificaciones" onAction="#onNotificaciones" styleClass="boton-info"/>
                 
                 <Separator orientation="VERTICAL" />
                 
-                <Button text="Nuevo Gasto" onAction="#onNuevoGasto" styleClass="boton-accion"/>
-                <Button text="Editar Gasto" onAction="#onEditarGasto" styleClass="boton-info"/>
-                <Button text="Eliminar Gasto" onAction="#onEliminarGasto" styleClass="boton-peligro"/>
+                <Button fx:id="btnNuevoGasto" text="Nuevo Gasto" onAction="#onNuevoGasto" styleClass="boton-accion"/>
+                <Button fx:id="btnEditarGasto" text="Editar Gasto" onAction="#onEditarGasto" styleClass="boton-info"/>
+                <Button fx:id="btnEliminarGasto" text="Eliminar Gasto" onAction="#onEliminarGasto" styleClass="boton-peligro"/>
             </HBox>
         </VBox>
     </center>
 
     <bottom>
         <HBox alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-border-color: #dee2e6; -fx-border-width: 1 0 0 0;">
-            <Button text="⬅ Volver a Mis Cuentas" onAction="#onVolver" styleClass="boton-secundario"/>
+            <Button fx:id="btnVolver" text="⬅ Volver a Mis Cuentas" onAction="#onVolver" styleClass="boton-secundario"/>
         </HBox>
     </bottom>
 

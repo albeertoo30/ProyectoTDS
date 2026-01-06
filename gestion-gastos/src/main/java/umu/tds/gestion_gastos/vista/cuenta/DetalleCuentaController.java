@@ -51,6 +51,15 @@ public class DetalleCuentaController {
 	private TableColumn<Gasto, String> colImporte;
 
 	@FXML private Button btnCategorias;
+	@FXML private Button btnAgregarUsuario;
+	@FXML private Button btnGraficas;
+	@FXML private Button btnLimpiar;
+	@FXML private Button btnNuevoGasto;
+	@FXML private Button btnEditarGasto;
+	@FXML private Button btnEliminarGasto;
+	@FXML private Button btnVolver;
+	@FXML private Button btnNotis;
+	@FXML private Button btnAlertas;
 	
 	private ControladorApp controlador;
 	private CuentaCompartida cuentaActual;
