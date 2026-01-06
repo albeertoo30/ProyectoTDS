@@ -108,8 +108,7 @@ public enum SceneManager {
             stage.showAndWait();
         }
     
-    
-    
+
     //Lo dejo por si se me ocurre como implementarlo sin hacer otro observer o sin violar grasp
     public void mostrarPopupNotificacion(Notificacion notificacion) {
         Platform.runLater(() -> {

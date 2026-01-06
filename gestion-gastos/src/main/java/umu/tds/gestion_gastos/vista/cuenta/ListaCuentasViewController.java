@@ -113,7 +113,7 @@ public class ListaCuentasViewController {
 
             Stage stage = new Stage();
             stage.setTitle("Detalle: " + seleccionada.getNombre());
-            stage.setScene(new Scene(root, 800, 600)); // Hacemos la ventana grande
+            stage.setScene(new Scene(root, 1200, 700)); // Hacemos la ventana grande
             stage.show();
 
         } catch (IOException e) {

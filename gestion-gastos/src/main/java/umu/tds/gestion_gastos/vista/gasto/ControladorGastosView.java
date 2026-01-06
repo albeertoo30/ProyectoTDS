@@ -54,6 +54,7 @@ public class ControladorGastosView {
     @FXML private Button btnEditar;
     @FXML private Button btnEliminar;
     @FXML private Button btnEstadisticas;
+    @FXML private Button btnAlertas;
 
     
     private final ObservableList<Gasto> gastosObservable = FXCollections.observableArrayList();

@@ -23,7 +23,7 @@
             
             <Button text="Ver Todos (Limpiar)" maxWidth="Infinity" onAction="#onLimpiarFiltro" style="-fx-font-size: 11px;"/>
             
-            <Button text="📊 Ver Gráficas" maxWidth="Infinity" onAction="#onVerEstadisticas" styleClass="boton-secundario"/>
+            <Button text="📊 Ver Gráficas" maxWidth="Infinity" onAction="#onVerEstadisticas" styleClass="boton-info"/>
         </VBox>
     </left>
 
@@ -44,6 +44,9 @@
             </TableView>
             
             <HBox spacing="10" alignment="CENTER_RIGHT">
+            	<Button fx:id="btnCategorias" text="Categorías" 
+                    styleClass="button, boton-info"
+                    onAction="#onIrACategorias"/>
                 <Button text="Alertas" onAction="#onAlertas" styleClass="boton-info"/>
                 <Button text="Notificaciones" onAction="#onNotificaciones" styleClass="boton-info"/>
                 

@@ -13,12 +13,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
@@ -27,6 +29,7 @@ import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.usuario.Usuario;
 import umu.tds.gestion_gastos.vista.alerta.ControladorCrearAlerta;
 import umu.tds.gestion_gastos.vista.alerta.ControladorVentanaAlerta;
+import umu.tds.gestion_gastos.vista.categoria.ControladorCategoriasView;
 import umu.tds.gestion_gastos.vista.notificacion.ControladorVentanaNotificacion;
 
 public class DetalleCuentaController {
@@ -47,6 +50,8 @@ public class DetalleCuentaController {
 	@FXML
 	private TableColumn<Gasto, String> colImporte;
 
+	@FXML private Button btnCategorias;
+	
 	private ControladorApp controlador;
 	private CuentaCompartida cuentaActual;
 	private Map<Usuario, Double> balancesCalculados = new HashMap<>();
@@ -284,6 +289,36 @@ public class DetalleCuentaController {
 		}
 	}
 
+	
+	//Copiado tal cual del controlador de GastosView, no me da tiempo a hacerlo bien con SceneManager
+    @FXML
+    private void onIrACategorias() throws IOException {
+        abrirVentana(
+            "/umu/tds/gestion_gastos/categorias/CategoriaView.fxml",
+            "Categorías"
+        );
+    }
+    
+    private void abrirVentana(String rutaFXML, String titulo) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+        Parent root = loader.load();
+        
+        // Inyectar el controlador si es necesario
+        Object controller = loader.getController();
+        
+        // Si el controlador tiene método setControlador, inyectarlo
+        if (controller instanceof ControladorCategoriasView) {
+            ((ControladorCategoriasView) controller).setControlador(controlador);
+        }
+        // Agregar otros controladores según sea necesario
+        
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle(titulo);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+    }
+	
 	@FXML
 	private void onAlertas() throws IOException {
 		controlador.getSceneManager().abrirVentanaAlertas();

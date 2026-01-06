@@ -100,13 +100,13 @@
                 <Insets top="15" bottom="15" left="20" right="20"/>
             </padding>
 
-            <Button fx:id="btnAñadir" text="Añadir" 
+            <Button fx:id="btnAnadir" text="Nuevo Gasto" 
                     styleClass="button, boton-accion"
                     onAction="#onNuevoGasto"/>
-            <Button fx:id="btnEditar" text="Editar" 
+            <Button fx:id="btnEditar" text="Editar Gasto" 
                     styleClass="button, boton-info"
                     onAction="#onEditarGasto"/>
-            <Button fx:id="btnEliminar" text="Eliminar" 
+            <Button fx:id="btnEliminar" text="Eliminar Gasto" 
                     styleClass="button, boton-peligro"
                     onAction="#onEliminarGasto"/>
         </HBox>
