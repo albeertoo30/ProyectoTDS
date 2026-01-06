@@ -44,6 +44,14 @@ public class AlertaMensual implements AlertaStrategy{
         // PASO 4: Comparar con el límite
         return totalMes > alerta.getLimite();
     }
+	
+	@Override
+    public boolean haCambiadoPeriodo(LocalDate ultima, LocalDate actual) {
+    	if(ultima == null) return true;
+    	return ultima.getYear() != actual.getYear()
+    	        || ultima.getMonth() != actual.getMonth();
+	}
+	
 }
 
 

@@ -49,4 +49,12 @@ public class AlertaSemanal implements AlertaStrategy{
         return totalSemana > alerta.getLimite();
     }
 
+    //Se puede aplicar plantilla pero por compatibilidad lo dejamos
+    @Override
+    public boolean haCambiadoPeriodo(LocalDate ultima, LocalDate actual) {
+    	if(ultima == null) return true;
+        WeekFields wf = WeekFields.of(Locale.getDefault());
+        return ultima.getYear() != actual.getYear() ||
+               ultima.get(wf.weekOfWeekBasedYear()) != actual.get(wf.weekOfWeekBasedYear());
+    }
 }

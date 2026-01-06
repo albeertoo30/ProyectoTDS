@@ -47,9 +47,10 @@ public class AlertManager implements IAlertManager {
                                     idAlerta.equalsIgnoreCase(nombreGasto);
         	//Solo crea la notificacion si se supera, si no esta notificada y si la alerta es de la cuenta del gasto
         													//Violacion grasp, cambiarlo. Cambiado. Ya no se persisten las Cuentas en gastos, nueva comprobacion en gasto
-        	if(supera && !a.isNotificada() && esMismaCuenta) {
+        	if(supera && a.puedeNotificarse(gasto.getFecha()) && esMismaCuenta) {
         		crearNotificacionAlerta(a);   //a.getIdCuenta().equals(gasto.getCuenta().getNombre())
-        		a.marcarComoNotificada();	//a.perteneceA(gasto.getNombreCuenta())	
+        		a.registrarNotificacion(gasto.getFecha());
+        		//a.marcarComoNotificada();	//a.perteneceA(gasto.getNombreCuenta())	
         		//.update(a);  //Esto no lo tengo muy claro
         	}
         	

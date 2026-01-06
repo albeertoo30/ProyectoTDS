@@ -1,4 +1,5 @@
 package umu.tds.gestion_gastos.alerta;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -43,4 +44,13 @@ public class AlertaAnual implements AlertaStrategy {
         // PASO 4: Comparar con el límite
         return totalAnio > alerta.getLimite();
     }
+
+	@Override
+	public boolean haCambiadoPeriodo(LocalDate ultima, LocalDate actual) {
+		 if (ultima == null) return true;
+		    return ultima.getYear() != actual.getYear();	
+	}
+    
+    
+
 }
