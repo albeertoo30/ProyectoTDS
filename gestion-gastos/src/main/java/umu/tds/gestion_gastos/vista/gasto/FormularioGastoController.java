@@ -45,7 +45,10 @@ public class FormularioGastoController {
         cargarCategorias();
         cargarCuentas();
         configurarConvertidores();
-        configurarListenerCuenta();
+        if (controlador.getUsuarioActual() != null) {
+            campoUsuario.setValue(controlador.getUsuarioActual());
+            campoUsuario.setDisable(true);
+        }
     }
 
     public void setGasto(Gasto g) {
@@ -103,41 +106,6 @@ public class FormularioGastoController {
         });
     }
 
-    // Dependencia Cuenta -> Usuario
-    private void configurarListenerCuenta() {
-        campoCuenta.valueProperty().addListener((obs, oldVal, newVal) -> {
-        	if (newVal == null || controlador == null) return;
-            
-            campoUsuario.getItems().clear();
-            Usuario usuarioActual = controlador.getUsuarioActual(); 
-
-            if (newVal.equals("Individual")) {
-                // Caso Individual: Usuario es "Yo" (usuario actual) y está bloqueado
-                campoUsuario.getItems().add(usuarioActual); 
-                campoUsuario.setValue(usuarioActual);
-                campoUsuario.setDisable(true); // Deshabilitado porque es obvio
-                
-            } else if (newVal instanceof CuentaCompartida) {
-                // Caso Compartida: Cargar miembros
-                CuentaCompartida cuentaSeleccionada = (CuentaCompartida) newVal;
-                campoUsuario.setDisable(false); // Habilitado para elegir quién pagó
-                
-                 // Obtenemos los miembros de la cuenta
-                List<Usuario> miembros = cuentaSeleccionada.getMiembros();
-                
-                if (miembros != null && !miembros.isEmpty()) {
-                    campoUsuario.getItems().addAll(miembros);
-                    
-                    // Si el usuario actual está en esa cuenta, lo pre-seleccionamos
-                    if (miembros.contains(usuarioActual)) {
-                        campoUsuario.getSelectionModel().select(usuarioActual);
-                    } else {
-                        campoUsuario.getSelectionModel().selectFirst();
-                    }
-                }
-            }
-        });
-    }
 
     @FXML
     private void onGuardar() {
@@ -156,20 +124,14 @@ public class FormularioGastoController {
             Categoria cat = campoCategoria.getValue();
             double cantidad = Double.parseDouble(campoCantidad.getText());
             String desc = campoDescripcion.getText();
-            Usuario pagador = null;
+            Usuario pagador = controlador.getUsuarioActual();
             Object seleccionCuenta = campoCuenta.getValue();
             Cuenta cuentaDestino = null;
 
             if (seleccionCuenta.equals("Individual") || (seleccionCuenta instanceof String && ((String)seleccionCuenta).equalsIgnoreCase("Individual"))) {
                 // CASO INDIVIDUAL:
-                pagador = controlador.getUsuarioActual();
-                
-                // BUSCAMOS LA CUENTA INDIVIDUAL REAL DEL USUARIO
-                // Asumimos que el controlador tiene acceso a todas las cuentas
                 cuentaDestino = controlador.obtenerTodasLasCuentas().stream()
-                    .filter(c -> c instanceof umu.tds.gestion_gastos.cuenta.CuentaIndividual) // Filtramos por tipo
-                    // Opcional: Si guardas el dueño en la cuenta, verifica que sea del usuario actual
-                    // .filter(c -> c.getPropietario().equals(pagador)) 
+                    .filter(c -> c instanceof umu.tds.gestion_gastos.cuenta.CuentaIndividual)
                     .findFirst()
                     .orElse(null);
                 
@@ -180,10 +142,7 @@ public class FormularioGastoController {
                 
             } else if (seleccionCuenta instanceof Cuenta) {
                 // CASO COMPARTIDA:
-                // Aquí sí es obligatorio que el usuario haya seleccionado algo en el combo
                 cuentaDestino = (Cuenta) seleccionCuenta;
-                pagador = campoUsuario.getValue();
-                
                 if (pagador == null) {
                     mostrarError("En una cuenta compartida debes indicar quién ha pagado (Usuario).");
                     return;
