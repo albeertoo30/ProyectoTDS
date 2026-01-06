@@ -13,6 +13,7 @@ import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.adapters.repository.impl.AlertaRepositoryJSONImpl;
 import umu.tds.gestion_gastos.alerta.AlertManager;
 import umu.tds.gestion_gastos.alerta.Alerta;
+import umu.tds.gestion_gastos.alerta.AlertaFilterBuilder;
 import umu.tds.gestion_gastos.alerta.AlertaStrategy;
 import umu.tds.gestion_gastos.alerta.GastoListener;
 import umu.tds.gestion_gastos.alerta.IAlertManager;
@@ -32,6 +33,7 @@ import umu.tds.gestion_gastos.importacion.IImportadorGastos;
 import umu.tds.gestion_gastos.importacion.ImportadorCSVAdapter;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
+import umu.tds.gestion_gastos.notificacion.NotificacionFilterBuilder;
 import umu.tds.gestion_gastos.scene_manager.SceneManager;
 import umu.tds.gestion_gastos.usuario.GestorUsuarios;
 import umu.tds.gestion_gastos.usuario.Usuario;
@@ -225,6 +227,28 @@ public class ControladorApp { //Yo le crearia una interfaz
     public List<Gasto> obtenerGastosFiltrados(LocalDate fecha, Categoria categoria, Double min, Double max) {
         return gestorGastos.obtenerGastosFiltrados(fecha, categoria, min, max);
     }
+    
+    
+    //Operaciones con filtros.
+    public Filtro<Notificacion> crearFiltroCompuestoN(String cuenta, LocalDate d, LocalDate h, Categoria c ){   
+    	 return new NotificacionFilterBuilder()
+    			 .cuenta(cuenta)
+    			 .fecha(d,h)
+    			 .categoria(c)
+    			 .build();
+    }
+    
+  //Operaciones con filtros.
+    public Filtro<Alerta> crearFiltroCompuestoA(String cuenta, Double d, Double h, Categoria c ){   
+    	 return new AlertaFilterBuilder()
+    			 .cuenta(cuenta)
+    			 .limite(d,h)
+    			 .categoria(c)
+    			 .build();
+    }
+    
+
+   
     
     //OPERACIONES CON ALERTAS: 
     

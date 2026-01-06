@@ -137,13 +137,18 @@ public class ControladorVentanaNotificacion {
     }
 
     @FXML
-    private void onAplicarFiltros() {
-        Filtro<Notificacion> filtroCompuesto = new NotificacionFilterBuilder()
+    private void onAplicarFiltros() {			//creo que se puede hacer en el controlador
+       /* Filtro<Notificacion> filtroCompuesto = new NotificacionFilterBuilder()
             .cuenta(Configuracion.getInstancia().getCuentaActual())
         	.fecha(dpDesde.getValue(), dpHasta.getValue())
             .categoria(cbCategorias.getValue())
             .build();
-        
+        */
+    	
+    	Filtro<Notificacion> filtroCompuesto = 
+    			controlador.crearFiltroCompuestoN(Configuracion.getInstancia().getCuentaActual(),
+    					dpDesde.getValue(), dpHasta.getValue(), cbCategorias.getValue());
+    	
         List<Notificacion> filtradas = controlador.filtrarNotificaciones(filtroCompuesto);
         
         nuevas.clear();
