@@ -100,20 +100,30 @@ public class DetalleCuentaController {
 					setStyle("");
 				} else {
 					double saldo = balancesCalculados.getOrDefault(item, 0.0);
-					String textoExtra = "";
+					
+					// Obtenemos el porcentaje
+					double porcentaje = 0.0;
+					if (cuentaActual != null) {
+						porcentaje = cuentaActual.getCuotaUsuario(item);
+					}
+					
+					String textoSaldo = "";
 					String estilo = "";
 
 					if (saldo > 0.01) {
-						textoExtra = String.format(" (+%.2f €)", saldo);
+						textoSaldo = String.format(" (+%.2f €)", saldo);
 						estilo = "-fx-text-fill: #28a745; -fx-font-weight: bold;";
 					} else if (saldo < -0.01) {
-						textoExtra = String.format(" (%.2f €)", saldo);
+						textoSaldo = String.format(" (%.2f €)", saldo);
 						estilo = "-fx-text-fill: #dc3545; -fx-font-weight: bold;";
 					} else {
 						estilo = "-fx-text-fill: black;";
 					}
 
-					setText(item.getNombre() + textoExtra);
+					//Nombre [20.0%] (+15.00 €)
+					String textoFinal = String.format("%s [ %.1f%% ]%s", item.getNombre(), porcentaje, textoSaldo);
+					
+					setText(textoFinal);
 					setStyle(estilo);
 				}
 			}

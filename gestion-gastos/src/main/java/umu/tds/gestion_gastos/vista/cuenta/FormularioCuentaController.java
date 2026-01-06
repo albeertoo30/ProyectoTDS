@@ -1,21 +1,33 @@
 package umu.tds.gestion_gastos.vista.cuenta;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
-import umu.tds.gestion_gastos.cuenta.CuentaIndividual;
 import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.usuario.Usuario;
 
@@ -23,7 +35,13 @@ public class FormularioCuentaController {
 
     @FXML private TextField campoNombre;
     @FXML private ComboBox<String> comboTipo;
-    @FXML private ListView<Usuario> listaUsuarios;
+    
+    @FXML private TableView<ParticipanteFx> tablaParticipantes;
+    @FXML private TableColumn<ParticipanteFx, Boolean> colSeleccion;
+    @FXML private TableColumn<ParticipanteFx, String> colNombre;
+    @FXML private TableColumn<ParticipanteFx, Double> colPorcentaje;
+    
+    @FXML private CheckBox checkEquitativo;
     @FXML private HBox boxNuevoUsuario;
     @FXML private TextField campoNuevoUsuario;
     @FXML private Button btnGuardar;
@@ -31,6 +49,8 @@ public class FormularioCuentaController {
 
     private ControladorApp controlador;
     private Runnable onSaveCallback;
+    
+    private ObservableList<ParticipanteFx> listaParticipantes = FXCollections.observableArrayList();
 
     public void setControlador(ControladorApp controlador) {
         this.controlador = controlador;
@@ -43,28 +63,79 @@ public class FormularioCuentaController {
 
     @FXML
     private void initialize() {
-        comboTipo.getItems().addAll("COMPARTIDA");
+        comboTipo.getItems().add("COMPARTIDA");
         comboTipo.setValue("COMPARTIDA");
-
-        listaUsuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
-        actualizarEstadoComponentes(true);
+        // Configuración de columnas
+        colSeleccion.setCellValueFactory(cellData -> cellData.getValue().seleccionadoProperty());
+        colSeleccion.setCellFactory(CheckBoxTableCell.forTableColumn(colSeleccion));
+        
+        colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsuario().getNombre()));
+        
+        colPorcentaje.setCellValueFactory(cellData -> cellData.getValue().porcentajeProperty().asObject());
+        colPorcentaje.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        
+        colPorcentaje.setOnEditCommit(event -> {
+            ParticipanteFx row = event.getRowValue();
+            row.setPorcentaje(event.getNewValue());
+        });
 
+        tablaParticipantes.setItems(listaParticipantes);
+
+        checkEquitativo.selectedProperty().addListener((obs, oldVal, isEquitativo) -> {
+            actualizarEstadoColumnas(isEquitativo);
+        });
+        
         comboTipo.valueProperty().addListener((obs, oldVal, newVal) -> {
             boolean esCompartida = "COMPARTIDA".equals(newVal);
-            actualizarEstadoComponentes(esCompartida);
+            actualizarVisibilidad(esCompartida);
         });
+
+        actualizarEstadoColumnas(true); 
     }
 
-    private void actualizarEstadoComponentes(boolean esCompartida) {
-        listaUsuarios.setDisable(!esCompartida);
+    private void actualizarVisibilidad(boolean esCompartida) {
+        tablaParticipantes.setDisable(!esCompartida);
         boxNuevoUsuario.setDisable(!esCompartida);
+        checkEquitativo.setDisable(!esCompartida);
+    }
+    
+    private void actualizarEstadoColumnas(boolean esEquitativo) {
+        colPorcentaje.setEditable(!esEquitativo);
+        
+        if (esEquitativo) {
+            colPorcentaje.setVisible(false);
+        } else {
+            colPorcentaje.setVisible(true);
+        }
     }
 
     private void cargarDatosIniciales() {
         if (controlador != null) {
-            List<Usuario> usuarios = controlador.obtenerTodosLosUsuarios();
-            listaUsuarios.getItems().setAll(usuarios);
+            List<Usuario> usuariosSistema = controlador.obtenerTodosLosUsuarios();
+            Usuario yo = controlador.getUsuarioActual();
+            
+            agregarParticipanteATabla(yo, true);
+            
+            for (Usuario u : usuariosSistema) {
+                agregarParticipanteATabla(u, false);
+            }
+        }
+    }
+
+    private void agregarParticipanteATabla(Usuario u, boolean seleccionadoPorDefecto) {
+        boolean existe = listaParticipantes.stream().anyMatch(p -> {
+            Usuario existente = p.getUsuario();
+            
+            if (existente.getId() > 0 && u.getId() > 0) {
+                return existente.getId() == u.getId();
+            }
+            
+            return existente.getNombre().equalsIgnoreCase(u.getNombre());
+        });
+        
+        if (!existe) {
+            listaParticipantes.add(new ParticipanteFx(u, 0.0, seleccionadoPorDefecto));
         }
     }
 
@@ -76,23 +147,14 @@ public class FormularioCuentaController {
             return;
         }
 
-        int idGenerado = (int) (Math.random() * 100000);
-        Usuario nuevoAmigo = new Usuario(idGenerado, nombreNuevo);
-
-        try {
-            
-            listaUsuarios.getItems().add(nuevoAmigo);
-            listaUsuarios.getSelectionModel().select(nuevoAmigo);
-            campoNuevoUsuario.clear();
-        } catch (Exception e) {
-            mostrarError("Error al crear usuario: " + e.getMessage());
-        }
+        Usuario nuevoAmigo = new Usuario(0, nombreNuevo); 
+        agregarParticipanteATabla(nuevoAmigo, true);
+        campoNuevoUsuario.clear();
     }
-
+    
     @FXML
     private void onGuardar() {
         String nombre = campoNombre.getText();
-        String tipo = comboTipo.getValue();
 
         if (nombre == null || nombre.isBlank()) {
             mostrarError("El nombre es obligatorio");
@@ -100,27 +162,46 @@ public class FormularioCuentaController {
         }
 
         try {
-            Usuario yo = controlador.getUsuarioActual();
-            Cuenta nuevaCuenta;
+            List<ParticipanteFx> participantesSeleccionados = listaParticipantes.stream()
+                    .filter(ParticipanteFx::isSeleccionado)
+                    .collect(Collectors.toList());
 
-            if ("INDIVIDUAL".equals(tipo)) {
-                nuevaCuenta = new CuentaIndividual(0, nombre, yo);
-            } else {
-                ObservableList<Usuario> seleccionados = listaUsuarios.getSelectionModel().getSelectedItems();
-                List<Usuario> miembros = new ArrayList<>(seleccionados);
-
-                if (!miembros.contains(yo)) {
-                    miembros.add(yo);
-                }
-
-                if (miembros.size() < 2) {
-                    mostrarError("Selecciona al menos un amigo de la lista.");
+            if (participantesSeleccionados.size() < 1) {
+                    mostrarError("Debes seleccionar al menos un participante.");
                     return;
-                }
-                nuevaCuenta = new CuentaCompartida(0, nombre, miembros);
             }
 
-            controlador.registrarCuenta(nuevaCuenta);
+            for (ParticipanteFx p : participantesSeleccionados) {
+                Usuario u = p.getUsuario();
+                if (u.getId() == 0) {
+                    controlador.registrarUsuario(u);
+                }
+            }
+
+            
+            List<Usuario> miembros = participantesSeleccionados.stream()
+                    .map(ParticipanteFx::getUsuario)
+                    .collect(Collectors.toList());
+
+            CuentaCompartida cuentaComp = new CuentaCompartida(0, nombre, miembros);
+            
+            if (!checkEquitativo.isSelected()) {
+                double suma = participantesSeleccionados.stream().mapToDouble(ParticipanteFx::getPorcentaje).sum();
+                
+                if (Math.abs(suma - 100.0) > 0.1) {
+                    mostrarError("La suma de porcentajes seleccionados debe ser 100%. Actual: " + suma + "%");
+                    return;
+                }
+                
+                Map<String, Double> mapaPorcentajes = new HashMap<>();
+                for (ParticipanteFx row : participantesSeleccionados) {
+                    // AHORA ES SEGURO: Todos los usuarios tienen ID real porque los acabamos de guardar
+                    mapaPorcentajes.put(String.valueOf(row.getUsuario().getId()), row.getPorcentaje());
+                }
+                cuentaComp.setPorcentajes(mapaPorcentajes);
+            }
+
+            controlador.registrarCuenta(cuentaComp);
 
             if (onSaveCallback != null) onSaveCallback.run();
             cerrar();
@@ -130,7 +211,7 @@ public class FormularioCuentaController {
             mostrarError("Error al guardar: " + e.getMessage());
         }
     }
-
+    
     @FXML
     private void onCancelar() {
         cerrar();
@@ -143,5 +224,27 @@ public class FormularioCuentaController {
 
     private void mostrarError(String msg) {
         new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).showAndWait();
+    }
+    
+    public static class ParticipanteFx {
+        private final Usuario usuario;
+        private final DoubleProperty porcentaje;
+        private final BooleanProperty seleccionado;
+
+        public ParticipanteFx(Usuario usuario, Double porcentaje, boolean isSelected) {
+            this.usuario = usuario;
+            this.porcentaje = new SimpleDoubleProperty(porcentaje);
+            this.seleccionado = new SimpleBooleanProperty(isSelected);
+        }
+
+        public Usuario getUsuario() { return usuario; }
+        
+        public double getPorcentaje() { return porcentaje.get(); }
+        public void setPorcentaje(double v) { porcentaje.set(v); }
+        public DoubleProperty porcentajeProperty() { return porcentaje; }
+        
+        public boolean isSeleccionado() { return seleccionado.get(); }
+        public void setSeleccionado(boolean v) { seleccionado.set(v); }
+        public BooleanProperty seleccionadoProperty() { return seleccionado; }
     }
 }

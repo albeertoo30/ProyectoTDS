@@ -16,7 +16,7 @@
     </top>
 
     <left>
-        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-pref-width: 220; -fx-border-color: #dee2e6; -fx-border-width: 0 1 0 0;">
+        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-pref-width: 300; -fx-border-color: #dee2e6; -fx-border-width: 0 1 0 0;">
             <Label text="MIEMBROS" styleClass="label-subtitulo" style="-fx-font-size: 14px;"/>
             
             <ListView fx:id="listaMiembros" VBox.vgrow="ALWAYS"/>

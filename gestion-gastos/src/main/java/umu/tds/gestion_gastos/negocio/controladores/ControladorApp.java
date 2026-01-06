@@ -347,6 +347,10 @@ public class ControladorApp { //Yo le crearia una interfaz
     
     //Usuarios
     
+    public void registrarUsuario(Usuario u) {
+    	this.gestorUsuarios.crearUsuario(u);
+    }
+    
     public Usuario getUsuarioActual() {
     	return this.usuarioActual;
     }
