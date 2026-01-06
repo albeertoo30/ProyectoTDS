@@ -43,12 +43,12 @@ public class FormularioCuentaController {
 
     @FXML
     private void initialize() {
-        comboTipo.getItems().addAll("INDIVIDUAL", "COMPARTIDA");
-        comboTipo.setValue("INDIVIDUAL");
+        comboTipo.getItems().addAll("COMPARTIDA");
+        comboTipo.setValue("COMPARTIDA");
 
         listaUsuarios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
-        actualizarEstadoComponentes(false);
+        actualizarEstadoComponentes(true);
 
         comboTipo.valueProperty().addListener((obs, oldVal, newVal) -> {
             boolean esCompartida = "COMPARTIDA".equals(newVal);
@@ -80,9 +80,6 @@ public class FormularioCuentaController {
         Usuario nuevoAmigo = new Usuario(idGenerado, nombreNuevo);
 
         try {
-            // Asumo que añades este método a ControladorApp delegando en GestorUsuarios
-            // controlador.registrarUsuario(nuevoAmigo); 
-            // Si no lo tienes, añádelo. Por ahora lo añadimos a la lista visual.
             
             listaUsuarios.getItems().add(nuevoAmigo);
             listaUsuarios.getSelectionModel().select(nuevoAmigo);
