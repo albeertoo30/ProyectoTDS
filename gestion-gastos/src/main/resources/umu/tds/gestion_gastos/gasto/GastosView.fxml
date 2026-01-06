@@ -9,7 +9,6 @@
             fx:controller="umu.tds.gestion_gastos.vista.gasto.ControladorGastosView"
             stylesheets="@/umu/tds/gestion_gastos/estilos/app.css">
 
-    <!-- ▬▬▬▬▬▬▬▬▬ TOP: TÍTULO Y NAVEGACIÓN ▬▬▬▬▬▬▬▬▬ -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f4f4f4;">
         
@@ -38,7 +37,6 @@
         </HBox>
     </top>
 
-    <!-- ▬▬▬▬▬▬▬▬▬ LEFT: FILTROS ▬▬▬▬▬▬▬▬▬ -->
     <left>
         <VBox spacing="12" style="-fx-background-color: #fafafa;">
             <padding>
@@ -80,7 +78,6 @@
         </VBox>
     </left>
 
-    <!-- ▬▬▬▬▬▬▬▬▬ CENTER: TABLA ▬▬▬▬▬▬▬▬▬ -->
     <center>
         <TableView fx:id="tablaGastos">
             <columns>
@@ -93,7 +90,6 @@
         </TableView>
     </center>
 
-    <!-- ▬▬▬▬▬▬▬▬▬ BOTTOM: BOTONES ▬▬▬▬▬▬▬▬▬ -->
     <bottom>
         <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-background-color: #f4f4f4;">
             <padding>

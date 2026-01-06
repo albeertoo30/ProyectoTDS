@@ -25,9 +25,7 @@ public class Terminal {
     }
 
     public void iniciar() {
-        System.out.println("\n╔═══════════════════════════════════════╗");
-        System.out.println("║   GESTOR DE GASTOS - LÍNEA DE COMANDOS   ║");
-        System.out.println("╚═══════════════════════════════════════╝");
+        System.out.println("GESTOR DE GASTOS - LÍNEA DE COMANDOS");
         
         boolean salir = false;
 
@@ -50,15 +48,12 @@ public class Terminal {
     }
 
     private void mostrarMenu() {
-        System.out.println("\n┌─────────────────────────┐");
-        System.out.println("│       MENÚ PRINCIPAL       │");
-        System.out.println("├─────────────────────────┤");
-        System.out.println("│ 1. Registrar gasto        │");
-        System.out.println("│ 2. Modificar gasto        │");
-        System.out.println("│ 3. Borrar gasto           │");
-        System.out.println("│ 4. Listar gastos          │");
-        System.out.println("│ 5. Salir                  │");
-        System.out.println("└─────────────────────────┘");
+        System.out.println("\n	MENÚ PRINCIPAL	\n");
+        System.out.println("1. Registrar gasto");
+        System.out.println("2. Modificar gasto");
+        System.out.println("3. Borrar gasto");
+        System.out.println("4. Listar gastos");
+        System.out.println("5. Salir\n");
         System.out.print("Opción: ");
     }
 
