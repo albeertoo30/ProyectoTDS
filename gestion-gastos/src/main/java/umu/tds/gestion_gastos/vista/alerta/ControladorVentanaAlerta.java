@@ -31,7 +31,9 @@ public class ControladorVentanaAlerta {
     @FXML private Button bActivarAlerta;
     @FXML private Button bAplicarFiltros;
     @FXML private Button bLimpiarFiltros;
+    @FXML private Button bNuevaAlerta;
 
+    
     @FXML private TextField tfLimiteDesde;
     @FXML private TextField tfLimiteHasta;
     @FXML private ComboBox<Categoria> cbCategorias;
@@ -192,20 +194,8 @@ public class ControladorVentanaAlerta {
 
     @FXML
     private void onNuevaAlerta() throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-            getClass().getResource("/umu/tds/gestion_gastos/alerta/FormularioAlertaCrear.fxml")
-        );
-        Parent root = loader.load();
-
-        ControladorCrearAlerta c = loader.getController();
-        c.setControlador(controlador);
-
-        Stage stage = new Stage();
-        stage.setTitle("Crear alerta");
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
-
-        cargarAlertas();
+    	controlador.getSceneManager().abrirVentanaCrearAlerta();
+    	cargarAlertas();
     }
 
 

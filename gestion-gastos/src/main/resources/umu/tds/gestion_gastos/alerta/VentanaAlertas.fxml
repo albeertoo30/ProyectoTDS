@@ -50,8 +50,7 @@
 
             <HBox alignment="CENTER_LEFT" spacing="10">
                 <Button fx:id="bAplicarFiltros" onAction="#onAplicarFiltros" text="Aplicar Filtros" styleClass="boton-accion"/>
-                <Button fx:id="bLimpiarFiltros" onAction="#onLimpiarFiltros" text="Limpiar Filtros" styleClass="boton-peligro"/>
-            	<Button fx:id="bNuevaAlerta" onAction="#onNuevaAlerta" text="Nueva Alerta" styleClass="boton-accion"/>  	
+                <Button fx:id="bLimpiarFiltros" onAction="#onLimpiarFiltros" text="Limpiar Filtros" styleClass="boton-peligro"/>	
             </HBox>
         </VBox>
     </top>
@@ -105,6 +104,7 @@
                     </padding>
                     <Button fx:id="bEliminarAlerta" onAction="#onEliminarAlerta" text="Eliminar Alerta" styleClass="boton-peligro"/>
                     <Button fx:id="bActivarAlerta" onAction="#onActivarAlerta" text="Activar/Desactivar" styleClass="boton-info"/>
+                	<Button fx:id="bNuevaAlerta" onAction="#onNuevaAlerta" text="Nueva Alerta" styleClass="boton-accion"/>  
                 </HBox>
             </buttons>
         </ButtonBar>

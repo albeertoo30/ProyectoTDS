@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
+import umu.tds.gestion_gastos.vista.alerta.ControladorCrearAlerta;
 import umu.tds.gestion_gastos.vista.alerta.ControladorVentanaAlerta;
 import umu.tds.gestion_gastos.vista.cuenta.ListaCuentasViewController;
 import umu.tds.gestion_gastos.vista.notificacion.ControladorVentanaNotificacion;
@@ -40,7 +41,7 @@ public enum SceneManager {
 
         Stage stage = new Stage();
         stage.setTitle("Alertas");
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(root, 900, 600));
 
         stage.setOnCloseRequest(e -> {
             try {
@@ -69,7 +70,7 @@ public enum SceneManager {
 
         Stage stage = new Stage();
         stage.setTitle("Notificaciones");
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(root, 900, 600)); //Asi mejor
 
         stage.setOnCloseRequest(e -> {
             try {
@@ -95,7 +96,7 @@ public enum SceneManager {
 
             Stage stage = new Stage();
             stage.setTitle("Cuentas Compartidas");
-            stage.setScene(new Scene(root));
+            stage.setScene(new Scene(root, 1200, 700));
 
             stage.setOnCloseRequest(e -> {
                 try {
@@ -109,6 +110,21 @@ public enum SceneManager {
         }
     
 
+    public void abrirVentanaCrearAlerta() throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/umu/tds/gestion_gastos/alerta/FormularioAlertaCrear.fxml")
+            );
+            Parent root = loader.load();
+
+            ControladorCrearAlerta c = loader.getController();
+            c.setControlador(controlador);
+
+            Stage stage = new Stage();
+            stage.setTitle("Crear alerta");
+            stage.setScene(new Scene(root, 400, 350)); //Asi mejor
+            stage.showAndWait();
+    }
+    
     //Lo dejo por si se me ocurre como implementarlo sin hacer otro observer o sin violar grasp
     public void mostrarPopupNotificacion(Notificacion notificacion) {
         Platform.runLater(() -> {
