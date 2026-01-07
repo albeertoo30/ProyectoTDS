@@ -12,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.scene_manager.SceneManager;
 import umu.tds.gestion_gastos.vista.gasto.ControladorGastosView;
 

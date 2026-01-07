@@ -17,9 +17,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 
 public class ListaCuentasViewController {
 

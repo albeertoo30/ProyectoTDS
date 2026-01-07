@@ -6,8 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.filtros.Filtro;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
 import umu.tds.gestion_gastos.notificacion.NotificacionFilterBuilder;
 

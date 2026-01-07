@@ -13,7 +13,7 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.categoria.Categoria;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 
 public class ControladorCategoriasView {
 

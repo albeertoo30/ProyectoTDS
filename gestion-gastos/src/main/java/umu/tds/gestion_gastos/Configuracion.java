@@ -3,7 +3,7 @@ package umu.tds.gestion_gastos;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 
 public abstract class Configuracion {
 

@@ -5,21 +5,21 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import umu.tds.gestion_gastos.adapters.repository.impl.AlertaRepositoryJSONImpl;
-import umu.tds.gestion_gastos.adapters.repository.impl.CategoriaRepositoryJSONImpl;
-import umu.tds.gestion_gastos.adapters.repository.impl.CuentaRepositoryJSONImpl;
-import umu.tds.gestion_gastos.adapters.repository.impl.GastoRepositoryJSONImpl;
-import umu.tds.gestion_gastos.adapters.repository.impl.NotificacionRepositoryJSONImpl;
-import umu.tds.gestion_gastos.adapters.repository.impl.UsuarioRepositoryJSONImpl;
 import umu.tds.gestion_gastos.alerta.AlertManager;
 import umu.tds.gestion_gastos.alerta.GastoListener;
 import umu.tds.gestion_gastos.alerta.IAlertManager;
 import umu.tds.gestion_gastos.alerta.IAlertaRepository;
 import umu.tds.gestion_gastos.categoria.CategoriaRepository;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.cuenta.CuentaRepository;
 import umu.tds.gestion_gastos.gasto.GastoRepository;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
+import umu.tds.gestion_gastos.repository.impl.AlertaRepositoryJSONImpl;
+import umu.tds.gestion_gastos.repository.impl.CategoriaRepositoryJSONImpl;
+import umu.tds.gestion_gastos.repository.impl.CuentaRepositoryJSONImpl;
+import umu.tds.gestion_gastos.repository.impl.GastoRepositoryJSONImpl;
+import umu.tds.gestion_gastos.repository.impl.NotificacionRepositoryJSONImpl;
+import umu.tds.gestion_gastos.repository.impl.UsuarioRepositoryJSONImpl;
 import umu.tds.gestion_gastos.scene_manager.SceneManager;
 import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 

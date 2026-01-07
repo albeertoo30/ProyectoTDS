@@ -9,7 +9,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import umu.tds.gestion_gastos.categoria.Categoria;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 
 public class FormularioCategoriaController {
 

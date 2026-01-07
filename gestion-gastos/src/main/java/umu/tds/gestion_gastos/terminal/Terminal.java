@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.cuenta.CuentaIndividual;
 import umu.tds.gestion_gastos.gasto.Gasto;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.usuario.Usuario;
 
 public class Terminal {

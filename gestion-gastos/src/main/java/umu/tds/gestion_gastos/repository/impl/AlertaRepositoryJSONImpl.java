@@ -1,4 +1,4 @@
-package umu.tds.gestion_gastos.adapters.repository.impl;
+package umu.tds.gestion_gastos.repository.impl;
 
 import java.io.IOException;
 import java.io.InputStream;

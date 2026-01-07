@@ -16,10 +16,10 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import umu.tds.gestion_gastos.categoria.Categoria;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.cuenta.Cuenta;
 import umu.tds.gestion_gastos.cuenta.CuentaCompartida;
 import umu.tds.gestion_gastos.gasto.Gasto;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 import umu.tds.gestion_gastos.usuario.Usuario;
 
 public class FormularioGastoController {

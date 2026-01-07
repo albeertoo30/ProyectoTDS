@@ -17,7 +17,7 @@ import umu.tds.gestion_gastos.alerta.AlertaMensual;
 import umu.tds.gestion_gastos.alerta.AlertaSemanal;
 import umu.tds.gestion_gastos.alerta.AlertaStrategy;
 import umu.tds.gestion_gastos.categoria.Categoria;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.filtros.Filtro;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package umu.tds.gestion_gastos.negocio.controladores;
+package umu.tds.gestion_gastos.controlador;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import umu.tds.gestion_gastos.Configuracion;
-import umu.tds.gestion_gastos.adapters.repository.impl.AlertaRepositoryJSONImpl;
 import umu.tds.gestion_gastos.alerta.AlertManager;
 import umu.tds.gestion_gastos.alerta.Alerta;
 import umu.tds.gestion_gastos.alerta.AlertaFilterBuilder;
@@ -35,6 +34,7 @@ import umu.tds.gestion_gastos.importacion.ImportadorFactory;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
 import umu.tds.gestion_gastos.notificacion.NotificacionFilterBuilder;
+import umu.tds.gestion_gastos.repository.impl.AlertaRepositoryJSONImpl;
 import umu.tds.gestion_gastos.scene_manager.SceneManager;
 import umu.tds.gestion_gastos.usuario.GestorUsuarios;
 import umu.tds.gestion_gastos.usuario.Usuario;

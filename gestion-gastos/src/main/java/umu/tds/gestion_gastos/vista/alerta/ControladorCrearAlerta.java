@@ -7,7 +7,7 @@ import umu.tds.gestion_gastos.Configuracion;
 import umu.tds.gestion_gastos.alerta.AlertaStrategy;
 import umu.tds.gestion_gastos.alerta.AlertaStrategyFactory;
 import umu.tds.gestion_gastos.categoria.Categoria;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 
 public class ControladorCrearAlerta {
 

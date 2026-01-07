@@ -21,8 +21,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.gasto.Gasto;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
 
 public class EstadisticasController implements Initializable {
 

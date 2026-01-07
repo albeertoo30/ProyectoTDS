@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.vista.categoria.ControladorCategoriasView;
 import umu.tds.gestion_gastos.vista.categoria.FormularioCategoriaController;
 import umu.tds.gestion_gastos.vista.cuenta.FormularioCuentaController;

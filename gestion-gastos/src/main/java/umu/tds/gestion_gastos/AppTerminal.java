@@ -1,6 +1,6 @@
 package umu.tds.gestion_gastos;
 
-import umu.tds.gestion_gastos.negocio.controladores.ControladorApp;
+import umu.tds.gestion_gastos.controlador.ControladorApp;
 import umu.tds.gestion_gastos.terminal.Terminal;
 
 public class AppTerminal {
