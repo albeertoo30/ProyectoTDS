@@ -31,6 +31,7 @@ import umu.tds.gestion_gastos.gasto.GastoRepository;
 import umu.tds.gestion_gastos.gasto.GestorGastos;
 import umu.tds.gestion_gastos.importacion.IImportadorGastos;
 import umu.tds.gestion_gastos.importacion.ImportadorCSVAdapter;
+import umu.tds.gestion_gastos.importacion.ImportadorFactory;
 import umu.tds.gestion_gastos.notificacion.INotificacionRepository;
 import umu.tds.gestion_gastos.notificacion.Notificacion;
 import umu.tds.gestion_gastos.notificacion.NotificacionFilterBuilder;
@@ -90,7 +91,7 @@ public class ControladorApp { //Yo le crearia una interfaz
         }
 
         try {
-            IImportadorGastos importador = new ImportadorCSVAdapter(
+            IImportadorGastos importador = ImportadorFactory.crear("csv",
                 this.gestorCategorias, 
                 this.gestorCuentas, 
                 this.gestorUsuarios, 
