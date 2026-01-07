@@ -27,7 +27,7 @@ Para que JavaFX funcione, debemos añadir la ruta a javafx en nuestro ordenador 
 - Run >> Run Configurations >> Arguments >> VM ARGUMENTS
 
 Imagen ejemplo:
-![Ejemplo Run Configurations](docs/imagenes/captura_javafx)
+![Ejemplo Run Configurations](docs/imagenes/captura_javafx.png)
 
 El argumento a añadir es:
 
