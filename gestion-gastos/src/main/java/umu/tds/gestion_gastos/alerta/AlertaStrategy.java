@@ -70,6 +70,4 @@ public interface AlertaStrategy {
     }
     
     boolean haCambiadoPeriodo(LocalDate ultima, LocalDate actual);
-    
-    
 }

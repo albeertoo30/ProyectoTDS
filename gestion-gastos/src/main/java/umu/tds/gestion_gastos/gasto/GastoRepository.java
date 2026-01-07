@@ -14,7 +14,6 @@ public interface GastoRepository {
 	List<Gasto> getAll();
 	void cargar(String ruta) throws IOException;
 	void guardar(String ruta) throws IOException;
-	//Necesito esta implementacion, que sea un observable.
 	void addListener(GastoListener gastoListener);
 	
 }

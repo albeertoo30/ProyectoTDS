@@ -19,8 +19,6 @@ public abstract class Configuracion {
 
     public abstract ControladorApp getControladorApp();
 
-    //public abstract String getRutaGastos();
-
     public abstract String getRutaCategorias();
     
     public abstract String getRutaCuentas();
@@ -31,7 +29,6 @@ public abstract class Configuracion {
  
     public abstract String getRutaNotificaciones();
     
-  //Esto no se si va aqui o en el controlador
     public abstract void cargarTodo() throws IOException;
     
     public abstract void guardarTodo() throws IOException;
@@ -39,6 +36,5 @@ public abstract class Configuracion {
     public abstract String getCuentaActual();
     
     public abstract void setCuentaActual(String id);
-    
     
 }

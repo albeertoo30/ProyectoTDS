@@ -39,7 +39,7 @@ import umu.tds.gestion_gastos.usuario.GestorUsuarios;
 import umu.tds.gestion_gastos.usuario.Usuario;
 import umu.tds.gestion_gastos.usuario.UsuarioRepository;
 
-public class ControladorApp { //Yo le crearia una interfaz 
+public class ControladorApp {
 
 	private static ControladorApp instancia;
 	

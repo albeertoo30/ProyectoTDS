@@ -10,7 +10,6 @@ import umu.tds.gestion_gastos.notificacion.NotificacionFilterFechaRange;
 
 public class AlertaFilterBuilder {
 
-	
     private Filtro<Alerta> filter = Filtro.alwaysTrue();
 
     public AlertaFilterBuilder limite(Double desde, Double hasta) {
