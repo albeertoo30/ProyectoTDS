@@ -29,7 +29,7 @@ Ejemplo
     AlertaStrategy strategy = AlertaStrategyFactory.crear("Mensual");
     boolean supera = strategy.seSupera(alerta, nuevoGasto, todosGastos);
 
-En Cuenta tenemos las implementaciones CuentaIndividual y CuentaCompartida, cada cuenta tiene un cimportamiento diferente, la compartida cada miembro puede tener un porcentaje diferente.
+En Cuenta tenemos las implementaciones CuentaIndividual y CuentaCompartida, cada cuenta tiene un comportamiento diferente, la compartida cada miembro puede tener un porcentaje diferente.
 
 Los métodos en cuestión: 
 
@@ -51,6 +51,20 @@ Esto nos desacopla la vista de las clases concretas, facilita la extensibilidad 
             default -> throw new IllegalArgumentException("Tipo no soportado");
         };
     }
+
+
+También ha sido usado para el importador de datos.
+public class ImportadorFactory {
+    public static IImportadorGastos crear(String tipoArchivo) {
+        return switch (tipoArchivo.toLowerCase()) {
+            case "csv" -> new ImportadorCSVAdapter(...);
+            default -> throw new IllegalArgumentException("Formato no soportado");
+        };
+    }
+}
+
+// Uso en ControladorApp:
+IImportadorGastos importador = ImportadorFactory.crear("csv");
 
 
 ## BUILDER
@@ -95,7 +109,7 @@ Flujo:
 ## ADAPTER
 
 ImportadorCSVAdapter nos adapta la lectura de archivos CSV al formato esperado por la app.
-Lee el CSV línea a línea, parsea cambos y crea Gastos
+Lee el CSV línea a línea, parsea cambios y crea Gastos
 
 Nos facilita añadir otros formatos implementando la misma interfaz, el controldor no sabe nada, y encapsulamos la lógica de importación.
 
@@ -109,7 +123,8 @@ Ejemplo:
 ControladorApp nos proporciona uan interfaz simplificada para todas las operacioens del sistema, la vista solo necesita conocer el ControladorApp, no los gestores individuales.
 
 
-## TEMPLATE METHOD
+## "TEMPLATE METHOD"
+Es mas bien uso de interfaces funcionales.
 Filtro<T> es una interfaz con métodos por defecto. Tiene una estructura común para los filtros de alertas y notificaciones, con operaciones por defecto que pueden combinarse.
 
     public interface Filtro<T> extends Predicate<T> {
