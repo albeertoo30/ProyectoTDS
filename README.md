@@ -40,3 +40,4 @@ El argumento a añadir es:
 - ### [Manual de Usuario](docs/ManualUsuario.md)
 - ### [Patrones de Diseño usados](docs/PatronesDis.md)
 - ### [Diagramas UML](docs/diagramasUML)
+- ### [Arquitectura](docs/Arquitectura.md)
