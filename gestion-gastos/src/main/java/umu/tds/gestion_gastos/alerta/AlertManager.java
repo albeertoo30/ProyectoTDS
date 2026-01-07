@@ -38,6 +38,9 @@ public class AlertManager implements IAlertManager {
         for (Alerta a : alertaRepo.getAlertasActivas()) {
         	//La estrategia se encarga del filtrado
         	boolean supera =  a.seSuperaCon(gasto, todosGastos);
+        	
+        	//Esto viola grasp pero de la otra forma daba algun tipo de error raro.
+        	//La clave seria usar perteneceA de Alerta pasandole una cuenta (de gasto.getCuenta)
         	String idAlerta = a.getIdCuenta();
             String idGasto = String.valueOf(gasto.getCuenta().getId()); 
             String nombreGasto = gasto.getCuenta().getNombre();
