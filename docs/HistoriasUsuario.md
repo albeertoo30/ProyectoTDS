@@ -83,14 +83,6 @@ Criterios de aceptación:
 - Si existen gastos asociados a la categoría, el sistema avisa y ofrece opciones (reasignar o eliminar los gastos relacionados).
 - Los datos se actualizan y persisten correctamente.
 
-### Historia 2.5: Asignar categoría por defecto (darle una vuelta)
-Como usuario, quiero establecer una categoría por defecto para agilizar el registro de nuevos gastos.
-Criterios de aceptación:
-- El usuario puede marcar cualquier categoría como “por defecto”.
-- Los nuevos gastos toman automáticamente esa categoría, salvo que se elija otra manualmente.
-- El sistema guarda la categoría por defecto de manera persistente.
-
-
 ## Objetivo 3: Alertas y Notificaciones 
 Meta:
 Permitir al usuario configurar alertas personalizadas que avisen cuando se superen determinados límites de gasto, así como consultar el historial de notificaciones generadas por dichas alertas. Aquí se usará el patrón estrategia.
