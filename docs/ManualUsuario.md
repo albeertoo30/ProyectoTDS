@@ -1,10 +1,7 @@
 # MANUAL DE USUARIO
 
 ## Introducción
-Esta aplicación permite a los usuarios registrar sus gastos personales, ordenarlos por categorías, filtrarlos y añadir alertas personalizadas que saltan cuando se sobrepasa la cantidad especificada.
-Además, también permite crear cuentas compartidas con porcentajes específicos para gestionar los gastos de un grupo y cuanto dinero debe cada persona y a quien.
-
-La aplicación está hecha en Java 21 y requiere JavaFX 21.0.9 para ejecutarse.
+Este manual está destinado a describir las distintas partes de la aplicación y guiar al usuario para que sepa como utilizar cada una de ellas.
 
 ## 1 Ventana de Inicio
 
