@@ -83,14 +83,6 @@ Criterios de aceptación:
 - Si existen gastos asociados a la categoría, el sistema avisa y ofrece opciones (reasignar o eliminar los gastos relacionados).
 - Los datos se actualizan y persisten correctamente.
 
-### Historia 2.5: Asignar categoría por defecto (darle una vuelta)
-Como usuario, quiero establecer una categoría por defecto para agilizar el registro de nuevos gastos.
-Criterios de aceptación:
-- El usuario puede marcar cualquier categoría como “por defecto”.
-- Los nuevos gastos toman automáticamente esa categoría, salvo que se elija otra manualmente.
-- El sistema guarda la categoría por defecto de manera persistente.
-
-
 ## Objetivo 3: Alertas y Notificaciones 
 Meta:
 Permitir al usuario configurar alertas personalizadas que avisen cuando se superen determinados límites de gasto, así como consultar el historial de notificaciones generadas por dichas alertas. Aquí se usará el patrón estrategia.
@@ -236,23 +228,6 @@ Criterios de aceptación:
 - Los datos importados se añaden a la lista general de gastos.
 - Los gastos importados se guardan de forma persistente.
 
-### Requisito no funcional: Soportar múltiples formatos de importación
-Como usuario avanzado, quiero que la aplicación pueda importar datos desde diferentes formatos de archivo (por ejemplo, CSV, JSON, XML, TXT) para integrar información procedente de distintas fuentes.
-Criterios de aceptación:
--El sistema detecta el formato del archivo o permite seleccionarlo manualmente.
-- Cada formato de archivo tiene su propio adaptador que traduce los datos al formato interno de la aplicación.
-- Se utiliza un Método Factoría para crear el adaptador correspondiente según el formato del archivo.
-- El diseño permite añadir nuevos formatos de importación sin modificar el código existente, con el número de gastos importados, ignorados y posibles errores.
-
-### Requisito no funcional: Extender el sistema con nuevos adaptadores
-Como desarrollador, quiero que el sistema permita añadir nuevos adaptadores de importación para soportar fácilmente nuevos formatos en el futuro.
-Criterios de aceptación:
-- Todos los adaptadores implementan una interfaz común (ImportadorDatos).
-- Un Método Factoría decide qué adaptador instanciar según el tipo de archivo.
-- Añadir un nuevo adaptador no requiere modificar el código de los demás.
-- El diseño sigue los principios de abierto/cerrado (OCP) del diseño orientado a objetos.
-
-
 ## Objetivo 7: Acceso desde Línea de Comandos
 Meta:
 Permitir al usuario realizar las operaciones básicas de gestión de gastos, categorías y alertas mediante una línea de comandos, sin necesidad de utilizar la interfaz gráfica.
@@ -287,13 +262,6 @@ Criterios de aceptación:
 - Se solicitan los nuevos datos (en caso de edición) o confirmación (en caso de borrado).
 - Los cambios se guardan de forma persistente.
 - El sistema muestra mensajes claros de confirmación o error.
-
-### Historia 7.5: Ayuda y comandos disponibles
-Como usuario, quiero consultar una lista de comandos disponibles para conocer las operaciones que puedo realizar en la consola.
-Criterios de aceptación:
-- El comando help o --help muestra todas las opciones disponibles con su sintaxis.
-- Se muestra un breve ejemplo de uso de cada comando.
-- El sistema informa adecuadamente cuando se introduce un comando incorrecto.
 
 ### Historia 7.6: Salir del modo línea de comandos
 Como usuario, quiero poder cerrar la aplicación de forma segura desde la consola para finalizar mi sesión sin perder datos.
