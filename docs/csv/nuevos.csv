@@ -1,0 +1,36 @@
+FECHA;CANTIDAD;DESCRIPCION;CATEGORIA;CUENTA;ES_COMPARTIDA;USUARIO_PAGADOR
+2026-04-01;850.00;Alquiler Abril;Vivienda;Piso Compartido;true;Yo
+2026-04-01;40.00;Internet Fibra;Vivienda;Piso Compartido;true;Elena
+2026-04-02;120.50;Compra Mensual Super;Alimentacion;Piso Compartido;true;Marc
+2026-04-02;9.99;Spotify Premium;Ocio;Mi Cuenta Personal;false;
+2026-04-03;15.00;Cervezas Afterwork;Ocio;Mi Cuenta Personal;false;
+2026-04-04;55.00;Factura Luz;Vivienda;Piso Compartido;true;Yo
+2026-04-05;300.00;Reserva Casa Rural;Viajes;Viaje Semana Santa;true;Lucia
+2026-04-05;25.00;Desayuno Ruta;Restaurante;Viaje Semana Santa;true;David
+2026-04-06;45.00;Gasolina Ida;Transporte;Viaje Semana Santa;true;Yo
+2026-04-07;80.00;Cena Grupo;Restaurante;Viaje Semana Santa;true;Lucia
+2026-04-07;15.00;Hielos y Refrescos;Alimentacion;Viaje Semana Santa;true;David
+2026-04-08;12.50;Entradas Museo;Ocio;Viaje Semana Santa;true;Yo
+2026-04-09;60.00;Gasolina Vuelta;Transporte;Viaje Semana Santa;true;Lucia
+2026-04-10;100.00;Bote Común;Otros;Regalo Madre;true;Yo
+2026-04-10;100.00;Aportación Hermano;Otros;Regalo Madre;true;Jorge
+2026-04-11;45.90;Zapatillas Running;Deporte;Mi Cuenta Personal;false;
+2026-04-12;8.50;Hamburguesa;Restaurante;Mi Cuenta Personal;false;
+2026-04-13;12.00;Productos Limpieza;Hogar;Piso Compartido;true;Elena
+2026-04-14;200.00;Reloj Inteligente (Regalo);Regalos;Regalo Madre;true;Jorge
+2026-04-15;50.00;Ahorro Mensual;Ahorro;Mi Cuenta Personal;false;
+2026-04-16;22.00;Cine y Palomitas;Ocio;Mi Cuenta Personal;false;
+2026-04-17;35.00;Factura Agua;Vivienda;Piso Compartido;true;Marc
+2026-04-18;150.00;Curso Java Avanzado;Educacion;Mi Cuenta Personal;false;
+2026-04-19;18.00;Taxi Centro;Transporte;Piso Compartido;true;Elena
+2026-04-20;65.00;Compra Carnicería;Alimentacion;Piso Compartido;true;Yo
+2026-04-21;9.95;Netflix;Ocio;Mi Cuenta Personal;false;
+2026-04-22;14.00;Pizza Domicilio;Restaurante;Piso Compartido;true;Marc
+2026-04-23;30.00;Libro Sant Jordi;Educacion;Mi Cuenta Personal;false;
+2026-04-24;10.00;Suscripción Gym;Salud;Mi Cuenta Personal;false;
+2026-04-25;250.00;Reparación Coche;Transporte;Mi Cuenta Personal;false;
+2026-04-26;12.00;Bebidas Fiesta;Ocio;Piso Compartido;true;Elena
+2026-04-27;5.50;Desayuno Cafetería;Restaurante;Mi Cuenta Personal;false;
+2026-04-28;20.00;Regalo Cumpleaños Pepe;Regalos;Piso Compartido;true;Marc
+2026-04-29;120.00;Compra Ropa Verano;Ropa;Mi Cuenta Personal;false;
+2026-04-30;15.00;Uber Eats;Restaurante;Piso Compartido;true;Yo

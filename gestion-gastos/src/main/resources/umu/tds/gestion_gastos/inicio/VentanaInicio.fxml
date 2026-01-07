@@ -55,7 +55,7 @@
             <Separator maxWidth="300" />
             <Button text="Importar Gastos (CSV)"
                     onAction="#onImportar"
-                    styleClass="button"/>
+                    styleClass="button-black"/>
         </VBox>
     </bottom>
 
